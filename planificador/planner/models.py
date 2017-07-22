@@ -186,7 +186,7 @@ class Distribucion_calidad(models.Model):
 
     def getValues(self):
         return {"primera":self.primera.getValues(), "segunda":self.primera.getValues(),
-                "tercera": self.primera.getValues(),"produccion":self.produccion.getValues()}
+                "tercera": self.primera.getValues(),"produccion":self.produccion.getValues().values()}
 
 
 class Datos_generales(models.Model):
@@ -214,6 +214,23 @@ class Preparacion_costos(models.Model):
     herbicida = models.OneToOneField(Costos, related_name="herbicida_costos")
     melaza = models.OneToOneField(Costos, related_name="melaza_costos")
     lycra = models.OneToOneField(Costos, related_name="lycra_costos")
+
+    def getValues(self):
+        return [
+            self.colino.getValues(),
+            self.estacas.getValues(),
+            self.materiaOrganica.getValues(),
+            self.cal.getValues(),
+            self.dap.getValues(),
+            self.micorriza.getValues(),
+            self.vinilo.getValues(),
+            self.paecilomyces.getValues(),
+            self.trichoderma.getValues(),
+            self.herramientas.getValues(),
+            self.herbicida.getValues(),
+            self.melaza.getValues(),
+            self.lycra.getValues()
+        ]
 
 class Ano_costo(models.Model):
     ano1 = models.OneToOneField(Costos, related_name= "ano1_datamo")
@@ -265,6 +282,23 @@ class Costos_insumos(models.Model):
     bombasEspalda = models.OneToOneField(Ano_costo, related_name="bombasEspalda_anocosto")
     bombasEstacionarias = models.OneToOneField(Ano_costo, related_name="bombasEstacionarias_anocosto")
     canastillas = models.OneToOneField(Ano_costo, related_name="canastillas_costos")
+
+    def getValues(self):
+        return {
+            "materiaOrganica" : self.materiaOrganica.getValues().values(),
+            "herbicidaCalles" : self.herbicidaCalles.getValues().values(),
+            "herbicidaPlatos" : self.herbicidaPlatos.getValues().values(),
+            "insecticidas" : self.insecticidas.getValues().values(),
+            "fungicidas" : self.fungicidas.getValues().values(),
+            "fertilizante" : self.fertilizante.getValues().values(),
+            "ridomil" : self.ridomil.getValues().values(),
+            "fertilizanteFoliar" : self.fertilizanteFoliar.getValues().values(),
+            "biocontroladores" : self.biocontroladores.getValues().values(),
+            "selectores" : self.selectores.getValues().values(),
+            "bombasEspalda" : self.bombasEspalda.getValues().values(),
+            "bombasEstacionarias" : self.bombasEstacionarias.getValues().values(),
+            "canastillas" : self.canastillas.getValues().values()
+        }
 
 class Data_mo(models.Model):
 
@@ -330,6 +364,24 @@ class Insumos_mo(models.Model):
     recoleccionContrato = models.OneToOneField(Anos_mo,related_name= "recoleccionContrato_anosmo")
     recoleccionDia = models.OneToOneField(Anos_mo,related_name= "recoleccionDia_anosmo")
 
+    def getValues(self):
+        return {
+            "siembra" : self.siembra.getValues().values(),
+            "resiembra" : self.resiembra.getValues().values(),
+            "limpiaGuadanaCalles" : self.limpiaGuadanaCalles.getValues().values(),
+            "aplicacionHerbicida" : self.aplicacionHerbicida.getValues().values(),
+            "plateo" : self.plateo.getValues().values(),
+            "fertilizacion" : self.fertilizacion.getValues().values(),
+            "aplicacionMateriaOrganica" : self.aplicacionMateriaOrganica.getValues().values(),
+            "fungicidas" : self.fungicidas.getValues().values(),
+            "biocontroladores" : self.biocontroladores.getValues().values(),
+            "aspersiones" : self.aspersiones.getValues().values(),
+            "tutorado" : self.tutorado.getValues().values(),
+            "podas" : self.podas.getValues().values(),
+            "recoleccionContrato" : self.recoleccionContrato.getValues().values(),
+            "recoleccionDia" : self.recoleccionDia.getValues().values()
+        }
+
 class CIPC(models.Model):
 
     gastosGenerales = models.FloatField(default=100)
@@ -339,6 +391,14 @@ class CIPC(models.Model):
 
     def __str__(self):
         return u"{} {}".format(self.gastosGenerales, self.prestacionesSociales)
+
+    def getValues(self):
+        return {
+            "gastosGenerales":self.gastosGenerales,
+            "prestacionesSociales":self.prestacionesSociales,
+            "impuestoPredial":self.impuestoPredial,
+            "gastosFinancieros":self.gastosFinancieros
+        }
 
 class Ano_cipc(models.Model):
     ano1 = models.OneToOneField(CIPC, related_name= "ano1_datamo")
@@ -358,23 +418,23 @@ class Ano_cipc(models.Model):
     ano15 = models.OneToOneField(CIPC, related_name= "ano15_datamo")
 
     def getValues(self):
-        return {
-        "ano1": self.ano1.getValues(),
-        "ano2": self.ano2.getValues(),
-        "ano3": self.ano3.getValues(),
-        "ano4": self.ano4.getValues(),
-        "ano5": self.ano5.getValues(),
-        "ano6": self.ano6.getValues(),
-        "ano7": self.ano7.getValues(),
-        "ano8": self.ano8.getValues(),
-        "ano9": self.ano9.getValues(),
-        "ano10": self.ano10.getValues(),
-        "ano11": self.ano11.getValues(),
-        "ano12": self.ano12.getValues(),
-        "ano13": self.ano13.getValues(),
-        "ano14": self.ano14.getValues(),
-        "ano15": self.ano15.getValues()
-        }
+        return [
+            self.ano1.getValues(),
+            self.ano2.getValues(),
+            self.ano3.getValues(),
+            self.ano4.getValues(),
+            self.ano5.getValues(),
+            self.ano6.getValues(),
+            self.ano7.getValues(),
+            self.ano8.getValues(),
+            self.ano9.getValues(),
+            self.ano10.getValues(),
+            self.ano11.getValues(),
+            self.ano12.getValues(),
+            self.ano13.getValues(),
+            self.ano14.getValues(),
+            self.ano15.getValues()
+        ]
 
     
 
