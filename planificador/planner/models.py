@@ -61,8 +61,8 @@ class User(AbstractBaseUser):
     __unicode__ = __str__
 
 class Finca(models.Model):
-    name = models.CharField(max_length=150)
-    area = models.FloatField()
+    name = models.CharField(max_length=150, default="FincaVerde")
+    area = models.FloatField(default=32000)
     agricultor = models.ForeignKey(User, blank=False,related_name= "finca_agricultor")
 
     def __str__(self):
@@ -72,16 +72,16 @@ class Finca(models.Model):
         return {"nombre":self.name, "area":self.area, "agricultor": self.agricultor.getValues()}
 
 class Riesgo(models.Model):
-    mercado = models.FloatField()
-    fitosanitario = models.FloatField()
-    fluctuacion_precio = models.FloatField()
-    administracion = models.FloatField()
-    tecnologia = models.FloatField()
-    mano_de_obra = models.FloatField()
-    clima = models.FloatField()
-    perecedero = models.FloatField()
-    agremiacion = models.FloatField()
-    inseguridad = models.FloatField()
+    mercado = models.FloatField(default=1)
+    fitosanitario = models.FloatField(default=1)
+    fluctuacion_precio = models.FloatField(default=1)
+    administracion = models.FloatField(default=1)
+    tecnologia = models.FloatField(default=1)
+    mano_de_obra = models.FloatField(default=1)
+    clima = models.FloatField(default=1)
+    perecedero = models.FloatField(default=1)
+    agremiacion = models.FloatField(default=1)
+    inseguridad = models.FloatField(default=1)
 
     def getValues(self):
         return {"mercado":self.mercado, "fitosanitario":self.fitosanitario, "fluctuacion_precio":self.fluctuacion_precio, 
@@ -89,12 +89,12 @@ class Riesgo(models.Model):
         "agremiacion":self.agremiacion, "inseguridad":self.inseguridad}
 
 class Lote(models.Model):
-    name = models.CharField(max_length=150, null=False, default="lote")
-    tipo = models.CharField(max_length=150)
-    cultivo = models.CharField(max_length=150)
-    variedad = models.CharField(max_length=150)
-    edad = models.FloatField()
-    area = models.FloatField()
+    name = models.CharField(max_length=150, null=False, default="Lote")
+    tipo = models.CharField(max_length=150, default="Verde")
+    cultivo = models.CharField(max_length=150, default="Verde")
+    variedad = models.CharField(max_length=150, default="Verde")
+    edad = models.FloatField(default=3)
+    area = models.FloatField(default=4000)
     finca = models.ForeignKey(Finca, blank=False,related_name= "lote_finca")
     riesgo = models.OneToOneField(Riesgo, related_name= "lote_riesgo")
 
@@ -114,13 +114,13 @@ class Lote(models.Model):
         }
 
 class Insumos_generales(models.Model):
-    arbol = models.FloatField()
-    fungicida = models.FloatField()
-    insecticida = models.FloatField()
-    herbicida = models.FloatField()
-    canatillas = models.FloatField()
-    proteina_hidrolizada = models.FloatField()
-    coadyuvantes = models.FloatField()
+    arbol = models.FloatField(default=400)
+    fungicida = models.FloatField(default=400)
+    insecticida = models.FloatField(default=400)
+    herbicida = models.FloatField(default=400)
+    canatillas = models.FloatField(default=400)
+    proteina_hidrolizada = models.FloatField(default=400)
+    coadyuvantes = models.FloatField(default=400)
 
 class Porcentaje_precio(models.Model):
     precio = models.FloatField()
