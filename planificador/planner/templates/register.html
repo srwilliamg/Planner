@@ -1,0 +1,39 @@
+{% extends "base_create.html" %}
+
+{% block title %}
+    Regitrarse
+{% endblock title %}
+
+{% block titulo %}Registro{{block.super}}{% endblock %}
+
+{% block message %}
+    {% if errors %}
+		<div class="alert alert-danger alert-dismissible" role="alert">
+		  <button type="button" class="close" data-dismiss="alert">
+		    <span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span>
+		  </button>
+		  <div class="font-weight-bold">Error:</div> {{ errors }}
+		</div>
+	{% endif %}
+
+	{% if mensaje %}
+		<div class="alert alert-success alert-dismissible" role="alert">
+		  <button type="button" class="close" data-dismiss="alert">
+		    <span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span>
+		  </button>
+		  {{ mensaje }}
+		</div>
+	{% endif %}
+{% endblock message %}
+
+
+{% block form %}
+
+    {% csrf_token %}
+   	{{ form.as_p }}
+   	<button type="submit">Enviar</button>
+
+{% endblock %}
+
+
+{% block footer %}{% endblock %}

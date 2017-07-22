@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block header %}{{titulo}}{{block.super}}{% endblock %}
+
+{% block wrapper %}
+
+{% endblock %}
+
+
+{% block table %}
+	<br>
+	{% if fincas %}
+	    {% for obj in fincas %}
+			<div class=" list-inline">
+		            <div class="col-lg-4">
+		                <div class="panel panel-default">
+		                    <div class="panel-heading">
+		                        <h3 class="panel-title"><i class="fa fa-photo fa-fw"></i> {{obj.name}}</h3>
+		                    </div>
+								<div class="panel-body">
+								    <div class="list-group">
+								        <a href="#" class="list-group-item">
+								            <span class="badge">{{obj.id}}</span>
+								            <i class="fa fa-fw fa-info"></i> ID
+								        </a>
+								        <a href="#" class="list-group-item">
+								            <span class="badge">{{obj.area}}</span>
+								            <i class="fa fa-fw fa-square"></i> Area
+								        </a>
+								    </div>
+								    <div class="text-right">
+								        <a href="lotes/{{obj.id}}"> Ver finca <i class="fa fa-arrow-circle-right"></i></a>
+								    </div>
+								</div>
+			                </div>
+		            </div> <!-- Horas -->
+		    </div>
+    	{% endfor %}
+	{% endif %}
+
+	{% if riesgo_list %}
+	<div class="list-inline">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-money fa-fw"></i> {{titulo}}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Mercado</th>
+                                    <th>Fitosanitario</th>
+                                    <th>Fluctuacion de precio</th>
+                                    <th>Administracion</th>
+                                    <th>Tecnologia</th>
+                                    <th>Mano de obra</th>
+                                    <th>Clima</th>
+                                    <th>Perecedero</th>
+                                    <th>Agremiacion</th>
+                                    <th>Inseguridad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{riesgo_list.mercado}}</td>
+                                    <td>{{riesgo_list.fitosanitario}}</td>
+                                    <td>{{riesgo_list.fluctuacion_precio}}</td>
+                                    <td>{{riesgo_list.administracion}}</td>
+                                    <td>{{riesgo_list.tecnologia}}</td>
+                                    <td>{{riesgo_list.mano_de_obra}}</td>
+                                    <td>{{riesgo_list.clima}}</td>
+                                    <td>{{riesgo_list.perecedero}}</td>
+                                    <td>{{riesgo_list.agremiacion}}</td>
+                                    <td>{{riesgo_list.inseguridad}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-right">
+                        <a href="#">View All Transactions <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Tablas -->
+	{% endif %}
+
+	{% if lote_list %}
+	    {% for obj in lote_list %}
+			<div class=" list-inline">
+		            <div class="col-lg-4">
+		                <div class="panel panel-default">
+		                    <div class="panel-heading">
+		                        <h3 class="panel-title"><i class="fa fa-photo fa-fw"></i>{{obj.name}}</h3>
+		                    </div>
+								<div class="panel-body">
+								    <div class="list-group">
+								    	<a href="#" class="list-group-item">
+								            <span class="badge">{{obj.tipo}}</span>
+								            <i class="fa fa-fw fa-square"></i> Tipo
+								        </a>
+								        <a href="#" class="list-group-item">
+								            <span class="badge">{{obj.cultivo}}</span>
+								            <i class="fa fa-fw fa-info"></i> Cultivo
+								        </a>
+								        <a href="#" class="list-group-item">
+								            <span class="badge">{{obj.variedad}}</span>
+								            <i class="fa fa-fw fa-square"></i> Variedad
+								        </a>
+								        <a href="#" class="list-group-item">
+								            <span class="badge">{{obj.edad}}</span>
+								            <i class="fa fa-fw fa-square"></i> Edad
+								        </a>
+								        <a href="#" class="list-group-item">
+								            <span class="badge">{{obj.area}}</span>
+								            <i class="fa fa-fw fa-square"></i> Area
+								        </a>
+								    </div>
+								    <div class="text-right">
+								        <a href=""> Ver lote <i class="fa fa-arrow-circle-right"></i></a>
+								        <a href="{% url 'riesgo' var=obj.id %}"> Riesgos <i class="fa fa-arrow-circle-right"></i></a>
+								    </div>
+								</div>
+			                </div>
+		            </div> <!-- Horas -->
+		    </div>
+    	{% endfor %}
+	{% endif %}
+
+{% endblock %}
+
+{% block footer %}{% endblock %}

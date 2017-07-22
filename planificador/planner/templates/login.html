@@ -1,0 +1,46 @@
+{% extends "base_create.html" %}
+
+{% block title %}
+  Login
+{% endblock title %}
+
+{% block message %}
+
+  {% if error %}
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+      <span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span>
+    </button>
+    <div class="font-weight-bold">Error:</div> {{ error }}
+  </div>
+  {% endif %}
+
+  {% if success %}
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+      <span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span>
+    </button>
+    <div class="font-weight-bold">Error:</div> {{ success }}
+  </div>
+  {% endif %}
+  
+{% endblock message %}
+
+{% block form %}
+
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="inputUsername" class="sr-only">Nombre de usuario</label>
+          <input name="email" type="text" id="inputUsername" class="form-control" placeholder="Nombre de usuario" required autofocus>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword" class="sr-only">Contraseña</label>
+          <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Contrase&ntilde;a" required>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Iniciar</button>
+  
+{% endblock form %}
+
+{% block footer %}
+  
+{% endblock footer %}
