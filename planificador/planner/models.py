@@ -122,6 +122,19 @@ class Insumos_generales(models.Model):
     proteina_hidrolizada = models.FloatField(default=400)
     coadyuvantes = models.FloatField(default=400)
 
+    def getValues(self):
+        return {
+            "arbol": self.arbol,
+            "fungicida": self.fungicida,
+            "insecticida": self.insecticida,
+            "herbicida": self.herbicida,
+            "canatillas": self.canatillas,
+            "proteina_hidrolizada": self.proteina_hidrolizada,
+            "coadyuvantes": self.coadyuvantes
+        }
+
+
+
 class Porcentaje_precio(models.Model):
     precio = models.FloatField()
     porcentaje = models.FloatField()
@@ -129,8 +142,11 @@ class Porcentaje_precio(models.Model):
     def __str__(self):
         return u"{}$-{}%".format(self.precio, self.porcentaje)
 
+    def mult(self):
+        return self.precio*(self.porcentaje/100)
+
     def getValues(self):
-        return {"precio":self.precio, "porcentaje":self.porcentaje}
+        return {"precio":self.precio, "porcentaje":self.porcentaje, "mult": self.mult()}
 
 class Produccion(models.Model):
     ano1 = models.FloatField(default=120)
@@ -190,14 +206,26 @@ class Distribucion_calidad(models.Model):
 
 
 class Datos_generales(models.Model):
-    empresa = models.CharField(max_length = 125, default="empresa")
-    departamento = models.CharField(max_length = 125, default="Risaralda")
-    vereda = models.CharField(max_length = 125, default="El cedral")
+    empresa = models.CharField(max_length= 125, default="empresa")
+    departamento = models.CharField(max_length= 125, default="Risaralda")
+    vereda = models.CharField(max_length= 125, default="El cedral")
     gastos_operacionales = models.FloatField(default=300)
     valor_de_tierra = models.FloatField(default=400)
     densidad = models.FloatField(default=400)
     jornal = models.FloatField(default=3000)
     altitud = models.FloatField(default=1000)
+
+    def getValues(self):
+        return{
+            "empresa":self.empresa,
+            "departamento":self.departamento,
+            "vereda":self.vereda,
+            "gastos_operacionales":self.gastos_operacionales,
+            "valor_de_tierra":self.valor_de_tierra,
+            "densidad":self.densidad,
+            "jornal":self.jornal,
+            "altitud":self.altitud
+        }
 
 
 class Preparacion_costos(models.Model):
@@ -310,7 +338,7 @@ class Data_mo(models.Model):
         return u"{} {} {}".format(self.rendimiento, self.frecuencia, self.unidad)
 
     def getValues(self):
-        return {"rendimiento":self.rendimiento, "porcentaje":self.frecuencia, "unidad":self.unidad}
+        return {"rendimiento":self.rendimiento, "frecuencia":self.frecuencia, "unidad":self.unidad}
 
 class Anos_mo(models.Model):
     ano1 = models.OneToOneField(Data_mo, related_name= "ano1_datamo")
@@ -400,6 +428,10 @@ class CIPC(models.Model):
             "gastosFinancieros":self.gastosFinancieros
         }
 
+    def getSum(self):
+        return self.gastosGenerales + self.prestacionesSociales + self.impuestoPredial + self.gastosFinancieros
+        
+
 class Ano_cipc(models.Model):
     ano1 = models.OneToOneField(CIPC, related_name= "ano1_datamo")
     ano2 = models.OneToOneField(CIPC, related_name= "ano2_datamo")
@@ -436,7 +468,25 @@ class Ano_cipc(models.Model):
             self.ano15.getValues()
         ]
 
-    
+    def getSums(self):
+        return [
+            self.ano1.getSum(),
+            self.ano2.getSum(),
+            self.ano3.getSum(),
+            self.ano4.getSum(),
+            self.ano5.getSum(),
+            self.ano6.getSum(),
+            self.ano7.getSum(),
+            self.ano8.getSum(),
+            self.ano9.getSum(),
+            self.ano10.getSum(),
+            self.ano11.getSum(),
+            self.ano12.getSum(),
+            self.ano13.getSum(),
+            self.ano14.getSum(),
+            self.ano15.getSum()
+        ]
+   
 
 class Establecimiento(models.Model):
     preparacionTerreno = models.FloatField(default=200)
@@ -449,6 +499,19 @@ class Establecimiento(models.Model):
     siembra = models.FloatField(default=200)
     resiembra = models.FloatField(default=300)
 
+    def getValues(self):
+        return {
+            "preparacionTerreno":self.preparacionTerreno,
+            "trazo":self.trazo,
+            "hoyado":self.hoyado,
+            "distribucionColino":self.distribucionColino,
+            "aplicacionCorrectivos":self.aplicacionCorrectivos,
+            "aplicacionMicorriza":self.aplicacionMicorriza,
+            "aplicacionMateriaOrganica":self.aplicacionMateriaOrganica,
+            "siembra":self.siembra,
+            "resiembra":self.resiembra
+        }
+
 class Base_presupuestal(models.Model):
     nombre = models.CharField(max_length=125, null=False, default="bp")
     rentabilidad = models.FloatField(default=0)
@@ -458,15 +521,158 @@ class Base_presupuestal(models.Model):
     costos_insumos = models.OneToOneField(Costos_insumos,related_name="bp_Costosinsumos")
     insumos_mo = models.OneToOneField(Insumos_mo,related_name="bp_insumosmo")
     distribucion_calidad = models.OneToOneField(Distribucion_calidad,related_name="bp_dc")
+    establecimiento_r = models.OneToOneField(Establecimiento,related_name="bp_establecimiento", default=1)
     cipc = models.OneToOneField(Ano_cipc, related_name = "bp_cipc")
 
     def __str__(self):
         return u"{} {}".format(self.nombre, self.rentabilidad)
 
     def graficar(self):
-        densidad = self.datos_g.densidadx
-        costosIndirectos = self.cipc.getValues()
+    # Datos
         dc_produccion = self.distribucion_calidad.getValues()
+        datos_g = self.datos_g.getValues()
+        insumos_g = self.insumos_g.getValues()
+        establecimiento = self.establecimiento_r.getValues()
+        insumos_mo = self.insumos_mo.getValues()
+
+    # INGRESOS
+    # Ventas (ingreses)
+        ventas = []
+        for tkg in dc_produccion["produccion"]:
+            ventas.append(
+                1000*tkg*(dc_produccion["primera"]["mult"] + dc_produccion["tercera"]["mult"] + dc_produccion["segunda"]["mult"])
+                )
+
+    # EGRESOS (perdidas)
+        egresos = []
+
+    # COSTOS INDIRECTOS PRODUCCION Y COMERCIALIZACIÓN
+        cipc = self.cipc.getSums()
+
+    # MANO DE OBRA
+        leldpE = establecimiento
+        # Labores de Establecimiento, Levante, Desarrollo y Producción.
+        leldpE["preparacionTerreno"] = establecimiento["preparacionTerreno"]
+        leldpE["trazo"] = establecimiento["trazo"]*datos_g["densidad"]
+        leldpE["hoyado"] = establecimiento["hoyado"]*datos_g["densidad"]
+        leldpE["distribucionColino"] = establecimiento["distribucionColino"]*datos_g["densidad"]
+        leldpE["aplicacionCorrectivos"] = establecimiento["aplicacionCorrectivos"]*datos_g["densidad"]
+        leldpE["aplicacionMicorriza"] = establecimiento["aplicacionMicorriza"]*datos_g["densidad"]
+        leldpE["aplicacionMateriaOrganica"] = establecimiento["aplicacionMateriaOrganica"]*datos_g["densidad"]
+        leldpE["siembra"] = establecimiento["siembra"]*datos_g["densidad"]
+        leldpE["resiembra"] = establecimiento["resiembra"]*datos_g["densidad"]
+
+        leldpR = {
+            "siembra" : [],
+            "resiembra" : [],
+            "limpiaGuadanaCalles" : [],
+            "aplicacionHerbicida" : [],
+            "plateo" : [],
+            "fertilizacion" : [],
+            "aplicacionMateriaOrganica" : [],
+            "fungicidas" : [],
+            "biocontroladores" : [],
+            "aspersiones" : [],
+            "tutorado" : [],
+            "podas" : []
+        }
+
+        recoleccion = {
+            "recoleccionContrato": [],
+            "recoleccionDia": []
+        }
+
+        """for key, value in insumos_mo.iteritems():
+            for vin in value.iteritems():
+                if key == "siembra" or key == "resiembra" or key == "limpiaGuadanaCalles" or key = "aplicacionHerbicida":
+                    leldpR[key].append(data_mo["rendimiento"]*data_mo["frecuencia"])
+                else:
+                    leldpR[key].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])"""
+
+        for data_mo in insumos_mo["siembra"]:
+            leldpR["siembra"].append(data_mo["rendimiento"]*data_mo["frecuencia"])
+
+        for data_mo in insumos_mo["resiembra"]:
+            leldpR["resiembra"].append(data_mo["rendimiento"]*data_mo["frecuencia"])
+
+        for data_mo in insumos_mo["limpiaGuadanaCalles"]:
+            leldpR["limpiaGuadanaCalles"].append(data_mo["rendimiento"]*data_mo["frecuencia"])
+
+        for data_mo in insumos_mo["aplicacionHerbicida"]:
+            leldpR["aplicacionHerbicida"].append(data_mo["rendimiento"]*data_mo["frecuencia"])
+
+        for data_mo in insumos_mo["plateo"]:
+            leldpR["plateo"].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
+
+        for data_mo in insumos_mo["fertilizacion"]:
+            leldpR["fertilizacion"].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
+
+        for data_mo in insumos_mo["aplicacionMateriaOrganica"]:
+            leldpR["aplicacionMateriaOrganica"].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
+
+        for data_mo in insumos_mo["fungicidas"]:
+            leldpR["fungicidas"].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
+
+        for data_mo in insumos_mo["biocontroladores"]:
+            leldpR["biocontroladores"].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
+
+        for data_mo in insumos_mo["aspersiones"]:
+            leldpR["aspersiones"].append(data_mo["rendimiento"]*data_mo["frecuencia"])
+
+        for data_mo in insumos_mo["tutorado"]:
+            leldpR["tutorado"].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
+
+        for data_mo in insumos_mo["podas"]:
+            leldpR["podas"].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
+
+        for counter,data_mo in enumerate(insumos_mo["recoleccionContrato"]):
+            recoleccion["recoleccionContrato"].append(
+                (
+                    70*dc_produccion["produccion"][counter]/100)/data_mo["rendimiento"]*data_mo["frecuencia"]
+                )
+
+        for counter,data_mo in enumerate(insumos_mo["recoleccionDia"]):
+            recoleccion["recoleccionDia"].append(
+                (
+                    30*dc_produccion["produccion"][counter]/100)/data_mo["rendimiento"]*data_mo["frecuencia"]
+                )
+
+        subTotalMO = [0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0]
+
+        for key, value in leldpE.iteritems():
+            subTotalMO[0] = subTotalMO[0] + value
+
+        for k, v in leldpR.iteritems():
+            for counter,i in enumerate(subTotalMO):
+                subTotalMO[counter] = subTotalMO[counter] + v[counter]
+
+        # Recolección
+        subTotalRecoleccion = [0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0,
+                      0, 0, 0, 0, 0]
+
+        for k, v in recoleccion.iteritems():
+            for counter,i in enumerate(subTotalRecoleccion):
+                subTotalRecoleccion[counter] = subTotalRecoleccion[counter] + v[counter]
+
+        totalRecoleccion = []
+        totalLEL = []
+        totalMO = []
+
+        for i in subTotalMO:
+            totalLEL.append(i*datos_g["jornal"]/1000)
+
+        for i in subTotalRecoleccion:
+            totalRecoleccion.append( i*datos_g["jornal"]/1000)
+
+        for i in range(len(totalRecoleccion)):
+            totalMO.append(totalLEL[i] + totalRecoleccion[i])
+        # Post-cosecha
+        return {"Totalrecoleccion":totalRecoleccion, "TotalLEL":totalLEL, "totalMO":totalMO}
+        # INSUMOS
+
         
 
 class lote_has_bp(models.Model):
