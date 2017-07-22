@@ -463,6 +463,12 @@ class Base_presupuestal(models.Model):
     def __str__(self):
         return u"{} {}".format(self.nombre, self.rentabilidad)
 
+    def graficar(self):
+        densidad = self.datos_g.densidadx
+        costosIndirectos = self.cipc.getValues()
+        dc_produccion = self.distribucion_calidad.getValues()
+        
+
 class lote_has_bp(models.Model):
     lote = models.ForeignKey(Lote, blank=False, related_name= "lotebp_lote")
     bp = models.ForeignKey(Base_presupuestal, blank=False, related_name= "lotebp_bp")
