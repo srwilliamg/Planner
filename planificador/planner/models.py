@@ -133,8 +133,6 @@ class Insumos_generales(models.Model):
             "coadyuvantes": self.coadyuvantes
         }
 
-
-
 class Porcentaje_precio(models.Model):
     precio = models.FloatField()
     porcentaje = models.FloatField()
@@ -184,16 +182,6 @@ class Produccion(models.Model):
         "ano15": self.ano15
         }
 
-
-class Costos(models.Model):
-    cantidadSitio = models.FloatField(default= 2)
-    cantidadHectarea = models.FloatField(default= 4)
-    frecuencia = models.FloatField(default=1)
-
-    def getValues(self):
-        return {"cantidadH":self.cantidadHectarea, "cantidadS":self.cantidadSitio, "frecuencia": self.frecuencia}
-    
-
 class Distribucion_calidad(models.Model):
     primera = models.OneToOneField(Porcentaje_precio, related_name= "dc_primera")
     segunda = models.OneToOneField(Porcentaje_precio, related_name= "dc_segunda")
@@ -203,7 +191,6 @@ class Distribucion_calidad(models.Model):
     def getValues(self):
         return {"primera":self.primera.getValues(), "segunda":self.primera.getValues(),
                 "tercera": self.primera.getValues(),"produccion":self.produccion.getValues().values()}
-
 
 class Datos_generales(models.Model):
     empresa = models.CharField(max_length= 125, default="empresa")
@@ -227,38 +214,38 @@ class Datos_generales(models.Model):
             "altitud":self.altitud
         }
 
+class Costos(models.Model):
+    cantidadSitio = models.FloatField(default= 2)
+    cantidadHectarea = models.FloatField(default= 4)
+    frecuencia = models.FloatField(default=1)
 
+    def getValues(self):
+        return {"cantidadH":self.cantidadHectarea, "cantidadS":self.cantidadSitio, "frecuencia": self.frecuencia}
+    
 class Preparacion_costos(models.Model):
+    resiembra = models.OneToOneField(Costos, related_name="resiembra_costos")
     colino = models.OneToOneField(Costos, related_name="colino_costos")
     estacas = models.OneToOneField(Costos, related_name="estacas_costos")
-    materiaOrganica = models.OneToOneField(Costos, related_name="materiaOrganicapulpa_costos")
     cal = models.OneToOneField(Costos, related_name="cal_costos")
     dap = models.OneToOneField(Costos, related_name="dap_costos")
     micorriza = models.OneToOneField(Costos, related_name="micorriza_costos")
     vinilo = models.OneToOneField(Costos, related_name="vinilo_costos")
     paecilomyces = models.OneToOneField(Costos, related_name="paecilomyces_costos")
     trichoderma = models.OneToOneField(Costos, related_name="trichoderma_costos")
-    herramientas = models.OneToOneField(Costos, related_name="herramientas_costos")
-    herbicida = models.OneToOneField(Costos, related_name="herbicida_costos")
     melaza = models.OneToOneField(Costos, related_name="melaza_costos")
-    lycra = models.OneToOneField(Costos, related_name="lycra_costos")
 
     def getValues(self):
-        return [
-            self.colino.getValues(),
-            self.estacas.getValues(),
-            self.materiaOrganica.getValues(),
-            self.cal.getValues(),
-            self.dap.getValues(),
-            self.micorriza.getValues(),
-            self.vinilo.getValues(),
-            self.paecilomyces.getValues(),
-            self.trichoderma.getValues(),
-            self.herramientas.getValues(),
-            self.herbicida.getValues(),
-            self.melaza.getValues(),
-            self.lycra.getValues()
-        ]
+        return {
+            "colino": self.colino.getValues(),
+            "estacas": self.estacas.getValues(),
+            "cal": self.cal.getValues(),
+            "dap": self.dap.getValues(),
+            "micorriza": self.micorriza.getValues(),
+            "vinilo": self.vinilo.getValues(),
+            "paecilomyces": self.paecilomyces.getValues(),
+            "trichoderma": self.trichoderma.getValues(),
+            "melaza": self.melaza.getValues(),
+        }
 
 class Ano_costo(models.Model):
     ano1 = models.OneToOneField(Costos, related_name= "ano1_datamo")
@@ -279,21 +266,21 @@ class Ano_costo(models.Model):
 
     def getValues(self):
         return {
-        "ano1": self.ano1.getValues(),
-        "ano2": self.ano2.getValues(),
-        "ano3": self.ano3.getValues(),
-        "ano4": self.ano4.getValues(),
-        "ano5": self.ano5.getValues(),
-        "ano6": self.ano6.getValues(),
-        "ano7": self.ano7.getValues(),
-        "ano8": self.ano8.getValues(),
-        "ano9": self.ano9.getValues(),
-        "ano10": self.ano10.getValues(),
-        "ano11": self.ano11.getValues(),
-        "ano12": self.ano12.getValues(),
-        "ano13": self.ano13.getValues(),
-        "ano14": self.ano14.getValues(),
-        "ano15": self.ano15.getValues()
+            "ano1": self.ano1.getValues(),
+            "ano2": self.ano2.getValues(),
+            "ano3": self.ano3.getValues(),
+            "ano4": self.ano4.getValues(),
+            "ano5": self.ano5.getValues(),
+            "ano6": self.ano6.getValues(),
+            "ano7": self.ano7.getValues(),
+            "ano8": self.ano8.getValues(),
+            "ano9": self.ano9.getValues(),
+            "ano10": self.ano10.getValues(),
+            "ano11": self.ano11.getValues(),
+            "ano12": self.ano12.getValues(),
+            "ano13": self.ano13.getValues(),
+            "ano14": self.ano14.getValues(),
+            "ano15": self.ano15.getValues()
         }
 
 class Costos_insumos(models.Model):
@@ -306,10 +293,13 @@ class Costos_insumos(models.Model):
     ridomil = models.OneToOneField(Ano_costo, related_name="ridomil_anocosto")
     fertilizanteFoliar = models.OneToOneField(Ano_costo, related_name="fertilizanteFoliar_anocosto")
     biocontroladores = models.OneToOneField(Ano_costo, related_name="biocontroladores_anocosto")
+    guadana = models.OneToOneField(Ano_costo, related_name="guadana_anocosto")
     selectores = models.OneToOneField(Ano_costo, related_name="selectores_anocosto")
     bombasEspalda = models.OneToOneField(Ano_costo, related_name="bombasEspalda_anocosto")
     bombasEstacionarias = models.OneToOneField(Ano_costo, related_name="bombasEstacionarias_anocosto")
-    canastillas = models.OneToOneField(Ano_costo, related_name="canastillas_costos")
+    canastillas = models.OneToOneField(Ano_costo, related_name="canastillas_anocosto")
+    herramientas = models.OneToOneField(Ano_costo, related_name="herramientas_anocosto")
+    lycra = models.OneToOneField(Ano_costo, related_name="lycra_anocosto")
 
     def getValues(self):
         return {
@@ -322,10 +312,13 @@ class Costos_insumos(models.Model):
             "ridomil" : self.ridomil.getValues().values(),
             "fertilizanteFoliar" : self.fertilizanteFoliar.getValues().values(),
             "biocontroladores" : self.biocontroladores.getValues().values(),
+            "guadana" : self.guadana.getValues().values(),
             "selectores" : self.selectores.getValues().values(),
             "bombasEspalda" : self.bombasEspalda.getValues().values(),
             "bombasEstacionarias" : self.bombasEstacionarias.getValues().values(),
-            "canastillas" : self.canastillas.getValues().values()
+            "canastillas" : self.canastillas.getValues().values(),
+            "herramientas" : self.herramientas.getValues().values(),
+            "lycra" : self.lycra.getValues().values()
         }
 
 class Data_mo(models.Model):
@@ -431,7 +424,6 @@ class CIPC(models.Model):
     def getSum(self):
         return self.gastosGenerales + self.prestacionesSociales + self.impuestoPredial + self.gastosFinancieros
         
-
 class Ano_cipc(models.Model):
     ano1 = models.OneToOneField(CIPC, related_name= "ano1_datamo")
     ano2 = models.OneToOneField(CIPC, related_name= "ano2_datamo")
@@ -487,7 +479,6 @@ class Ano_cipc(models.Model):
             self.ano15.getSum()
         ]
    
-
 class Establecimiento(models.Model):
     preparacionTerreno = models.FloatField(default=200)
     trazo = models.FloatField(default=200)
@@ -527,14 +518,58 @@ class Base_presupuestal(models.Model):
     def __str__(self):
         return u"{} {}".format(self.nombre, self.rentabilidad)
 
-    def graficar(self):
+    def totalInsumos(self):
+    # Variables
+        dc_produccion = self.distribucion_calidad.getValues()
+        datos_g = self.datos_g.getValues()
+        costos_insumos = self.costos_insumos.getValues()
+        preparacion = self.preparacion.getValues()
+    #
+        colino = (preparacion["colino"]["cantidadS"]*datos_g["densidad"]) + (preparacion["colino"]["cantidadH"]*datos_g["densidad"]/100)
+        pmo_costo = {
+            "colino": colino, #
+            "estacas":(preparacion["estacas"]["cantidadS"]*datos_g["densidad"]),#
+            "cal":(preparacion["cal"]["cantidadS"]*datos_g["densidad"]/1000), #
+            "dap":(preparacion["dap"]["cantidadS"]*datos_g["densidad"]/1000), #
+            "micorriza":(preparacion["micorriza"]["cantidadS"]*datos_g["densidad"]), #
+            "vinilo": (colino)*preparacion["vinilo"]["cantidadS"]*preparacion["vinilo"]["frecuencia"]/1000,#
+            "paecilomyces":(colino*preparacion["paecilomyces"]["cantidadS"]*preparacion["paecilomyces"]["frecuencia"]),
+            "trichoderma":(colino*preparacion["trichoderma"]["cantidadS"]*preparacion["trichoderma"]["frecuencia"]),
+            "melaza":(colino)*preparacion["melaza"]["cantidadS"]*preparacion["melaza"]["frecuencia"]/1000,
+        }
+
+        ci_costo ={
+            "materiaOrganica" : [],
+            "herbicidaCalles" : [],
+            "herbicidaPlatos" : [],
+            "insecticidas" : [],
+            "fungicidas" : [],
+            "fertilizante" : [],
+            "ridomil" : [],
+            "fertilizanteFoliar" : [],
+            "biocontroladores" : [],
+            "guadana" : [],
+            "selectores" : [],
+            "bombasEspalda" : [],
+            "bombasEstacionarias" : [],
+            "canastillas" : [],
+            "herramientas" : [],
+            "lycra" : []
+        }
+
+        #for key, value in costos_insumos.iteritems():
+
+        return pmo_costo
+            
+        
+
+    def IngresosEgresos(self):
     # Datos
         dc_produccion = self.distribucion_calidad.getValues()
         datos_g = self.datos_g.getValues()
         insumos_g = self.insumos_g.getValues()
         establecimiento = self.establecimiento_r.getValues()
         insumos_mo = self.insumos_mo.getValues()
-
     # INGRESOS
     # Ventas (ingreses)
         ventas = []
@@ -551,7 +586,7 @@ class Base_presupuestal(models.Model):
 
     # MANO DE OBRA
         leldpE = establecimiento
-        # Labores de Establecimiento, Levante, Desarrollo y Producción.
+    # Labores de Establecimiento, Levante, Desarrollo y Producción.
         leldpE["preparacionTerreno"] = establecimiento["preparacionTerreno"]
         leldpE["trazo"] = establecimiento["trazo"]*datos_g["densidad"]
         leldpE["hoyado"] = establecimiento["hoyado"]*datos_g["densidad"]
@@ -648,7 +683,7 @@ class Base_presupuestal(models.Model):
             for counter,i in enumerate(subTotalMO):
                 subTotalMO[counter] = subTotalMO[counter] + v[counter]
 
-        # Recolección
+    # Recolección
         subTotalRecoleccion = [0, 0, 0, 0, 0,
                       0, 0, 0, 0, 0,
                       0, 0, 0, 0, 0]
@@ -669,8 +704,9 @@ class Base_presupuestal(models.Model):
 
         for i in range(len(totalRecoleccion)):
             totalMO.append(totalLEL[i] + totalRecoleccion[i])
-        # Post-cosecha
-        return {"Totalrecoleccion":totalRecoleccion, "TotalLEL":totalLEL, "totalMO":totalMO}
+
+    # result
+        return {"totalMO":totalMO, "cipc":cipc, "ingresos":ventas}
         # INSUMOS
 
         
