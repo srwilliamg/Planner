@@ -119,8 +119,11 @@ class Insumos_generales(models.Model):
     insecticida = models.FloatField(default=400)
     herbicida = models.FloatField(default=400)
     canatillas = models.FloatField(default=400)
+    materiaOrganica = models.FloatField(default=400)
     proteina_hidrolizada = models.FloatField(default=400)
     coadyuvantes = models.FloatField(default=400)
+    fertilizante = models.FloatField(default=400)
+    ridomil = models.FloatField(default=400)
 
     def getValues(self):
         return {
@@ -129,8 +132,11 @@ class Insumos_generales(models.Model):
             "insecticida": self.insecticida,
             "herbicida": self.herbicida,
             "canatillas": self.canatillas,
+            "materiaOrganica":self.materiaOrganica,
             "proteina_hidrolizada": self.proteina_hidrolizada,
-            "coadyuvantes": self.coadyuvantes
+            "coadyuvantes": self.coadyuvantes,
+            "fertilizante": self.fertilizante,
+            "ridomil": self.ridomil
         }
 
 class Porcentaje_precio(models.Model):
@@ -527,15 +533,15 @@ class Base_presupuestal(models.Model):
     #
         colino = (preparacion["colino"]["cantidadS"]*datos_g["densidad"]) + (preparacion["colino"]["cantidadH"]*datos_g["densidad"]/100)
         pmo_costo = {
-            "colino": colino, #
-            "estacas":(preparacion["estacas"]["cantidadS"]*datos_g["densidad"]),#
-            "cal":(preparacion["cal"]["cantidadS"]*datos_g["densidad"]/1000), #
-            "dap":(preparacion["dap"]["cantidadS"]*datos_g["densidad"]/1000), #
-            "micorriza":(preparacion["micorriza"]["cantidadS"]*datos_g["densidad"]), #
-            "vinilo": (colino)*preparacion["vinilo"]["cantidadS"]*preparacion["vinilo"]["frecuencia"]/1000,#
-            "paecilomyces":(colino*preparacion["paecilomyces"]["cantidadS"]*preparacion["paecilomyces"]["frecuencia"]),
-            "trichoderma":(colino*preparacion["trichoderma"]["cantidadS"]*preparacion["trichoderma"]["frecuencia"]),
-            "melaza":(colino)*preparacion["melaza"]["cantidadS"]*preparacion["melaza"]["frecuencia"]/1000,
+            "colino" : colino, #
+            "estacas" :(preparacion["estacas"]["cantidadS"]*datos_g["densidad"]),#
+            "cal" :(preparacion["cal"]["cantidadS"]*datos_g["densidad"]/1000), #
+            "dap" :(preparacion["dap"]["cantidadS"]*datos_g["densidad"]/1000), #
+            "micorriza" :(preparacion["micorriza"]["cantidadS"]*datos_g["densidad"]), #
+            "vinilo" : (colino)*preparacion["vinilo"]["cantidadS"]*preparacion["vinilo"]["frecuencia"]/1000,#
+            "paecilomyces" :(colino*preparacion["paecilomyces"]["cantidadS"]*preparacion["paecilomyces"]["frecuencia"]),
+            "trichoderma" :(colino*preparacion["trichoderma"]["cantidadS"]*preparacion["trichoderma"]["frecuencia"]),
+            "melaza" :(colino)*preparacion["melaza"]["cantidadS"]*preparacion["melaza"]["frecuencia"]/1000,
         }
 
         ci_costo ={
@@ -556,11 +562,68 @@ class Base_presupuestal(models.Model):
             "herramientas" : [],
             "lycra" : []
         }
+        for key,value in costos_insumos.iteritems():
+            if key == "herbicidaCalles":
+                    for counter,d in enumerate(value):
+                        if counter < 2:
+                            ci_costo[key].append(datos_g["densidad"]*d["cantidadS"]*d["frecuencia"]/2/1000)
+                        else:
+                            ci_costo[key].append(datos_g["densidad"]*d["cantidadS"]*d["frecuencia"]/1000)
+            else:
+                for d in value:
+                    ci_costo[key].append(datos_g["densidad"]*d["cantidadS"]*d["frecuencia"])
 
-        #for key, value in costos_insumos.iteritems():
+        subTotalInsumos = {
+            "colino":[self.insumos_g.arbol*pmo_costo["colino"]/1000],
+            "estacas":[ pmo_costo["estacas"]/1000 ],
+            "cal":[ pmo_costo["cal"]/1000 ],
+            "dap":[ pmo_costo["dap"]/1000 ],
+            "micorriza":[pmo_costo["micorriza"]/1000],
+            "vinilo":[ pmo_costo["vinilo"]/1000 ],
+            "paecilomyces":[ pmo_costo["paecilomyces"]/1000 ],
+            "trichoderma":[ pmo_costo["trichoderma"]/1000 ],
+            "melaza":[ pmo_costo["melaza"]/1000 ],
+            "materiaOrganica":[],
+            "herbicidaCalles":[],
+            "herbicidaPlatos":[],
+            "insecticidas":[],
+            "fungicidas":[],
+            "fertilizante":[],
+            "ridomil":[],
+            "fertilizanteFoliar":[],
+            "biocontroladores":[],
+            "guadana":[],
+            "selectores":[],
+            "bombasEspalda":[],
+            "bombasEstacionarias":[],
+            "canastillas":[],
+            "herramientas":[],
+            "lycra":[]
+        }
 
-        return pmo_costo
-            
+        cost = {"materiaOrganica":self.insumos_g.materiaOrganica, "herbicidaCalles":self.insumos_g.herbicida, "herbicidaPlatos":self.insumos_g.herbicida,
+        "insecticidas":self.insumos_g.insecticida, "fungicidas": self.insumos_g.fungicida, "fertilizante":self.insumos_g.fertilizante, 
+        "ridomil": self.insumos_g.ridomil, "fertilizanteFoliar": self.insumos_g.fertilizante}
+
+        for key,value in cost.iteritems():
+            for f in ci_costo[key]:
+                subTotalInsumos[key].append(value*f/1000)
+
+        ############
+        keys = ["biocontroladores", "guadana", "selectores", "bombasEspalda", "bombasEstacionarias", "canastillas", "herramientas", "lycra"]
+        for k in keys:
+            for f in ci_costo[k]:
+                subTotalInsumos[k].append(f/1000)
+        ############
+        totalInsumos = [0,0,0,0,0,
+                        0,0,0,0,0,
+                        0,0,0,0,0]
+
+        for key,value in subTotalInsumos.iteritems():
+            for counter,x in enumerate(value):
+                totalInsumos[counter] = totalInsumos[counter] + x
+
+        return totalInsumos
         
 
     def IngresosEgresos(self):
@@ -685,8 +748,8 @@ class Base_presupuestal(models.Model):
 
     # Recolección
         subTotalRecoleccion = [0, 0, 0, 0, 0,
-                      0, 0, 0, 0, 0,
-                      0, 0, 0, 0, 0]
+                              0, 0, 0, 0, 0,
+                              0, 0, 0, 0, 0]
 
         for k, v in recoleccion.iteritems():
             for counter,i in enumerate(subTotalRecoleccion):
@@ -705,12 +768,15 @@ class Base_presupuestal(models.Model):
         for i in range(len(totalRecoleccion)):
             totalMO.append(totalLEL[i] + totalRecoleccion[i])
 
+    # INSUMOS
+        totalInsumos = self.totalInsumos()
+
     # result
-        return {"totalMO":totalMO, "cipc":cipc, "ingresos":ventas}
-        # INSUMOS
+        for x in range(0,15):
+            egresos.append(totalMO[x] + cipc[x] + totalInsumos[x])
 
+        return {"ingresos":ventas, "egresos": egresos}
         
-
 class lote_has_bp(models.Model):
     lote = models.ForeignKey(Lote, blank=False, related_name= "lotebp_lote")
     bp = models.ForeignKey(Base_presupuestal, blank=False, related_name= "lotebp_bp")
