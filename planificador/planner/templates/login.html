@@ -4,6 +4,8 @@
   Login
 {% endblock title %}
 
+{% block titulo %}Agroplanificador{% endblock titulo %}
+
 {% block message %}
 
   {% if error %}
@@ -27,17 +29,22 @@
 {% endblock message %}
 
 {% block form %}
-
-        {% csrf_token %}
-        <div class="form-group">
-          <label for="inputUsername" class="sr-only">Nombre de usuario</label>
-          <input name="email" type="text" id="inputUsername" class="form-control" placeholder="Nombre de usuario" required autofocus>
-        </div>
-        <div class="form-group">
-          <label for="inputPassword" class="sr-only">Contraseña</label>
-          <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Contrase&ntilde;a" required>
-        </div>
-        <button class="btn btn-primary btn-block" type="submit">Iniciar</button>
+    <div class="main-login main-center">
+      <form class="form-horizontal" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="inputUsername" class="sr-only">Nombre de usuario</label>
+            <input name="email" type="text" id="inputUsername" class="form-control" placeholder="Nombre de usuario" required autofocus>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword" class="sr-only">Contraseña</label>
+            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Contrase&ntilde;a" required>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit">Iniciar</button>
+      </form>
+      <br>
+      <a href="{% url 'register' %}"> Registrarse <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
   
 {% endblock form %}
 

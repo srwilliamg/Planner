@@ -28,11 +28,13 @@
 
 
 {% block form %}
-
-    {% csrf_token %}
-   	{{ form.as_p }}
-   	<button type="submit">Enviar</button>
-
+		<div class="main-login main-center">
+			<form action="" method="POST" accept-charset="utf-8">
+				{% csrf_token %}
+			   	{{ form.as_p}}
+			   	<button class="btn btn-primary btn-block" type="submit">Enviar</button>
+			</form>
+    	</div>
 {% endblock %}
 
 

@@ -86,39 +86,42 @@
 	{% endif %}
 
 	{% if lote_list %}
-	    {% for obj in lote_list %}
+		<div class="col-sm-9 center-block">
+			<canvas id="myChart" style='visibility:hidden; display:none;'></canvas>	
+		</div>
+	    {% for key, value in data_lotes.items %}
 			<div class=" list-inline">
 		            <div class="col-lg-4">
 		                <div class="panel panel-default">
 		                    <div class="panel-heading">
-		                        <h3 class="panel-title"><i class="fa fa-photo fa-fw"></i>{{obj.name}}</h3>
+		                        <h3 class="panel-title"><i class="fa fa-photo fa-fw"></i>{{obj.lote.name}}</h3>
 		                    </div>
 								<div class="panel-body">
 								    <div class="list-group">
 								    	<a href="#" class="list-group-item">
-								            <span class="badge">{{obj.tipo}}</span>
+								            <span class="badge">{{value.lote.tipo}}</span>
 								            <i class="fa fa-fw fa-square"></i> Tipo
 								        </a>
 								        <a href="#" class="list-group-item">
-								            <span class="badge">{{obj.cultivo}}</span>
+								            <span class="badge">{{value.lote.cultivo}}</span>
 								            <i class="fa fa-fw fa-info"></i> Cultivo
 								        </a>
 								        <a href="#" class="list-group-item">
-								            <span class="badge">{{obj.variedad}}</span>
+								            <span class="badge">{{value.lote.variedad}}</span>
 								            <i class="fa fa-fw fa-square"></i> Variedad
 								        </a>
 								        <a href="#" class="list-group-item">
-								            <span class="badge">{{obj.edad}}</span>
+								            <span class="badge">{{value.lote.edad}}</span>
 								            <i class="fa fa-fw fa-square"></i> Edad
 								        </a>
 								        <a href="#" class="list-group-item">
-								            <span class="badge">{{obj.area}}</span>
+								            <span class="badge">{{value.lote.area}}</span>
 								            <i class="fa fa-fw fa-square"></i> Area
 								        </a>
 								    </div>
 								    <div class="text-right">
-								        <a href=""> Ver lote <i class="fa fa-arrow-circle-right"></i></a>
-								        <a href="{% url 'riesgo' var=obj.id %}"> Riesgos <i class="fa fa-arrow-circle-right"></i></a>
+								        <a onclick="return chart({{value.ingresos}},{{value.egresos}});"> Ver lote <i class="fa fa-arrow-circle-right"></i></a>
+								        <a href="{% url 'riesgo' var=value.lote.id %}"> Riesgos <i class="fa fa-arrow-circle-right"></i></a>
 								    </div>
 								</div>
 			                </div>
@@ -127,6 +130,48 @@
     	{% endfor %}
 	{% endif %}
 
+{% endblock %}
+
+{% block script %}
+		{% load staticfiles %}
+		<script src="{% static 'js/Chart.min.js' %}"></script>
+		<script src="{% static 'js/Chart.js' %}"></script>
+    	<script type="text/javascript">
+
+			function chart(ingresos, egresos){
+				var ctx = document.getElementById("myChart");
+				var myChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+					datasets: [
+						{
+							label: 'ingresos',
+							data: ingresos,
+							backgroundColor: ['rgba(255, 99, 132, 0.3)']
+						},
+						{
+							label: 'egresos',
+							data: egresos,
+							backgroundColor: ['rgba(132, 255, 99, 0.3)']
+						}
+					]
+					},
+				options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:true
+								}
+							}]
+						}
+					}
+				});
+				ctx.style.visibility='visible';
+				ctx.style.display ='initial';
+			}
+			
+		</script>
 {% endblock %}
 
 {% block footer %}{% endblock %}

@@ -638,7 +638,7 @@ class Base_presupuestal(models.Model):
         ventas = []
         for tkg in dc_produccion["produccion"]:
             ventas.append(
-                1000*tkg*(dc_produccion["primera"]["mult"] + dc_produccion["tercera"]["mult"] + dc_produccion["segunda"]["mult"])
+                    tkg*(dc_produccion["primera"]["mult"] + dc_produccion["tercera"]["mult"] + dc_produccion["segunda"]["mult"])
                 )
 
     # EGRESOS (perdidas)
@@ -680,13 +680,6 @@ class Base_presupuestal(models.Model):
             "recoleccionDia": []
         }
 
-        """for key, value in insumos_mo.iteritems():
-            for vin in value.iteritems():
-                if key == "siembra" or key == "resiembra" or key == "limpiaGuadanaCalles" or key = "aplicacionHerbicida":
-                    leldpR[key].append(data_mo["rendimiento"]*data_mo["frecuencia"])
-                else:
-                    leldpR[key].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])"""
-
         for data_mo in insumos_mo["siembra"]:
             leldpR["siembra"].append(data_mo["rendimiento"]*data_mo["frecuencia"])
 
@@ -699,41 +692,34 @@ class Base_presupuestal(models.Model):
         for data_mo in insumos_mo["aplicacionHerbicida"]:
             leldpR["aplicacionHerbicida"].append(data_mo["rendimiento"]*data_mo["frecuencia"])
 
-        for data_mo in insumos_mo["plateo"]:
-            leldpR["plateo"].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
+        keys = [ "plateo", "fertilizacion", "aplicacionMateriaOrganica", "fungicidas", "biocontroladores", "aspersiones", "tutorado", "podas"]
+        for k in keys:
+            for data_mo in insumos_mo[k]:
+                if data_mo["rendimiento"]*data_mo["frecuencia"] == 0:
+                    leldpR[k].append(0)
+                else:
+                    leldpR[k].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
 
-        for data_mo in insumos_mo["fertilizacion"]:
-            leldpR["fertilizacion"].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
-
-        for data_mo in insumos_mo["aplicacionMateriaOrganica"]:
-            leldpR["aplicacionMateriaOrganica"].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
-
-        for data_mo in insumos_mo["fungicidas"]:
-            leldpR["fungicidas"].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
-
-        for data_mo in insumos_mo["biocontroladores"]:
-            leldpR["biocontroladores"].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
-
-        for data_mo in insumos_mo["aspersiones"]:
-            leldpR["aspersiones"].append(data_mo["rendimiento"]*data_mo["frecuencia"])
-
-        for data_mo in insumos_mo["tutorado"]:
-            leldpR["tutorado"].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
-
-        for data_mo in insumos_mo["podas"]:
-            leldpR["podas"].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
 
         for counter,data_mo in enumerate(insumos_mo["recoleccionContrato"]):
-            recoleccion["recoleccionContrato"].append(
-                (
-                    70*dc_produccion["produccion"][counter]/100)/data_mo["rendimiento"]*data_mo["frecuencia"]
-                )
+            div = data_mo["rendimiento"]*data_mo["frecuencia"]
+            if div == 0:
+                recoleccion["recoleccionContrato"].append(0)
+            else:
+                recoleccion["recoleccionContrato"].append(
+                    (
+                        70*dc_produccion["produccion"][counter]/100)/div
+                    )
 
         for counter,data_mo in enumerate(insumos_mo["recoleccionDia"]):
-            recoleccion["recoleccionDia"].append(
-                (
-                    30*dc_produccion["produccion"][counter]/100)/data_mo["rendimiento"]*data_mo["frecuencia"]
-                )
+            div = data_mo["rendimiento"]*data_mo["frecuencia"]
+            if div == 0:
+                recoleccion["recoleccionDia"].append(0)
+            else:
+                recoleccion["recoleccionDia"].append(
+                    (
+                        30*dc_produccion["produccion"][counter]/100)/data_mo["rendimiento"]*data_mo["frecuencia"]
+                    )
 
         subTotalMO = [0, 0, 0, 0, 0,
                       0, 0, 0, 0, 0,
@@ -773,7 +759,7 @@ class Base_presupuestal(models.Model):
 
     # result
         for x in range(0,15):
-            egresos.append(totalMO[x] + cipc[x] + totalInsumos[x])
+            egresos.append((totalMO[x] + cipc[x] + totalInsumos[x])*-10) #Agregado según excel es por -1000 pero en la gráfica es demasiado entonces -10
 
         return {"ingresos":ventas, "egresos": egresos}
         

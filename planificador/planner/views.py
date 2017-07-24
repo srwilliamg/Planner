@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
@@ -37,15 +37,11 @@ def log_in(request):
     print(request.user)
     if request.user.is_authenticated():
         return RedirectToHome(request.user)
-
-    print(request.POST)
+    #print(request.POST)
 
     if request.method == "POST":
         username = request.POST['email']
         password = request.POST['password']
-
-        print(username)
-        print(password)
 
         user = authenticate(username=username, password=password)
         print(user)
@@ -76,6 +72,7 @@ def register(request):
         if form.is_valid():
             form.save()
             mensaje = ("El usuario ha sido registrado exitosamente.")
+            redirect('login')
         else:
             errors = form.errors
     template_name = 'register.html'
@@ -87,21 +84,68 @@ def register(request):
     template_name = "register.html"
     success_url = "/home/user"'''
 
-'''class IndexView(View):
-    def get(self, request, *args, **kwargs):
-        context = {}
-        return render(request, "index.html", context)
-    def post(self, request, *args, **kwargs):
-        context = {}
-        return render(request, "index.html", context)
-    def put(self, request, *args, **kwargs):
-        context = {}
-        return render(request, "index.html", context)
-    def delete(self, request, *args, **kwargs):
-        context = {}
-        return render(request, "index.html", context)'''
+class LoteListView(ListView):
+    template_name = 'home_agricultor.html'
+    def get_queryset(self):
+        number = self.kwargs.get("var")
+        if number:
+            finca = Finca.objects.filter(pk=number)
+            queryset = finca[0].lote_finca.all()
+            if queryset.__len__() == 0:
+                queryset = ["No tiene ningún lote"]
+        else:
+            queryset = Finca.objects.none()
+        return queryset
 
+    def get_context_data(self, *args, **kwargs):
+        number = self.kwargs.get("var")
+        context = super(LoteListView, self).get_context_data(*args, **kwargs)
+        finca = Finca.objects.filter(pk=number)
+        lotes = finca[0].lote_finca.all()
+        context['titulo'] = ("Lotes")
+        data = {}
 
+        if lotes.__len__() == 0:
+            return context
+        else:
+            for x in lotes:
+                rel = x.lotebp_lote.all()
+                if rel.__len__() == 0:
+                    return context
+                else:
+                    loteIE = rel[0].bp.IngresosEgresos()
+                    data[x.id] = {"lote":x, "ingresos":loteIE["ingresos"], "egresos":loteIE["egresos"]}
+        
+        context['data_lotes'] = data
+        return context
+
+class RiesgoListView(ListView):
+    template_name = 'home_agricultor.html'
+    context_object_name = 'riesgo_list'
+    def get_queryset(self):
+        number = self.kwargs.get("var")
+        if number:
+            queryset = Lote.objects.filter(pk=number)[0].riesgo
+        else:
+            queryset = Lote.objects.none()
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(RiesgoListView, self).get_context_data(*args, **kwargs)
+        context['titulo'] = ("Riesgos")
+        return context
+
+@login_required()
+def home_agricultor(request):
+    fincas = request.user.finca_agricultor.all()
+    context = {"fincas":fincas, "titulo": ("Fincas")}
+    return render(request, "home_agricultor.html", context)
+
+@login_required()
+def home_admin(request):
+    return render(request, "home_admin.html")
+
+################################################3
 class IndexView(TemplateView):
     template_name = "index.html"
     def get_context_data(self, *args, **kwargs):
@@ -124,7 +168,6 @@ class LotesListView(ListView):
 class UserListView(ListView):
     queryset = User.objects.all()
     template_name = 'home.html'
-
 
 class FincasListView(ListView):
     template_name = 'home.html'
@@ -153,47 +196,4 @@ class FincasDetailView(DetailView):
         key = self.kwargs.get('key')
         obj = get_object_or_404(Finca, id=key)
         return obj
-
-class LoteListView(ListView):
-    template_name = 'home_agricultor.html'
-    def get_queryset(self):
-        number = self.kwargs.get("var")
-        if number:
-            finca = Finca.objects.filter(pk=number)
-            queryset = finca[0].lote_finca.all()
-            if queryset.__len__() == 0:
-                queryset = ["No tiene ningún lote"]
-        else:
-            queryset = Finca.objects.none()
-        return queryset
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(LoteListView, self).get_context_data(*args, **kwargs)
-        context['titulo'] = ("Lotes")
-        return context
-
-class RiesgoListView(ListView):
-    template_name = 'home_agricultor.html'
-    context_object_name = 'riesgo_list'
-    def get_queryset(self):
-        number = self.kwargs.get("var")
-        if number:
-            queryset = Lote.objects.filter(pk=number)[0].riesgo
-        else:
-            queryset = Lote.objects.none()
-        return queryset
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(RiesgoListView, self).get_context_data(*args, **kwargs)
-        context['titulo'] = ("Riesgos")
-        return context
-
-@login_required()
-def home_agricultor(request):
-    fincas = request.user.finca_agricultor.all()
-    context = {"fincas":fincas, "titulo": ("Fincas")}
-    return render(request, "home_agricultor.html", context)
-
-@login_required()
-def home_admin(request):
-    return render(request, "home_admin.html")
+#############################################################3

@@ -18,42 +18,29 @@
     <!-- Custom CSS -->
     <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
 
-    <!-- Morris Charts CSS -->
-    <link href="{% static 'css/plugins/morris.css' %}" rel="stylesheet">
-
     <!-- Custom Fonts -->
-    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
 
 </head>
 
-<body style="background: white; margin-bottom: 4em;">
-    <div class="container">
-            <div class="row main">
+<body>
+    <div class="container" style="justify-content: center; align-items: center; height: 100%; display: flex;">
+            <div class="row col-md-7">
                 <div class="panel-heading">
                     {% block message %}
                         
                     {% endblock message %}
                    <div class="panel-title text-center">
-                        <h1 class="title">{% block titulo %}
+                        <h1 class="title" style="color:white;">
+                        {% block titulo %}
                             
                         {% endblock titulo %}</h1>
                         <hr />
                     </div>
                 </div> 
-                <div class="main-login main-center">
-                    <form class="form-horizontal" method="post">
-                        {% block form %}
-                            
-                        {% endblock form %}
-                    </form>
-                </div>
+                {% block form %}
+                    
+                {% endblock form %}
             </div>
         </div>
 
@@ -63,10 +50,8 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
-    <!-- Morris Charts JavaScript -->
-    <script src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>
-    <script src="{% static 'js/plugins/morris/morris.min.js' %}"></script>
-    <script src="{% static 'js/plugins/morris/morris-data.js' %}"></script>
+    {% block script %}
+    {% endblock %}
 </body>
 <footer>
     {% block footer %}{% endblock %}

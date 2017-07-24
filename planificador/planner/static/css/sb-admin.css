@@ -8,6 +8,7 @@
 
 body {
     margin-top: 100px;
+    margin-bottom: 100px;
     background-color: #222;
 }
 
@@ -40,6 +41,13 @@ body {
     #page-wrapper {
         padding: 10px;
     }
+}
+
+.container {
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    display: flex;
 }
 
 /* Top Navigation */
@@ -224,4 +232,16 @@ ul.alert-dropdown {
 
 .panel-yellow > a:hover {
     color: #df8a13;
+}
+
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
 }
