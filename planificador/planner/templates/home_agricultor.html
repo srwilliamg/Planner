@@ -10,6 +10,12 @@
 {% block table %}
 	<br>
 	{% if fincas %}
+		<div id="campoChart" class="row" style='visibility:hidden; display:none;' style="margin: 1em 0em 1em 0em;">
+			<div class="col-md-8 col-md-offset-2 panel panel-default">
+				<canvas id="myChart"></canvas>	
+			</div>
+		</div>
+		<button id="bchart" class="btn-link btn btn-lg m-t-1" onclick="calcularMargen();">Calcular margen total de las fincas</button>
 	    {% for obj in fincas %}
 			<div class=" list-inline">
 		            <div class="col-lg-4">
@@ -86,15 +92,17 @@
 	{% endif %}
 
 	{% if lote_list %}
-		<div class="col-sm-9 center-block">
-			<canvas id="myChart" style='visibility:hidden; display:none;'></canvas>	
+		<div id="campoLote" class="row" style='visibility:hidden; display:none;' style="margin: 1em 0em 1em 0em;">
+			<div class="col-md-8 col-md-offset-2 panel panel-default">
+				<canvas id="chartLote"></canvas>	
+			</div>
 		</div>
 	    {% for key, value in data_lotes.items %}
 			<div class=" list-inline">
 		            <div class="col-lg-4">
 		                <div class="panel panel-default">
 		                    <div class="panel-heading">
-		                        <h3 class="panel-title"><i class="fa fa-photo fa-fw"></i>{{obj.lote.name}}</h3>
+		                        <h3 class="panel-title"><i class="fa fa-photo fa-fw"></i>{{value.lote.name}}</h3>
 		                    </div>
 								<div class="panel-body">
 								    <div class="list-group">
@@ -120,7 +128,7 @@
 								        </a>
 								    </div>
 								    <div class="text-right">
-								        <a onclick="return chart({{value.ingresos}},{{value.egresos}});"> Ver lote <i class="fa fa-arrow-circle-right"></i></a>
+								        <a href="javascript:void(0)" onclick="dochart({{value.ingresos}},{{value.egresos}});"> Ver lote <i class="fa fa-arrow-circle-right"></i></a>
 								        <a href="{% url 'riesgo' var=value.lote.id %}"> Riesgos <i class="fa fa-arrow-circle-right"></i></a>
 								    </div>
 								</div>
@@ -137,10 +145,10 @@
 		<script src="{% static 'js/Chart.min.js' %}"></script>
 		<script src="{% static 'js/Chart.js' %}"></script>
     	<script type="text/javascript">
-
-			function chart(ingresos, egresos){
-				var ctx = document.getElementById("myChart");
-				var myChart = new Chart(ctx, {
+	    	
+    		function dochart(ingresos, egresos){
+				var ctxLote = document.getElementById("chartLote");
+				var chartLote = new Chart(ctxLote, {
 				type: 'line',
 				data: {
 					labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
@@ -167,10 +175,44 @@
 						}
 					}
 				});
-				ctx.style.visibility='visible';
-				ctx.style.display ='initial';
+				var campo = document.getElementById("campoLote");
+				campo.style.visibility='visible';
+				campo.style.display ='initial';
 			}
-			
+
+	    	function calcularMargen(){
+	    		var ctx = document.getElementById("myChart");
+				var myChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+					datasets: [
+						{
+							label: 'Margen total',
+							data: {{margen}},
+							backgroundColor: ['rgba(255, 99, 132, 0.3)']
+						},
+					]
+					},
+				options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:true
+								}
+							}]
+						}
+					}
+				});
+
+				var campo = document.getElementById("campoChart");
+				campo.style.visibility='visible';
+				campo.style.display ='initial';
+
+				var buttong = document.getElementById("bchart");
+				buttong.style.visibility='hidden';
+				buttong.style.display ='none';
+	    	}
 		</script>
 {% endblock %}
 

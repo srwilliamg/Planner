@@ -762,6 +762,17 @@ class Base_presupuestal(models.Model):
             egresos.append((totalMO[x] + cipc[x] + totalInsumos[x])*-10) #Agregado según excel es por -1000 pero en la gráfica es demasiado entonces -10
 
         return {"ingresos":ventas, "egresos": egresos}
+
+    def margen(self):
+        ie = self.IngresosEgresos()
+        egresos = ie["egresos"]
+        ingresos = ie["ingresos"]
+        margen = []
+        for i in range(len(ingresos)):
+            margen.append(ingresos[i]+egresos[i])
+
+        return margen
+            
         
 class lote_has_bp(models.Model):
     lote = models.ForeignKey(Lote, blank=False, related_name= "lotebp_lote")

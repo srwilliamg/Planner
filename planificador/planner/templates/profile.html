@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block header %}
+Perfil de usuario{{block.super}}
+{% endblock %}
+
+{% block wrapper %}
+	<div class="row">
+	  <form class="col-xs-11" method="POST">
+		    {% csrf_token %}
+		    <div class="form-group row flex-items-md-middle">
+		      <label for="id-type-input" class="col-md-3 col-form-label">Tipo de identificación</label>
+		      <div class="col-md-9">
+		        <select name="document_type" class="form-control w-100" value="{{ user.document_type }}" disabled>
+		          <option value="TI">Tarjeta de Identidad</option>
+		          <option value="CC" selected>Cédula de Ciudadanía</option>
+		          <option value="CE">Cédula de Extranjería</option>
+		        </select>
+		      </div>
+		    </div>
+		    <div class="form-group row flex-items-md-middle">
+		      <label for="id-number-input" class="col-md-3 col-form-label">Número de identificación</label>
+		      <div class="col-md-9">
+		        <input name="document_number" type="text" id="input_no_documento" class="form-control" value="{{ user.document_number }}" placeholder="Número  Documento" required disabled>
+		      </div>
+		    </div>
+		    <div class="form-group row flex-items-md-middle">
+		      <label for="name-input" class="col-md-3 col-form-label">Nombres</label>
+		      <div class="col-md-9">
+		        <input name="first_name" type="text" id="input_nombre" value="{{ user.first_name }}" class="form-control" placeholder="Nombres" required disabled >
+		      </div>
+		    </div>
+		    <div class="form-group row flex-items-md-middle">
+		      <label for="lastname-input" class="col-md-3 col-form-label">Apellidos</label>
+		      <div class="col-md-9">
+		        <input name="last_name" type="text" id="input_apellido" class="form-control w-50" value="{{ user.last_name }}" placeholder="Apellidos" required  disabled>
+		      </div>
+		    </div>
+		    <div class="form-group row flex-items-md-middle">
+		      <label for="born-date-input" class="col-md-3 col-form-label">Fecha de Nacimiento</label>
+		      <div class="col-md-9">
+		        <input name = "birthdate" type="date" class="form-control" value="{{ user.birthdate}}" placeholder="DD/MM/YY" disabled >
+		      </div>
+		    </div>
+		    <div class="form-group row flex-items-md-middle">
+		      <label for="formd-gender" class="col-md-3 col-form-label">Genero</label>
+		      <div class="col-md-9">
+		        <select name="gender" id="formd-gender" class="form-control w-100" value="{{user.gender}}" disabled>
+		          <option value="M">Masculino</option>
+		          <option value="F">Femenino</option>
+		          <option value="O">Other</option>
+		        </select>
+		      </div>
+		    </div>
+		    <div class="form-group row flex-items-md-middle">
+		      <label for="address-input" class="col-md-3 col-form-label">Dirección</label>
+		      <div class="col-md-9">
+		        <input name="address" type="text" class="form-control" value="{{ user.address }}" placeholder="Dirección" required disabled >
+		      </div>
+		    </div>
+		    <div class="form-group row flex-items-md-middle">
+		      <label for="phone-input" class="col-md-3 col-form-label">Teléfono</label>
+		      <div class="col-md-9">
+		        <input name="phone" type="tel" class="form-control" value="{{ user.phone }}" placeholder="Teléfono" required disabled >
+		      </div>
+		    </div>
+		    <div class="form-group row flex-items-md-middle">
+		      <label for="email-input" class="col-md-3 col-form-label">Email</label>
+		      <div class="col-md-9">
+		        <input name="email" type="email" class="form-control" value="{{ user.email }}" placeholder="Email" required disabled >
+		      </div>
+		    </div>
+		    <div class="form-group row flex-items-md-middle">
+		      <label for="formd-password" class="col-md-3 col-form-label">Contraseña</label>
+		      <div class="col-md-9">
+		        <input name="password" type="password" class="form-control" value="{{ user.password }}" placeholder="Contraseña" required disabled >
+		      </div>
+		    </div>
+		    <div class="form-group row flex-items-md-middle">
+		      <label for="formd-password-repeat" class="col-md-3 col-form-label">Repetir Contraseña</label>
+		      <div class="col-md-9">
+		        <input name="repetir_password" type="password" class="form-control" value="{{ user.password }}" placeholder="Repetir Contraseña" required disabled >
+		      </div>
+		    </div>
+		    <center>
+				<button id="update" class="btn btn-lg btn-danger m-t-1" type="submit" style='visibility:hidden; display:none;' >Actualizar</button>
+		    </center>
+	  </form>
+	  <center class="col-xs-11">
+			<button id="modificar" class="btn btn-lg btn-primary m-t-1" onclick="update();" >Modificar</button>
+	  </center>
+	</div>
+
+{% endblock wrapper %}
+
+{% block table %}
+    
+{% endblock table %}
+
+{% block script %}
+    <script type="text/javascript">
+
+			function update(){
+				var ctx = document.getElementById("update");
+				ctx.style.visibility='visible';
+				ctx.style.display ='initial';
+
+				var ctx = document.getElementById("modificar");
+				ctx.style.visibility='hidden';
+				ctx.style.display ='none';
+
+				var inputs = document.getElementsByTagName("input");
+				for (var i = 0; i < inputs.length; i++) {
+				        inputs[i].disabled = false;
+				}
+
+				var selects = document.getElementsByTagName("select");
+				for (var i = 0; i < inputs.length; i++) {
+				        selects[i].disabled = false;
+				}
+
+			}
+			
+		</script>
+{% endblock script %}
+
+{% block footer %}
+    
+{% endblock footer %}

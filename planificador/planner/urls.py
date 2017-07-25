@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^register/$', views.register, name='register'),
     url(r'^login/$', views.log_in, name='login'),
     url(r'^logout/$', views.log_out, name="logout"),
+    url(r'^profile/$', views.updateProfile, name="profile"),
     url(r'^home_agricultor/$', views.home_agricultor, name='home_agricultor'),
     url(r'^home_agricultor/lotes/(?P<var>\w+)/$', LoteListView.as_view(), name='lotes'),
     url(r'^home_agricultor/riesgo/(?P<var>\w+)/$', RiesgoListView.as_view(), name='riesgo'),

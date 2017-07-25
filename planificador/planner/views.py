@@ -9,29 +9,6 @@ from planner.util import *
 from planner.forms import *
 from planner.models import *
 
-@login_required()
-def home(request):
-    data = request.POST.dict()
-    data.update({"is_active": False})
-    form = AddUserForm(request.POST)
-    message_success = None
-    message_error = None
-
-    if request.method == "POST":
-        if form.is_valid():
-            usuario = form.save()
-            form = AddUserForm(None)
-            message_success = ("Registro exitoso. Por favor espere a que un "
-                               "administrador active su cuenta")
-        else:
-            message_error = form.errors
-
-    return render(request, "base_user.html", {
-        "form": form,
-        "message_success": message_success,
-        "message_error": message_error
-    })
-
 def log_in(request):
     data = {}
     print(request.user)
@@ -79,10 +56,15 @@ def register(request):
     context = {"form":form, "errors":errors, "mensage": mensaje}
     return render(request, template_name, context)
 
-'''class createUser(CreateView):
-    form_class = AddUserForm
-    template_name = "register.html"
-    success_url = "/home/user"'''
+@login_required()
+def updateProfile(request):
+    if request.method == "POST":
+        form = EditUserProfileForm(data=request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+        else:
+            print form.errors
+    return render(request,'profile.html')
 
 class LoteListView(ListView):
     template_name = 'home_agricultor.html'
@@ -117,6 +99,7 @@ class LoteListView(ListView):
                     data[x.id] = {"lote":x, "ingresos":loteIE["ingresos"], "egresos":loteIE["egresos"]}
         
         context['data_lotes'] = data
+        context['margen'] = [1,2,3] #Puesto para solucionar conficto con chart de finca
         return context
 
 class RiesgoListView(ListView):
@@ -137,14 +120,39 @@ class RiesgoListView(ListView):
 
 @login_required()
 def home_agricultor(request):
+    if request.user.role != 'S':
+        return RedirectToHome(request.user)
+
+    margenes = []
+    margenTotal = [0,0,0,0,0,
+                   0,0,0,0,0,
+                   0,0,0,0,0]
+
     fincas = request.user.finca_agricultor.all()
-    context = {"fincas":fincas, "titulo": ("Fincas")}
+
+    for f in fincas:
+        lotes = f.lote_finca.all()
+        for l in lotes:
+            bp = l.lotebp_lote.all()[0].bp
+            margenes.append(bp.margen())
+
+    for x in margenes:
+        for counter,y in enumerate(x):
+            margenTotal[counter] += y
+
+    context = {"fincas":fincas, "margen": margenTotal,"titulo": ("Fincas")}
     return render(request, "home_agricultor.html", context)
 
 @login_required()
 def home_admin(request):
+    if request.user.role != 'A':
+        return RedirectToHome(request.user)
     return render(request, "home_admin.html")
 
+'''class createUser(CreateView):
+    form_class = AddUserForm
+    template_name = "register.html"
+    success_url = "/home/user"'''
 ################################################3
 class IndexView(TemplateView):
     template_name = "index.html"

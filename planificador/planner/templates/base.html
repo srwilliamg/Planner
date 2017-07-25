@@ -19,15 +19,16 @@
     <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
 
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <!-- jQuery -->
     <script src="{% static 'js/jquery.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    {% block script %}
+    {% endblock %}
 
 </head>
 
@@ -51,14 +52,6 @@
             {% endblock %}
         </div> 
 
-    <!-- jQuery -->
-    <script src="{% static 'js/jquery.js' %}"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-
-    {% block script %}
-    {% endblock %}
 </body>
 <footer>
     {% block footer %}{% endblock %}

@@ -163,3 +163,56 @@ class AddDatos_generalesForm(forms.ModelForm):
             'jornal',
             'altitud'
         ]
+
+
+class EditUserProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = [
+            "document_type",
+            "document_number",
+            "first_name",
+            "last_name",
+            "address",
+            "phone",
+            "email",
+            "birthdate",
+            "gender",
+            "password",
+        ]
+
+    document_type = forms.ChoiceField(
+        required=True, widget=forms.RadioSelect, choices=DOCUMENT_OPTIONS)
+    document_number = forms.CharField(
+        required=True, label="Numero de documento",
+        widget=forms.TextInput(
+            attrs={"size": 25, "title": "Numero de documento"}))
+    first_name = forms.CharField(
+        required=True, label="Primer Nombre",
+        widget=forms.TextInput(
+            attrs={"size": 20, "title": "Nombre"}))
+    last_name = forms.CharField(
+        required=True, label="Apellido",
+        widget=forms.TextInput(
+            attrs={"size": 20, "title": "Apellido"}))
+    address = forms.CharField(
+        required=True, label="Direccion de Residencia",
+        widget=forms.TextInput(
+            attrs={"size": 30, "title": "Direccion de Residencia"}))
+    birthdate = forms.DateField(
+        required=True, label="Fecha de nacimiento",
+        input_formats=["%Y-%m-%d",
+                       "%d/%m/%Y",
+                       "%d/%m/%y"], widget=forms.TextInput(attrs={"class": "form-control"})
+    )
+    gender = forms.ChoiceField(
+        required=True, widget=forms.Select(attrs={"class": "form-control"}), choices=GENDER_OPTIONS)
+    phone = forms.CharField(
+        required=True, label="Numero de telefono",
+        widget=forms.TextInput(
+            attrs={"size": 20, "title": "Numero de telefono"}))
+    email = forms.EmailField(
+        required=True, label="Email", widget=forms.TextInput())
+    password = forms.CharField(
+        required=True, label="Password", widget=forms.PasswordInput())
