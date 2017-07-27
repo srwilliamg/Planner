@@ -12,8 +12,7 @@ class UserBackend(ModelBackend):
         try:
             user = User.objects.get(email=email)
             if user.check_password(password) or user.password == password:
-                user.backend = "{}.{}".format(self.__module__,
-                                              self.__class__.__name__)
+                user.backend = "{}.{}".format(self.__module__, self.__class__.__name__)
                 return user
         except User.DoesNotExist:
             print "User {} does not exist".format(email)

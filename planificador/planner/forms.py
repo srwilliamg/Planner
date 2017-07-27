@@ -15,9 +15,9 @@ class AddUserForm(forms.ModelForm):
             "birthdate",
             "gender",
             "address",
-            "phone",
-            "role",
-            "is_active"
+            "phone"
+            #"role",
+            #"is_active"
         ]
 
     document_number = forms.CharField(
@@ -29,7 +29,7 @@ class AddUserForm(forms.ModelForm):
         required=True, label= "Tipo de documento", widget=forms.RadioSelect(attrs={"title": "Tipo de documento","class": "radio-inline"}), choices=DOCUMENT_OPTIONS)
 
     gender = forms.ChoiceField(
-        required=True, widget=forms.Select(attrs={"class": "form-control"}), choices=GENDER_OPTIONS)
+        required=True, label="Genero", widget=forms.Select(attrs={"class": "form-control"}), choices=GENDER_OPTIONS)
 
     first_name = forms.CharField(
         required=True, widget=forms.TextInput(
@@ -65,10 +65,10 @@ class AddUserForm(forms.ModelForm):
     password = forms.CharField(
         required=True, label="Password", widget=forms.PasswordInput(attrs={"class": "form-control"}))
 
-    role = forms.ChoiceField(
-        required=True, widget=forms.Select(attrs={"class": "form-control"}), choices=ROLE_OPTIONS)
+    #role = forms.ChoiceField(
+    #    required=True, label="Rol", widget=forms.Select(attrs={"class": "form-control"}), choices=ROLE_OPTIONS)
 
-    is_active = forms.BooleanField(required=True)
+    #is_active = forms.BooleanField(required=True, label="Es usuario activo")
 
 
 class AddAgricultorForm(AddUserForm):
@@ -88,7 +88,15 @@ class AddAdministratorForm(AddUserForm):
 class AddFincaForm(forms.ModelForm):
     class Meta:
         model = Finca
-        fields = ['name', 'area', 'agricultor']
+        fields = ['name', 'area']
+
+    name = forms.CharField(
+        required=True, label="Nombre de la finca",
+        widget=forms.TextInput(
+            attrs={"size": 25, "class": "form-control"}))
+
+    area = forms.FloatField(
+        required=True, label= "Area", min_value=1, widget=forms.NumberInput(attrs={"class": "form-control"}))
 
 class AddRiesgoForm(forms.ModelForm):
     class Meta:

@@ -2,10 +2,9 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser
-)
+from django.contrib.auth.models import (AbstractBaseUser)
 from .auth import UserManager
+from django.utils.translation import gettext as _
 
 
 ROLE_OPTIONS = (("R", "Root"), ("A", "Administrador"),("S", "Agricultor"))
@@ -30,9 +29,9 @@ class User(AbstractBaseUser):
     role = models.CharField(max_length=1, choices=ROLE_OPTIONS,
                             null=False, blank=False)
 
-    is_active = models.BooleanField(default=False, blank=False)
+    is_active = models.BooleanField(default=True, blank=True)
     join_date = models.DateTimeField(auto_now_add=True)
-    last_login = models.DateTimeField(auto_now_add=True)
+    last_login = models.DateTimeField(_('last_login'), auto_now_add=True)
 
     objects = UserManager()
 

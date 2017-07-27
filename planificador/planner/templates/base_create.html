@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-{% load staticfiles %}
 <html lang="en">
-
+{% load staticfiles %}
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,24 +16,30 @@
     <!-- Custom CSS -->
     <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
 
+    <!-- Custom CSS -->
+    <link href="{% static 'css/extra.css' %}" rel="stylesheet">
+
     <!-- Custom Fonts -->
     <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
 
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
 </head>
 
-<body>
-    <div class="container" style="justify-content: center; align-items: center; height: 100%; display: flex;">
+<body background="{% static 'images/landscape.jpg' %}" class="backwall">
+    <div class="container container-login">
             <div class="row col-md-7">
                 <div class="panel-heading">
                     {% block message %}
                         
                     {% endblock message %}
                    <div class="panel-title text-center">
-                        <h1 class="title" style="color:white;">
-                        {% block titulo %}
-                            
-                        {% endblock titulo %}</h1>
-                        <hr />
+                        <h1 class="title title-login">{% block titulo %}{% endblock titulo %}</h1>
+                        <hr style="border-color:green;">
                     </div>
                 </div> 
                 {% block form %}
@@ -43,12 +47,6 @@
                 {% endblock form %}
             </div>
         </div>
-
-    <!-- jQuery -->
-    <script src="{% static 'js/jquery.js' %}"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
     {% block script %}
     {% endblock %}

@@ -47,9 +47,12 @@ def register(request):
     mensaje = None
     if request.method == "POST":
         if form.is_valid():
-            form.save()
+            obj = form.save(commit=False)
+            obj.is_active = True
+            obj.role = 'S'
+            obj.save()
             mensaje = ("El usuario ha sido registrado exitosamente.")
-            redirect('login')
+            return redirect('login')
         else:
             errors = form.errors
     template_name = 'register.html'
@@ -99,7 +102,7 @@ class LoteListView(ListView):
                     data[x.id] = {"lote":x, "ingresos":loteIE["ingresos"], "egresos":loteIE["egresos"]}
         
         context['data_lotes'] = data
-        context['margen'] = [1,2,3] #Puesto para solucionar conficto con chart de finca
+        context['margen'] = [1,2,3] #Puesto para solucionar conficto con chart de finca 
         return context
 
 class RiesgoListView(ListView):
@@ -149,10 +152,21 @@ def home_admin(request):
         return RedirectToHome(request.user)
     return render(request, "home_admin.html")
 
-'''class createUser(CreateView):
-    form_class = AddUserForm
-    template_name = "register.html"
-    success_url = "/home/user"'''
+class createFinca(CreateView):
+    form_class = AddFincaForm
+    template_name = "createFinca.html"
+
+    def form_valid(self,form):
+        obj = form.save(commit=False)
+        obj.agricultor = self.request.user
+        obj.save()
+        return redirect('home_agricultor')
+
+    def get_context_data(self, **kwargs):
+        ctx = super(createFinca, self).get_context_data(**kwargs)
+        ctx['titulo'] = "Crear nueva finca"
+        return ctx
+
 ################################################3
 class IndexView(TemplateView):
     template_name = "index.html"
