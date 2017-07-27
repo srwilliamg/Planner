@@ -102,7 +102,8 @@ class LoteListView(ListView):
                     data[x.id] = {"lote":x, "ingresos":loteIE["ingresos"], "egresos":loteIE["egresos"]}
         
         context['data_lotes'] = data
-        context['margen'] = [1,2,3] #Puesto para solucionar conficto con chart de finca 
+        context['margen'] = [1] #Puesto para solucionar conficto con chart de finca 
+        context['years'] = [1] #Puesto para solucionar conficto con chart de finca 
         return context
 
 class RiesgoListView(ListView):
@@ -127,23 +128,37 @@ def home_agricultor(request):
         return RedirectToHome(request.user)
 
     margenes = []
-    margenTotal = [0,0,0,0,0,
-                   0,0,0,0,0,
-                   0,0,0,0,0]
+    margenTotal = []
+    years = []
+    edades = []
 
     fincas = request.user.finca_agricultor.all()
 
     for f in fincas:
         lotes = f.lote_finca.all()
         for l in lotes:
+            edades.append(l.edad)
+
+    maximo = max(edades)
+    minimo = min(edades)
+    print(minimo,maximo)
+    totalyears = int(abs(minimo) + abs(maximo) + 15)
+
+    for x in range(totalyears):
+        margenTotal.append(0)
+        years.append(x+1)
+
+    for f in fincas:
+        lotes = f.lote_finca.all()
+        for l in lotes:
             bp = l.lotebp_lote.all()[0].bp
-            margenes.append(bp.margen())
+            margenes.append(bp.margen(l.edad, minimo, maximo))
 
     for x in margenes:
         for counter,y in enumerate(x):
             margenTotal[counter] += y
 
-    context = {"fincas":fincas, "margen": margenTotal,"titulo": ("Fincas")}
+    context = {"fincas":fincas, "margen": margenTotal, "years":years ,"titulo": ("Fincas")}
     return render(request, "home_agricultor.html", context)
 
 @login_required()

@@ -762,13 +762,26 @@ class Base_presupuestal(models.Model):
 
         return {"ingresos":ventas, "egresos": egresos}
 
-    def margen(self):
+    def margen(self, edad, minimo, maximo):
         ie = self.IngresosEgresos()
         egresos = ie["egresos"]
         ingresos = ie["ingresos"]
         margen = []
+
+        if edad == 0:
+            pos = int(abs(minimo))
+        elif edad < 0:
+            pos = int(abs(minimo) - abs(edad))
+        else:
+            pos = int(abs(minimo) + abs(edad))
+
+        totalyears = int(abs(minimo) + abs(maximo) + 15)
+
+        for x in range(totalyears):
+            margen.append(0)
+
         for i in range(len(ingresos)):
-            margen.append(ingresos[i]+egresos[i])
+            margen[i+pos] = (ingresos[i]+egresos[i])
 
         return margen
             
