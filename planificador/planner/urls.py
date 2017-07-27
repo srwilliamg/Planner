@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^home_agricultor/riesgo/(?P<var>\w+)/$', RiesgoListView.as_view(), name='riesgo'),
     url(r'^home_admin/$', views.home_admin, name='home_admin'),
     url(r'^home_agricultor/crearf/$', createFinca.as_view(), name = "createFinca"),
+    url(r'^home_agricultor/crearl/$', createLote.as_view(), name = "createLote"),
 ]

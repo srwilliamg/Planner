@@ -98,6 +98,50 @@ class AddFincaForm(forms.ModelForm):
     area = forms.FloatField(
         required=True, label= "Area", min_value=1, widget=forms.NumberInput(attrs={"class": "form-control"}))
 
+class AddLoteForm(forms.ModelForm):
+    class Meta:
+        model = Lote
+        fields = [
+            'name',
+            'tipo',
+            'cultivo',
+            'variedad',
+            'edad',
+            'area',
+            'finca',
+            'riesgo'
+        ]
+
+    name = forms.CharField(
+        required=True, label="Nombre del lote",
+        widget=forms.TextInput(
+            attrs={"size": 25, "class": "form-control"}))
+
+    tipo = forms.CharField(
+        required=True, label="Tipo",
+        widget=forms.TextInput(
+            attrs={"size": 25, "class": "form-control"}))
+
+    cultivo = forms.CharField(
+        required=True, label="Cultivo",
+        widget=forms.TextInput(
+            attrs={"size": 25, "class": "form-control"}))
+
+    variedad = forms.CharField(
+        required=True, label="Variedad",
+        widget=forms.TextInput(
+            attrs={"size": 25, "class": "form-control"}))
+
+    edad = forms.FloatField(
+        required=True, label= "Edad", min_value=1, widget=forms.NumberInput(attrs={"class": "form-control"}))
+
+    area = forms.FloatField(
+        required=True, label= "Area", min_value=1, widget=forms.NumberInput(attrs={"class": "form-control"}))
+
+    finca = forms.ModelChoiceField(queryset = Finca.objects.all(),label = "Pertenece a la finca", widget=forms.Select(attrs={"class": "form-control"}))
+
+    riesgo = forms.ModelChoiceField(queryset = Riesgo.objects.all(),label = "Cuales son sus riesgos", widget=forms.Select(attrs={"class": "form-control"}))
+
 class AddRiesgoForm(forms.ModelForm):
     class Meta:
         model = Riesgo
@@ -114,18 +158,6 @@ class AddRiesgoForm(forms.ModelForm):
             'inseguridad'
         ]
 
-class AddLoteForm(forms.ModelForm):
-    class Meta:
-        model = Lote
-        fields = [
-            'tipo',
-            'cultivo',
-            'variedad',
-            'edad',
-            'area',
-            'finca',
-            'riesgo'
-        ]
 
 class AddInsumos_generalesForm(forms.ModelForm):
     class Meta:

@@ -48,8 +48,8 @@
                         <a href="{% url 'home_agricultor' %}"><i class="fa fa-fw fa-bar-chart-o"></i> Consultar </a>
                     </li>
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Finca <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
+                        <a href="javascript:;" data-toggle="collapse" data-target="#finca"><i class="fa fa-fw fa-arrows-v"></i> Finca <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="finca" class="collapse">
                             <li>
                                 <a href="{% url 'createFinca' %}">Crear</a>
                             </li>
@@ -62,10 +62,10 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Lote <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
+                        <a href="javascript:;" data-toggle="collapse" data-target="#lote"><i class="fa fa-fw fa-arrows-v"></i> Lote <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="lote" class="collapse">
                             <li>
-                                <a href="#">Crear</a>
+                                <a href="{% url 'createLote' %}">Crear</a>
                             </li>
                             <li>
                                 <a href="#">Actualizar</a>

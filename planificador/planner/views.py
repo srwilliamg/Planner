@@ -167,6 +167,20 @@ class createFinca(CreateView):
         ctx['titulo'] = "Crear nueva finca"
         return ctx
 
+class createLote(CreateView):
+    form_class = AddLoteForm
+    template_name = "createLote.html"
+
+    def form_valid(self,form):
+        obj = form.save(commit=False)
+        obj.agricultor = self.request.user
+        obj.save()
+        return redirect('home_agricultor')
+
+    def get_context_data(self, **kwargs):
+        ctx = super(createLote, self).get_context_data(**kwargs)
+        ctx['titulo'] = "Crear nuevo lote"
+        return ctx
 ################################################3
 class IndexView(TemplateView):
     template_name = "index.html"

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block header %}{{titulo}}{{block.super}}{% endblock %}
+
+{% block wrapper %}
+  <form method="post" accept-charset="utf-8">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn-success btn b-t-1">Crear</button>
+  </form>
+{% endblock %}
+
+
+{% block table %}
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+{% block footer %}{% endblock %}
