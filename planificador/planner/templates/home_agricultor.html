@@ -88,7 +88,9 @@
 								        </a>
 								    </div>
 								    <div class="text-right">
-								        <a href="javascript:void(0)" onclick="dochart({{value.ingresos}},{{value.egresos}});"> Ver lote <i class="fa fa-arrow-circle-right"></i></a>
+								        <a href="javascript:void(0)" 
+								        	onclick="dochart({{value.ingresos}},{{value.egresos}},{{value.years}});"> 
+								        	Ver lote <i class="fa fa-arrow-circle-right"></i></a>
 								        <a href="{% url 'riesgo' var=value.lote.id %}"> Riesgos <i class="fa fa-arrow-circle-right"></i></a>
 								    </div>
 								</div>
@@ -145,12 +147,12 @@
 	    		{% endif %}
 			});
 
-    		function dochart(ingresos, egresos){
+    		function dochart(ingresos, egresos, years){
 				var ctxLote = document.getElementById("myChart");
 				var chartLote = new Chart(ctxLote, {
 				type: 'line',
 				data: {
-					labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+					labels: years,
 					datasets: [
 						{
 							label: 'ingresos',

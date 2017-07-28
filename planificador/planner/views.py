@@ -8,6 +8,7 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from planner.util import *
 from planner.forms import *
 from planner.models import *
+import datetime
 
 def log_in(request):
     data = {}
@@ -89,17 +90,26 @@ class LoteListView(ListView):
         lotes = finca[0].lote_finca.all()
         context['titulo'] = ("Lotes")
         data = {}
+        years = []
+
+        now = datetime.datetime.now()
 
         if lotes.__len__() == 0:
             return context
         else:
             for x in lotes:
+                first_year = now.year - x.edad
+
+                for year in range(15):
+                    years.append(year+first_year)
+
                 rel = x.lotebp_lote.all()
                 if rel.__len__() == 0:
                     return context
                 else:
                     loteIE = rel[0].bp.IngresosEgresos()
-                    data[x.id] = {"lote":x, "ingresos":loteIE["ingresos"], "egresos":loteIE["egresos"]}
+                    data[x.id] = {"lote":x, "ingresos":loteIE["ingresos"], "egresos":loteIE["egresos"], "years":years}
+                    years = []
         
         context['data_lotes'] = data
         context['margen'] = [1] #Puesto para solucionar conficto con chart de finca 
@@ -141,12 +151,13 @@ def home_agricultor(request):
 
     maximo = max(edades)
     minimo = min(edades)
-    print(minimo,maximo)
     totalyears = int(abs(minimo) + abs(maximo) + 15)
+    now = datetime.datetime.now()
+    first_year = now.year - abs(minimo)
 
     for x in range(totalyears):
         margenTotal.append(0)
-        years.append(x+1)
+        years.append(x+first_year)
 
     for f in fincas:
         lotes = f.lote_finca.all()

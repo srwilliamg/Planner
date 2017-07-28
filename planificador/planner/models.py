@@ -169,23 +169,23 @@ class Produccion(models.Model):
     ano15 = models.FloatField(default=120)
 
     def getValues(self):
-        return {
-        "ano1": self.ano1,
-        "ano2": self.ano2,
-        "ano3": self.ano3,
-        "ano4": self.ano4,
-        "ano5": self.ano5,
-        "ano6": self.ano6,
-        "ano7": self.ano7,
-        "ano8": self.ano8,
-        "ano9": self.ano9,
-        "ano10": self.ano10,
-        "ano11": self.ano11,
-        "ano12": self.ano12,
-        "ano13": self.ano13,
-        "ano14": self.ano14,
-        "ano15": self.ano15
-        }
+        return [
+            self.ano1,
+            self.ano2,
+            self.ano3,
+            self.ano4,
+            self.ano5,
+            self.ano6,
+            self.ano7,
+            self.ano8,
+            self.ano9,
+            self.ano10,
+            self.ano11,
+            self.ano12,
+            self.ano13,
+            self.ano14,
+            self.ano15
+        ]
 
 class Distribucion_calidad(models.Model):
     primera = models.OneToOneField(Porcentaje_precio, related_name= "dc_primera")
@@ -195,7 +195,7 @@ class Distribucion_calidad(models.Model):
 
     def getValues(self):
         return {"primera":self.primera.getValues(), "segunda":self.primera.getValues(),
-                "tercera": self.primera.getValues(),"produccion":self.produccion.getValues().values()}
+                "tercera": self.primera.getValues(),"produccion":self.produccion.getValues()}
 
 class Datos_generales(models.Model):
     empresa = models.CharField(max_length= 125, default="empresa")
@@ -270,23 +270,23 @@ class Ano_costo(models.Model):
     ano15 = models.OneToOneField(Costos, related_name= "ano15_datamo")
 
     def getValues(self):
-        return {
-            "ano1": self.ano1.getValues(),
-            "ano2": self.ano2.getValues(),
-            "ano3": self.ano3.getValues(),
-            "ano4": self.ano4.getValues(),
-            "ano5": self.ano5.getValues(),
-            "ano6": self.ano6.getValues(),
-            "ano7": self.ano7.getValues(),
-            "ano8": self.ano8.getValues(),
-            "ano9": self.ano9.getValues(),
-            "ano10": self.ano10.getValues(),
-            "ano11": self.ano11.getValues(),
-            "ano12": self.ano12.getValues(),
-            "ano13": self.ano13.getValues(),
-            "ano14": self.ano14.getValues(),
-            "ano15": self.ano15.getValues()
-        }
+        return [
+            self.ano1.getValues(),
+            self.ano2.getValues(),
+            self.ano3.getValues(),
+            self.ano4.getValues(),
+            self.ano5.getValues(),
+            self.ano6.getValues(),
+            self.ano7.getValues(),
+            self.ano8.getValues(),
+            self.ano9.getValues(),
+            self.ano10.getValues(),
+            self.ano11.getValues(),
+            self.ano12.getValues(),
+            self.ano13.getValues(),
+            self.ano14.getValues(),
+            self.ano15.getValues()
+        ]
 
 class Costos_insumos(models.Model):
     materiaOrganica = models.OneToOneField(Ano_costo, related_name="materiaOrganica_anocosto")
@@ -308,22 +308,22 @@ class Costos_insumos(models.Model):
 
     def getValues(self):
         return {
-            "materiaOrganica" : self.materiaOrganica.getValues().values(),
-            "herbicidaCalles" : self.herbicidaCalles.getValues().values(),
-            "herbicidaPlatos" : self.herbicidaPlatos.getValues().values(),
-            "insecticidas" : self.insecticidas.getValues().values(),
-            "fungicidas" : self.fungicidas.getValues().values(),
-            "fertilizante" : self.fertilizante.getValues().values(),
-            "ridomil" : self.ridomil.getValues().values(),
-            "fertilizanteFoliar" : self.fertilizanteFoliar.getValues().values(),
-            "biocontroladores" : self.biocontroladores.getValues().values(),
-            "guadana" : self.guadana.getValues().values(),
-            "selectores" : self.selectores.getValues().values(),
-            "bombasEspalda" : self.bombasEspalda.getValues().values(),
-            "bombasEstacionarias" : self.bombasEstacionarias.getValues().values(),
-            "canastillas" : self.canastillas.getValues().values(),
-            "herramientas" : self.herramientas.getValues().values(),
-            "lycra" : self.lycra.getValues().values()
+            "materiaOrganica" : self.materiaOrganica.getValues(),
+            "herbicidaCalles" : self.herbicidaCalles.getValues(),
+            "herbicidaPlatos" : self.herbicidaPlatos.getValues(),
+            "insecticidas" : self.insecticidas.getValues(),
+            "fungicidas" : self.fungicidas.getValues(),
+            "fertilizante" : self.fertilizante.getValues(),
+            "ridomil" : self.ridomil.getValues(),
+            "fertilizanteFoliar" : self.fertilizanteFoliar.getValues(),
+            "biocontroladores" : self.biocontroladores.getValues(),
+            "guadana" : self.guadana.getValues(),
+            "selectores" : self.selectores.getValues(),
+            "bombasEspalda" : self.bombasEspalda.getValues(),
+            "bombasEstacionarias" : self.bombasEstacionarias.getValues(),
+            "canastillas" : self.canastillas.getValues(),
+            "herramientas" : self.herramientas.getValues(),
+            "lycra" : self.lycra.getValues()
         }
 
 class Data_mo(models.Model):
@@ -356,23 +356,23 @@ class Anos_mo(models.Model):
     ano15 = models.OneToOneField(Data_mo, related_name= "ano15_datamo")
 
     def getValues(self):
-        return {
-        "ano1": self.ano1.getValues(),
-        "ano2": self.ano2.getValues(),
-        "ano3": self.ano3.getValues(),
-        "ano4": self.ano4.getValues(),
-        "ano5": self.ano5.getValues(),
-        "ano6": self.ano6.getValues(),
-        "ano7": self.ano7.getValues(),
-        "ano8": self.ano8.getValues(),
-        "ano9": self.ano9.getValues(),
-        "ano10": self.ano10.getValues(),
-        "ano11": self.ano11.getValues(),
-        "ano12": self.ano12.getValues(),
-        "ano13": self.ano13.getValues(),
-        "ano14": self.ano14.getValues(),
-        "ano15": self.ano15.getValues()
-        }
+        return [
+            self.ano1.getValues(),
+            self.ano2.getValues(),
+            self.ano3.getValues(),
+            self.ano4.getValues(),
+            self.ano5.getValues(),
+            self.ano6.getValues(),
+            self.ano7.getValues(),
+            self.ano8.getValues(),
+            self.ano9.getValues(),
+            self.ano10.getValues(),
+            self.ano11.getValues(),
+            self.ano12.getValues(),
+            self.ano13.getValues(),
+            self.ano14.getValues(),
+            self.ano15.getValues()
+        ]
 
 class Insumos_mo(models.Model):
     siembra = models.OneToOneField(Anos_mo,related_name= "siembra_anosmo")
@@ -392,20 +392,20 @@ class Insumos_mo(models.Model):
 
     def getValues(self):
         return {
-            "siembra" : self.siembra.getValues().values(),
-            "resiembra" : self.resiembra.getValues().values(),
-            "limpiaGuadanaCalles" : self.limpiaGuadanaCalles.getValues().values(),
-            "aplicacionHerbicida" : self.aplicacionHerbicida.getValues().values(),
-            "plateo" : self.plateo.getValues().values(),
-            "fertilizacion" : self.fertilizacion.getValues().values(),
-            "aplicacionMateriaOrganica" : self.aplicacionMateriaOrganica.getValues().values(),
-            "fungicidas" : self.fungicidas.getValues().values(),
-            "biocontroladores" : self.biocontroladores.getValues().values(),
-            "aspersiones" : self.aspersiones.getValues().values(),
-            "tutorado" : self.tutorado.getValues().values(),
-            "podas" : self.podas.getValues().values(),
-            "recoleccionContrato" : self.recoleccionContrato.getValues().values(),
-            "recoleccionDia" : self.recoleccionDia.getValues().values()
+            "siembra" : self.siembra.getValues(),
+            "resiembra" : self.resiembra.getValues(),
+            "limpiaGuadanaCalles" : self.limpiaGuadanaCalles.getValues(),
+            "aplicacionHerbicida" : self.aplicacionHerbicida.getValues(),
+            "plateo" : self.plateo.getValues(),
+            "fertilizacion" : self.fertilizacion.getValues(),
+            "aplicacionMateriaOrganica" : self.aplicacionMateriaOrganica.getValues(),
+            "fungicidas" : self.fungicidas.getValues(),
+            "biocontroladores" : self.biocontroladores.getValues(),
+            "aspersiones" : self.aspersiones.getValues(),
+            "tutorado" : self.tutorado.getValues(),
+            "podas" : self.podas.getValues(),
+            "recoleccionContrato" : self.recoleccionContrato.getValues(),
+            "recoleccionDia" : self.recoleccionDia.getValues()
         }
 
 class CIPC(models.Model):
@@ -633,7 +633,7 @@ class Base_presupuestal(models.Model):
         establecimiento = self.establecimiento_r.getValues()
         insumos_mo = self.insumos_mo.getValues()
     # INGRESOS
-    # Ventas (ingreses)
+    # Ventas (ingresos)
         ventas = []
         for tkg in dc_produccion["produccion"]:
             ventas.append(
@@ -725,11 +725,11 @@ class Base_presupuestal(models.Model):
                       0, 0, 0, 0, 0]
 
         for key, value in leldpE.iteritems():
-            subTotalMO[0] = subTotalMO[0] + value
+            subTotalMO[0] += value
 
         for k, v in leldpR.iteritems():
             for counter,i in enumerate(subTotalMO):
-                subTotalMO[counter] = subTotalMO[counter] + v[counter]
+                subTotalMO[counter] += v[counter]
 
     # Recolección
         subTotalRecoleccion = [0, 0, 0, 0, 0,
@@ -738,7 +738,7 @@ class Base_presupuestal(models.Model):
 
         for k, v in recoleccion.iteritems():
             for counter,i in enumerate(subTotalRecoleccion):
-                subTotalRecoleccion[counter] = subTotalRecoleccion[counter] + v[counter]
+                subTotalRecoleccion[counter] += v[counter]
 
         totalRecoleccion = []
         totalLEL = []
@@ -758,7 +758,7 @@ class Base_presupuestal(models.Model):
 
     # result
         for x in range(0,15):
-            egresos.append((totalMO[x] + cipc[x] + totalInsumos[x])*-10) #Agregado según excel es por -1000 pero en la gráfica es demasiado entonces -10
+            egresos.append((totalMO[x] + cipc[x] + totalInsumos[x])*-1) #Agregado para quedar negativo
 
         return {"ingresos":ventas, "egresos": egresos}
 
