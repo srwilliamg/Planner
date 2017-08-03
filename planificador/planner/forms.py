@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django import forms
 from .models import *
 
@@ -21,15 +22,15 @@ class AddUserForm(forms.ModelForm):
         ]
 
     document_number = forms.CharField(
-        required=True, label="Numero de documento",
+        required=True, label="Número de documento",
         widget=forms.TextInput(
-            attrs={"size": 25, "title": "Numero de documento", "class": "form-control"}))
+            attrs={"size": 25, "title": "Número de documento", "class": "form-control"}))
 
     document_type = forms.ChoiceField(
         required=True, label= "Tipo de documento", widget=forms.RadioSelect(attrs={"title": "Tipo de documento","class": "radio-inline"}), choices=DOCUMENT_OPTIONS)
 
     gender = forms.ChoiceField(
-        required=True, label="Genero", widget=forms.Select(attrs={"class": "form-control"}), choices=GENDER_OPTIONS)
+        required=True, label="Género", widget=forms.Select(attrs={"class": "form-control"}), choices=GENDER_OPTIONS)
 
     first_name = forms.CharField(
         required=True, widget=forms.TextInput(
@@ -50,14 +51,14 @@ class AddUserForm(forms.ModelForm):
     )
 
     address = forms.CharField(
-        required=True, label="Direccion de Residencia",
+        required=True, label="Dirección de Residencia",
         widget=forms.TextInput(
-            attrs={"size": 30, "title": "Direccion de Residencia", "class": "form-control"}
+            attrs={"size": 30, "title": "Dirección de Residencia", "class": "form-control"}
         ))
     phone = forms.CharField(
-        required=True, label="Numero de telefono",
+        required=True, label="Número de teléfono",
         widget=forms.TextInput(
-            attrs={"size": 20, "title": "Numero de telefono", "class": "form-control"}
+            attrs={"size": 20, "title": "Número de teléfono", "class": "form-control"}
         ))
 
     email = forms.EmailField(
@@ -108,8 +109,8 @@ class AddLoteForm(forms.ModelForm):
             'variedad',
             'edad',
             'area',
-            'finca',
-            'riesgo'
+            'finca'
+            #'riesgo'
         ]
 
     name = forms.CharField(
@@ -117,20 +118,20 @@ class AddLoteForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={"size": 25, "class": "form-control"}))
 
-    tipo = forms.CharField(
+    tipo = forms.ChoiceField(
         required=True, label="Tipo",
-        widget=forms.TextInput(
-            attrs={"size": 25, "class": "form-control"}))
+        widget=forms.Select(
+            attrs={"class": "form-control"}), choices=TIPO_OPTIONS)
 
-    cultivo = forms.CharField(
+    cultivo = forms.ChoiceField(
         required=True, label="Cultivo",
-        widget=forms.TextInput(
-            attrs={"size": 25, "class": "form-control"}))
+        widget=forms.Select(
+            attrs={"class": "form-control"}), choices=CULTIVO_OPTIONS)
 
-    variedad = forms.CharField(
+    variedad = forms.ChoiceField(
         required=True, label="Variedad",
-        widget=forms.TextInput(
-            attrs={"size": 25, "class": "form-control"}))
+        widget=forms.Select(
+            attrs={"class": "form-control"}), choices=VARIEDAD_OPTIONS)
 
     edad = forms.FloatField(
         required=True, label= "Edad", min_value=1, widget=forms.NumberInput(attrs={"class": "form-control"}))
@@ -140,7 +141,7 @@ class AddLoteForm(forms.ModelForm):
 
     finca = forms.ModelChoiceField(queryset = Finca.objects.all(),label = "Pertenece a la finca", widget=forms.Select(attrs={"class": "form-control"}))
 
-    riesgo = forms.ModelChoiceField(queryset = Riesgo.objects.all(),label = "Cuales son sus riesgos", widget=forms.Select(attrs={"class": "form-control"}))
+    #riesgo = forms.ModelChoiceField(queryset = Riesgo.objects.all(),label = "Cuales son sus riesgos", widget=forms.Select(attrs={"class": "form-control"}))
 
 class AddRiesgoForm(forms.ModelForm):
     class Meta:
@@ -157,6 +158,37 @@ class AddRiesgoForm(forms.ModelForm):
             'agremiacion',
             'inseguridad'
         ]
+
+    mercado = forms.FloatField(
+        required=True, label= "Mercado", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+    fitosanitario = forms.FloatField(
+        required=True, label= "Fitosanitario", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+    fluctuacion_precio = forms.FloatField(
+        required=True, label= "Fluctuacion de precio", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+    administracion = forms.FloatField(
+        required=True, label= "Administración", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+    tecnologia = forms.FloatField(
+        required=True, label= "Tecnología", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+    mano_de_obra = forms.FloatField(
+        required=True, label= "Mano de obra", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+    clima = forms.FloatField(
+        required=True, label= "Clima", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+    perecedero = forms.FloatField(
+        required=True, label= "Perecedero", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+    agremiacion = forms.FloatField(
+        required=True, label= "Agremiación", min_value=0, max_value=10,
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+    inseguridad = forms.FloatField(
+        required=True, label= "Inseguridad", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
 
 
 class AddInsumos_generalesForm(forms.ModelForm):
@@ -225,9 +257,9 @@ class EditUserProfileForm(forms.ModelForm):
     document_type = forms.ChoiceField(
         required=True, widget=forms.RadioSelect, choices=DOCUMENT_OPTIONS)
     document_number = forms.CharField(
-        required=True, label="Numero de documento",
+        required=True, label="Número de documento",
         widget=forms.TextInput(
-            attrs={"size": 25, "title": "Numero de documento"}))
+            attrs={"size": 25, "title": "Número de documento"}))
     first_name = forms.CharField(
         required=True, label="Primer Nombre",
         widget=forms.TextInput(
@@ -237,9 +269,9 @@ class EditUserProfileForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={"size": 20, "title": "Apellido"}))
     address = forms.CharField(
-        required=True, label="Direccion de Residencia",
+        required=True, label="Dirección de Residencia",
         widget=forms.TextInput(
-            attrs={"size": 30, "title": "Direccion de Residencia"}))
+            attrs={"size": 30, "title": "Dirección de Residencia"}))
     birthdate = forms.DateField(
         required=True, label="Fecha de nacimiento",
         input_formats=["%Y-%m-%d",
@@ -249,9 +281,9 @@ class EditUserProfileForm(forms.ModelForm):
     gender = forms.ChoiceField(
         required=True, widget=forms.Select(attrs={"class": "form-control"}), choices=GENDER_OPTIONS)
     phone = forms.CharField(
-        required=True, label="Numero de telefono",
+        required=True, label="Número de teléfono",
         widget=forms.TextInput(
-            attrs={"size": 20, "title": "Numero de telefono"}))
+            attrs={"size": 20, "title": "Número de telefono"}))
     email = forms.EmailField(
         required=True, label="Email", widget=forms.TextInput())
     password = forms.CharField(

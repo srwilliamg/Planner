@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import json
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
+from django.http import HttpResponse
 from planner.util import *
 from planner.forms import *
 from planner.models import *
@@ -15,7 +16,6 @@ def log_in(request):
     print(request.user)
     if request.user.is_authenticated():
         return RedirectToHome(request.user)
-    #print(request.POST)
 
     if request.method == "POST":
         username = request.POST['email']
@@ -41,6 +41,39 @@ def log_in(request):
 def log_out(request):
     logout(request)
     return redirect("login")
+
+def loteChart(request):
+    if request.is_ajax():
+        #fnum = request.POST["finca"]
+        lnum = request.POST["lote"]
+        lote = Lote.objects.filter(pk=lnum)[0]
+        #lotes = finca[0].lote_finca.all()
+        years = []
+
+        now = datetime.datetime.now()
+        first_year = now.year - lote.edad
+
+        for year in range(15):
+            years.append(year+first_year)
+
+        rel = lote.lotebp_lote.all()
+        if rel.__len__() == 0:
+            data = {
+                "ok": False,
+                "riesgo":lote.riesgo.getValues()
+            }
+            return HttpResponse(json.dumps(data), content_type="application/json")
+        else:
+            loteIE = rel[0].bp.IngresosEgresos()
+            data = {
+                "ok": True,
+                "riesgo":lote.riesgo.getValues(),
+                "ingresos":[i * lote.area for i in loteIE["ingresos"]],
+                "egresos":[i * lote.area for i in loteIE["egresos"]],
+                "years":years
+            }
+            
+        return HttpResponse(json.dumps(data), content_type="application/json")
 
 def register(request):
     form = AddUserForm(request.POST or None)
@@ -88,48 +121,11 @@ class LoteListView(ListView):
         context = super(LoteListView, self).get_context_data(*args, **kwargs)
         finca = Finca.objects.filter(pk=number)
         lotes = finca[0].lote_finca.all()
+
         context['titulo'] = ("Lotes")
-        data = {}
-        years = []
-
-        now = datetime.datetime.now()
-
-        if lotes.__len__() == 0:
-            return context
-        else:
-            for x in lotes:
-                first_year = now.year - x.edad
-
-                for year in range(15):
-                    years.append(year+first_year)
-
-                rel = x.lotebp_lote.all()
-                if rel.__len__() == 0:
-                    return context
-                else:
-                    loteIE = rel[0].bp.IngresosEgresos()
-                    data[x.id] = {"lote":x, "ingresos":loteIE["ingresos"], "egresos":loteIE["egresos"], "years":years}
-                    years = []
-        
-        context['data_lotes'] = data
+        context['lotes'] = lotes
         context['margen'] = [1] #Puesto para solucionar conficto con chart de finca 
         context['years'] = [1] #Puesto para solucionar conficto con chart de finca 
-        return context
-
-class RiesgoListView(ListView):
-    template_name = 'home_agricultor.html'
-    context_object_name = 'riesgo_list'
-    def get_queryset(self):
-        number = self.kwargs.get("var")
-        if number:
-            queryset = Lote.objects.filter(pk=number)[0].riesgo
-        else:
-            queryset = Lote.objects.none()
-        return queryset
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(RiesgoListView, self).get_context_data(*args, **kwargs)
-        context['titulo'] = ("Riesgos")
         return context
 
 @login_required()
@@ -162,8 +158,12 @@ def home_agricultor(request):
     for f in fincas:
         lotes = f.lote_finca.all()
         for l in lotes:
-            bp = l.lotebp_lote.all()[0].bp
-            margenes.append(bp.margen(l.edad, minimo, maximo))
+            qbp = l.lotebp_lote.all()
+            if qbp.__len__() !=0:
+                bp = l.lotebp_lote.all()[0].bp
+                margenes.append(
+                    [i * l.area for i in bp.margen(l.edad, minimo, maximo)]
+                    )
 
     for x in margenes:
         for counter,y in enumerate(x):
@@ -193,21 +193,32 @@ class createFinca(CreateView):
         ctx['titulo'] = "Crear nueva finca"
         return ctx
 
-class createLote(CreateView):
+def createLote(request):
     form_class = AddLoteForm
     template_name = "createLote.html"
+    ctx = {}
+    if request.POST:
+        loteform = AddLoteForm(request.POST or None)
+        riesgoform = AddRiesgoForm(request.POST or None)
 
-    def form_valid(self,form):
-        obj = form.save(commit=False)
-        obj.agricultor = self.request.user
-        obj.save()
+        objlote = loteform.save(commit=False)
+        objlote.agricultor = request.user
+        objriesgo = riesgoform.save()
+        objlote.riesgo = objriesgo
+        objlote.save()
+
+        qbp = Base_presupuestal.objects.filter(tipo=objlote.tipo, cultivo=objlote.cultivo, variedad=objlote.variedad)
+        if qbp.__len__() != 0:
+            bp= qbp[0]
+            lhbp = lote_has_bp(lote = objlote,bp = bp)
+            lhbp.save()
         return redirect('home_agricultor')
-
-    def get_context_data(self, **kwargs):
-        ctx = super(createLote, self).get_context_data(**kwargs)
+    else:
         ctx['titulo'] = "Crear nuevo lote"
-        return ctx
-################################################3
+        ctx['loteform'] = AddLoteForm
+        ctx['riesgoform'] = AddRiesgoForm
+    return render(request, template_name, ctx)
+
 class IndexView(TemplateView):
     template_name = "index.html"
     def get_context_data(self, *args, **kwargs):
@@ -230,20 +241,6 @@ class LotesListView(ListView):
 class UserListView(ListView):
     queryset = User.objects.all()
     template_name = 'home.html'
-
-class FincasListView(ListView):
-    template_name = 'home.html'
-    def get_queryset(self):
-        number = self.kwargs.get("var")
-        if number:
-            queryset = Finca.objects.filter(
-                Q(agricultor__document_number__icontains=number) | Q(agricultor__document_number__iexact=number)
-            )
-            if queryset.__len__() == 0:
-                queryset = ["No tienes ninguna finca"]
-        else:
-            queryset = Finca.objects.none()
-        return queryset
 
 class FincasDetailView(DetailView):
     template_name = 'home.html'

@@ -42,3 +42,8 @@
 .logged-name:hover{
 	background-color: green !important;
 }
+
+.riesgoform{
+	width: 10px !important;
+	float:left !important;
+}

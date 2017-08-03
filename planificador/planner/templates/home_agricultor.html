@@ -8,102 +8,6 @@
 			<canvas id="myChart"></canvas>	
 		</div>
 	</div>
-
-	{% if riesgo_list %}
-	<div class="list-inline">
-            <div class="panel panel-green">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-money fa-fw"></i> {{titulo}}</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Mercado</th>
-                                    <th>Fitosanitario</th>
-                                    <th>Fluctuacion de precio</th>
-                                    <th>Administracion</th>
-                                    <th>Tecnologia</th>
-                                    <th>Mano de obra</th>
-                                    <th>Clima</th>
-                                    <th>Perecedero</th>
-                                    <th>Agremiacion</th>
-                                    <th>Inseguridad</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{{riesgo_list.mercado}}</td>
-                                    <td>{{riesgo_list.fitosanitario}}</td>
-                                    <td>{{riesgo_list.fluctuacion_precio}}</td>
-                                    <td>{{riesgo_list.administracion}}</td>
-                                    <td>{{riesgo_list.tecnologia}}</td>
-                                    <td>{{riesgo_list.mano_de_obra}}</td>
-                                    <td>{{riesgo_list.clima}}</td>
-                                    <td>{{riesgo_list.perecedero}}</td>
-                                    <td>{{riesgo_list.agremiacion}}</td>
-                                    <td>{{riesgo_list.inseguridad}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="text-right">
-                        <a href="#">View All Transactions <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- Tablas -->
-	{% endif %}
-
-	{% if lote_list %}
-	    {% for key, value in data_lotes.items %}
-			<div class=" list-inline">
-		            <div class="col-lg-4">
-		                <div class="panel panel-green">
-		                    <div class="panel-heading">
-		                        <h3 class="panel-title"><i class="fa fa-photo fa-fw"></i>{{value.lote.name}}</h3>
-		                    </div>
-								<div class="panel-body">
-								    <div class="list-group">
-								    	<a href="#" class="list-group-item">
-								            <span class="badge">{{value.lote.tipo}}</span>
-								            <i class="fa fa-fw fa-square"></i> Tipo
-								        </a>
-								        <a href="#" class="list-group-item">
-								            <span class="badge">{{value.lote.cultivo}}</span>
-								            <i class="fa fa-fw fa-info"></i> Cultivo
-								        </a>
-								        <a href="#" class="list-group-item">
-								            <span class="badge">{{value.lote.variedad}}</span>
-								            <i class="fa fa-fw fa-square"></i> Variedad
-								        </a>
-								        <a href="#" class="list-group-item">
-								            <span class="badge">{{value.lote.edad}}</span>
-								            <i class="fa fa-fw fa-square"></i> Edad
-								        </a>
-								        <a href="#" class="list-group-item">
-								            <span class="badge">{{value.lote.area}}</span>
-								            <i class="fa fa-fw fa-square"></i> Area
-								        </a>
-								    </div>
-								    <div class="text-right">
-								        <a href="javascript:void(0)" 
-								        	onclick="dochart({{value.ingresos}},{{value.egresos}},{{value.years}});"> 
-								        	Ver lote <i class="fa fa-arrow-circle-right"></i></a>
-								        <a href="{% url 'riesgo' var=value.lote.id %}"> Riesgos <i class="fa fa-arrow-circle-right"></i></a>
-								    </div>
-								</div>
-			                </div>
-		            </div> <!-- Horas -->
-		    </div>
-    	{% endfor %}
-	{% endif %}
-{% endblock %}
-
-
-{% block table %}
-	<br>
 	{% if fincas %}
 	    {% for obj in fincas %}
 			<div class=" list-inline">
@@ -133,6 +37,95 @@
     	{% endfor %}
 	{% endif %}
 
+	<div class="list-inline" id="tableRiesgo" style='visibility:hidden; display:none;'>
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-exclamation-triangle fa-fw"></i> Riesgos</h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped" id="riesgos">
+                        <thead>
+                            <tr>
+                                <th>Mercado</th>
+                                <th>Fitosanitario</th>
+                                <th>Fluctuacion de precio</th>
+                                <th>Administracion</th>
+                                <th>Tecnologia</th>
+                                <th>Mano de obra</th>
+                                <th>Clima</th>
+                                <th>Perecedero</th>
+                                <th>Agremiacion</th>
+                                <th>Inseguridad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>mercado</td>
+                                <td>fitosanitario</td>
+                                <td>fluctuacion_precio</td>
+                                <td>administracion</td>
+                                <td>tecnologia</td>
+                                <td>mano_de_obra</td>
+                                <td>clima</td>
+                                <td>perecedero</td>
+                                <td>agremiacion</td>
+                                <td>inseguridad</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div> <!-- Tablas -->
+
+	{% if lote_list %}
+	    {% for value in lotes %}
+			<div class=" list-inline">
+		            <div class="col-lg-4">
+		                <div class="panel panel-green">
+		                    <div class="panel-heading">
+		                        <h3 class="panel-title"><i class="fa fa-photo fa-fw"></i>{{value.name}}</h3>
+		                    </div>
+								<div class="panel-body">
+								    <div class="list-group">
+								    	<a href="#" class="list-group-item">
+								            <span class="badge">{{value.tipo}}</span>
+								            <i class="fa fa-fw fa-circle-o"></i> Tipo
+								        </a>
+								        <a href="#" class="list-group-item">
+								            <span class="badge">{{value.cultivo}}</span>
+								            <i class="fa fa-fw fa-circle-o"></i> Cultivo
+								        </a>
+								        <a href="#" class="list-group-item">
+								            <span class="badge">{{value.variedad}}</span>
+								            <i class="fa fa-fw fa-circle-o"></i> Variedad
+								        </a>
+								        <a href="#" class="list-group-item">
+								            <span class="badge">{{value.edad}}</span>
+								            <i class="fa fa-fw fa-calendar"></i> Edad
+								        </a>
+								        <a href="#" class="list-group-item">
+								            <span class="badge">{{value.area}}</span>
+								            <i class="fa fa-fw fa-area-chart"></i> Area
+								        </a>
+								    </div>
+								    <div class="text-right">
+								        <a href="javascript:void(0)" id="buttonId" data-lote="{{value.id}}"> 
+								        	Ver lote <i class="fa fa-arrow-circle-right"></i></a>
+								    </div>
+								</div>
+			                </div>
+		            </div> <!-- Horas -->
+		    </div>
+    	{% endfor %}
+	{% endif %}
+{% endblock %}
+
+
+{% block table %}
+
+
 {% endblock %}
 
 {% block script %}
@@ -145,41 +138,80 @@
 	    		{% if fincas %}
 			    calcularMargen();
 	    		{% endif %}
-			});
 
-    		function dochart(ingresos, egresos, years){
-				var ctxLote = document.getElementById("myChart");
-				var chartLote = new Chart(ctxLote, {
-				type: 'line',
-				data: {
-					labels: years,
-					datasets: [
-						{
-							label: 'ingresos',
-							data: ingresos,
-							backgroundColor: ['rgba(255, 99, 132, 0.3)']
-						},
-						{
-							label: 'egresos',
-							data: egresos,
-							backgroundColor: ['rgba(132, 255, 99, 0.3)']
-						}
-					]
-					},
-				options: {
-						scales: {
-							yAxes: [{
-								ticks: {
-									beginAtZero:true
-								}
-							}]
-						}
-					}
+	    		$('a[id="buttonId"]').click(function() {    
+	    			var $this = $(this);
+        			//var finca = $this.data('finca');
+        			var lote = $this.data('lote');
+        			console.log(lote);
+        			
+				    $.ajax({
+				        url: "{% url 'loteChart' %}",
+				        method: 'POST',
+				        data: {
+				            'lote': lote,
+				            'csrfmiddlewaretoken': '{{ csrf_token }}'
+				        },
+				        success: function (data){
+
+				        	if(data["ok"]){
+					            var ctxLote = document.getElementById("myChart");
+								var chartLote = new Chart(ctxLote, {
+								type: 'line',
+								data: {
+									labels: data["years"],
+									datasets: [
+										{
+											label: 'ingresos',
+											data: data["ingresos"],
+											backgroundColor: ['rgba(132, 255, 99, 0.3)']
+										},
+										{
+											label: 'egresos',
+											data: data["egresos"],
+											backgroundColor: ['rgba(255, 99, 132, 0.3)']
+										}
+									]
+									},
+								options: {
+										scales: {
+											yAxes: [{
+												ticks: {
+													beginAtZero:true
+												}
+											}]
+										}
+									}
+								});
+
+								var campo = document.getElementById("campoChart");
+								campo.style.visibility='visible';
+								campo.style.display ='initial';
+							}
+							
+							if(!data["ok"]){
+								var campo = document.getElementById("campoChart");
+								campo.style.visibility='hidden';
+								campo.style.display ='none';
+							}
+							// print riesgos
+
+							var myTable = document.getElementById('riesgos');
+						    for (var t = 0; t < 10; t += 1) {
+								myTable.rows[1].cells[t].innerHTML = data["riesgo"][t];
+
+							}
+							var tr = document.getElementById("tableRiesgo");
+							tr.style.visibility='visible';
+							tr.style.display ='initial';
+				        },
+
+				        error : function() {
+				            alert("error");
+				        }
+				    });
 				});
-				var campo = document.getElementById("campoChart");
-				campo.style.visibility='visible';
-				campo.style.display ='initial';
-			}
+			});
 
 	    	function calcularMargen(){
 	    		var ctx = document.getElementById("myChart");

@@ -11,6 +11,10 @@ ROLE_OPTIONS = (("R", "Root"), ("A", "Administrador"),("S", "Agricultor"))
 DOCUMENT_OPTIONS = (("TI", "Tarjeta de Identidad"), ("CC", "Cedula de Ciudadania"), ("CE", "Cedula de Extranjería"))
 GENDER_OPTIONS = (("M", "Masculino"), ("F", "Femenino"), ("O", "Other"))
 
+TIPO_OPTIONS = (("frutales", "Frutales"), ("cafe", "Café"), ("forestales", "Forestales"), ("hortalizas", "Hortalizas"))
+CULTIVO_OPTIONS = (("limon", "Limón"), ("agroforestal", "Agroforestal"), ("lulo", "Lulo"), ("frijol", "Frijol"), ("mora", "Mora"), ("zoca", "Zoca"))
+VARIEDAD_OPTIONS = (("tahiti", "Tahití"),("selva", "La selva"), ("sin espinas", "Sin espinas"), ("arbustivo", "Arbustivo"), ("nogal", "Nogal"), ("calavera", "Calavera"), ("bandola", "Bandola"))
+
 
 class User(AbstractBaseUser):
     document_type = models.CharField(max_length=5, choices=DOCUMENT_OPTIONS, default="CC")
@@ -60,12 +64,12 @@ class User(AbstractBaseUser):
     __unicode__ = __str__
 
 class Finca(models.Model):
-    name = models.CharField(max_length=150, default="FincaVerde")
-    area = models.FloatField(default=32000)
+    name = models.CharField(max_length=150, default="Finca")
+    area = models.FloatField(default=320)
     agricultor = models.ForeignKey(User, blank=False,related_name= "finca_agricultor")
 
     def __str__(self):
-        return u"{} {}".format(self.name, self.area)
+        return u"{}".format(self.name)
 
     def getValues(self):
         return {"nombre":self.name, "area":self.area, "agricultor": self.agricultor.getValues()}
@@ -83,17 +87,26 @@ class Riesgo(models.Model):
     inseguridad = models.FloatField(default=1)
 
     def getValues(self):
-        return {"mercado":self.mercado, "fitosanitario":self.fitosanitario, "fluctuacion_precio":self.fluctuacion_precio, 
-        "administracion":self.administracion,"tecnologia":self.tecnologia, "mano_de_obra":self.mano_de_obra, "cliam":self.clima, "perecedero":self.perecedero,
-        "agremiacion":self.agremiacion, "inseguridad":self.inseguridad}
+        return [
+            self.mercado,
+            self.fitosanitario,
+            self.fluctuacion_precio,
+            self.administracion,
+            self.tecnologia,
+            self.mano_de_obra,
+            self.clima,
+            self.perecedero,
+            self.agremiacion,
+            self.inseguridad
+        ]
 
 class Lote(models.Model):
     name = models.CharField(max_length=150, null=False, default="Lote")
-    tipo = models.CharField(max_length=150, default="Verde")
-    cultivo = models.CharField(max_length=150, default="Verde")
-    variedad = models.CharField(max_length=150, default="Verde")
-    edad = models.FloatField(default=3)
-    area = models.FloatField(default=4000)
+    tipo = models.CharField(max_length=15, choices=TIPO_OPTIONS, blank=False)
+    cultivo = models.CharField(max_length=15, choices=CULTIVO_OPTIONS, blank=False)
+    variedad = models.CharField(max_length=15, choices=VARIEDAD_OPTIONS, blank=False)
+    edad = models.FloatField(default=1, null = False, blank = False)
+    area = models.FloatField(default=1, null = False, blank = False)
     finca = models.ForeignKey(Finca, blank=False,related_name= "lote_finca")
     riesgo = models.OneToOneField(Riesgo, related_name= "lote_riesgo")
 
@@ -509,6 +522,9 @@ class Establecimiento(models.Model):
         }
 
 class Base_presupuestal(models.Model):
+    tipo = models.CharField(max_length=15, choices=TIPO_OPTIONS, blank=False, default="frutales")
+    cultivo = models.CharField(max_length=15, choices=CULTIVO_OPTIONS, blank=False, default="frutales")
+    variedad = models.CharField(max_length=15, choices=VARIEDAD_OPTIONS, blank=False, default="frutales")
     nombre = models.CharField(max_length=125, null=False, default="bp")
     rentabilidad = models.FloatField(default=0)
     datos_g = models.OneToOneField(Datos_generales,related_name="bp_dg")
