@@ -160,35 +160,35 @@ class AddRiesgoForm(forms.ModelForm):
         ]
 
     mercado = forms.FloatField(
-        required=True, label= "Mercado", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+        required=True, label= "", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Mercado[0,10]", "class": "riesgoform form-control"}))
     fitosanitario = forms.FloatField(
-        required=True, label= "Fitosanitario", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+        required=True, label= "", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Fitosanitario[0,10]", "class": "riesgoform form-control"}))
     fluctuacion_precio = forms.FloatField(
-        required=True, label= "Fluctuacion de precio", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+        required=True, label= "", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Fluctuacion de precio[0,10]", "class": "riesgoform form-control"}))
     administracion = forms.FloatField(
-        required=True, label= "Administración", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+        required=True, label= "", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Administracion[0,10]", "class": "riesgoform form-control"}))
     tecnologia = forms.FloatField(
-        required=True, label= "Tecnología", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+        required=True, label= "", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Tecnologia[0,10]", "class": "riesgoform form-control"}))
     mano_de_obra = forms.FloatField(
-        required=True, label= "Mano de obra", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+        required=True, label= "", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Mano de obra[0,10]", "class": "riesgoform form-control"}))
     clima = forms.FloatField(
-        required=True, label= "Clima", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+        required=True, label= "", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Clima[0,10]", "class": "riesgoform form-control"}))
     perecedero = forms.FloatField(
-        required=True, label= "Perecedero", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+        required=True, label= "", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Perecedero[0,10]", "class": "riesgoform form-control"}))
     agremiacion = forms.FloatField(
-        required=True, label= "Agremiación", min_value=0, max_value=10,
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+        required=True, label= "", min_value=0, max_value=10,
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Agremiacion[0,10]", "class": "riesgoform form-control"}))
     inseguridad = forms.FloatField(
-        required=True, label= "Inseguridad", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"[0,10]", "class": "riesgoform form-control"}))
+        required=True, label= "", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Inseguridad[0,10]", "class": "riesgoform form-control"}))
 
 
 class AddInsumos_generalesForm(forms.ModelForm):

@@ -241,28 +241,28 @@ class Costos(models.Model):
         return {"cantidadH":self.cantidadHectarea, "cantidadS":self.cantidadSitio, "frecuencia": self.frecuencia}
     
 class Preparacion_costos(models.Model):
-    resiembra = models.OneToOneField(Costos, related_name="resiembra_costos")
-    colino = models.OneToOneField(Costos, related_name="colino_costos")
-    estacas = models.OneToOneField(Costos, related_name="estacas_costos")
-    cal = models.OneToOneField(Costos, related_name="cal_costos")
-    dap = models.OneToOneField(Costos, related_name="dap_costos")
-    micorriza = models.OneToOneField(Costos, related_name="micorriza_costos")
-    vinilo = models.OneToOneField(Costos, related_name="vinilo_costos")
-    paecilomyces = models.OneToOneField(Costos, related_name="paecilomyces_costos")
-    trichoderma = models.OneToOneField(Costos, related_name="trichoderma_costos")
-    melaza = models.OneToOneField(Costos, related_name="melaza_costos")
+    resiembra = models.FloatField(default = 2)
+    colino = models.FloatField(default = 2)
+    estacas = models.FloatField(default = 2)
+    cal = models.FloatField(default = 2)
+    dap = models.FloatField(default = 2)
+    micorriza = models.FloatField(default = 2)
+    vinilo = models.FloatField(default = 2)
+    paecilomyces = models.FloatField(default = 2)
+    trichoderma = models.FloatField(default = 2)
+    melaza = models.FloatField(default = 2)
 
     def getValues(self):
         return {
-            "colino": self.colino.getValues(),
-            "estacas": self.estacas.getValues(),
-            "cal": self.cal.getValues(),
-            "dap": self.dap.getValues(),
-            "micorriza": self.micorriza.getValues(),
-            "vinilo": self.vinilo.getValues(),
-            "paecilomyces": self.paecilomyces.getValues(),
-            "trichoderma": self.trichoderma.getValues(),
-            "melaza": self.melaza.getValues(),
+            "colino": self.colino,
+            "estacas": self.estacas,
+            "cal": self.cal,
+            "dap": self.dap,
+            "micorriza": self.micorriza,
+            "vinilo": self.vinilo,
+            "paecilomyces": self.paecilomyces,
+            "trichoderma": self.trichoderma,
+            "melaza": self.melaza,
         }
 
 class Ano_costo(models.Model):
@@ -546,18 +546,18 @@ class Base_presupuestal(models.Model):
         costos_insumos = self.costos_insumos.getValues()
         preparacion = self.preparacion.getValues()
     #
-        colino = (preparacion["colino"]["cantidadS"]*datos_g["densidad"]) + (preparacion["colino"]["cantidadH"]*datos_g["densidad"]/100)
-        pmo_costo = {
-            "colino" : colino, #
-            "estacas" :(preparacion["estacas"]["cantidadS"]*datos_g["densidad"]),#
-            "cal" :(preparacion["cal"]["cantidadS"]*datos_g["densidad"]/1000), #
-            "dap" :(preparacion["dap"]["cantidadS"]*datos_g["densidad"]/1000), #
-            "micorriza" :(preparacion["micorriza"]["cantidadS"]*datos_g["densidad"]), #
-            "vinilo" : (colino)*preparacion["vinilo"]["cantidadS"]*preparacion["vinilo"]["frecuencia"]/1000,#
-            "paecilomyces" :(colino*preparacion["paecilomyces"]["cantidadS"]*preparacion["paecilomyces"]["frecuencia"]),
-            "trichoderma" :(colino*preparacion["trichoderma"]["cantidadS"]*preparacion["trichoderma"]["frecuencia"]),
-            "melaza" :(colino)*preparacion["melaza"]["cantidadS"]*preparacion["melaza"]["frecuencia"]/1000,
-        }
+        #colino = (preparacion["colino"]["cantidadS"]*datos_g["densidad"]) + (preparacion["colino"]["cantidadH"]*datos_g["densidad"]/100)
+        #pmo_costo = {
+        #    "colino" : colino, #
+        #    "estacas" :(preparacion["estacas"]["cantidadS"]*datos_g["densidad"]),#
+        #    "cal" :(preparacion["cal"]["cantidadS"]*datos_g["densidad"]/1000), #
+        #    "dap" :(preparacion["dap"]["cantidadS"]*datos_g["densidad"]/1000), #
+        #    "micorriza" :(preparacion["micorriza"]["cantidadS"]*datos_g["densidad"]/1000), #
+        #    "vinilo" : (colino)*preparacion["vinilo"]["cantidadS"]*preparacion["vinilo"]["frecuencia"]/1000,#
+        #    "paecilomyces" :(colino*preparacion["paecilomyces"]["cantidadS"]*preparacion["paecilomyces"]["frecuencia"]/1000),
+        #    "trichoderma" :(colino*preparacion["trichoderma"]["cantidadS"]*preparacion["trichoderma"]["frecuencia"]/1000),
+        #    "melaza" :(colino)*preparacion["melaza"]["cantidadS"]*preparacion["melaza"]["frecuencia"]/1000,
+        #}
 
         ci_costo ={
             "materiaOrganica" : [],
@@ -586,9 +586,9 @@ class Base_presupuestal(models.Model):
                             ci_costo[key].append(datos_g["densidad"]*d["cantidadS"]*d["frecuencia"]/1000)
             else:
                 for d in value:
-                    ci_costo[key].append(datos_g["densidad"]*d["cantidadS"]*d["frecuencia"])
+                    ci_costo[key].append(datos_g["densidad"]*d["cantidadS"]*d["frecuencia"]/1000)
 
-        subTotalInsumos = {
+        """subTotalInsumos = {
             "colino":[self.insumos_g.arbol*pmo_costo["colino"]/1000],
             "estacas":[ pmo_costo["estacas"]/1000 ],
             "cal":[ pmo_costo["cal"]/1000 ],
@@ -598,6 +598,34 @@ class Base_presupuestal(models.Model):
             "paecilomyces":[ pmo_costo["paecilomyces"]/1000 ],
             "trichoderma":[ pmo_costo["trichoderma"]/1000 ],
             "melaza":[ pmo_costo["melaza"]/1000 ],
+            "materiaOrganica":[],
+            "herbicidaCalles":[],
+            "herbicidaPlatos":[],
+            "insecticidas":[],
+            "fungicidas":[],
+            "fertilizante":[],
+            "ridomil":[],
+            "fertilizanteFoliar":[],
+            "biocontroladores":[],
+            "guadana":[],
+            "selectores":[],
+            "bombasEspalda":[],
+            "bombasEstacionarias":[],
+            "canastillas":[],
+            "herramientas":[],
+            "lycra":[]
+        }"""
+
+        subTotalInsumos = {
+            "colino":[preparacion["colino"]],
+            "estacas":[preparacion["estacas"]],
+            "cal":[preparacion["cal"]],
+            "dap":[preparacion["dap"]],
+            "micorriza":[preparacion["micorriza"]],
+            "vinilo":[preparacion["vinilo"]],
+            "paecilomyces":[preparacion["paecilomyces"]],
+            "trichoderma":[preparacion["trichoderma"]],
+            "melaza":[preparacion["melaza"]],
             "materiaOrganica":[],
             "herbicidaCalles":[],
             "herbicidaPlatos":[],
@@ -648,12 +676,13 @@ class Base_presupuestal(models.Model):
         insumos_g = self.insumos_g.getValues()
         establecimiento = self.establecimiento_r.getValues()
         insumos_mo = self.insumos_mo.getValues()
+        preparacion = self.preparacion.getValues()
     # INGRESOS
     # Ventas (ingresos)
         ventas = []
         for tkg in dc_produccion["produccion"]:
             ventas.append(
-                    tkg*(dc_produccion["primera"]["mult"] + dc_produccion["tercera"]["mult"] + dc_produccion["segunda"]["mult"])
+                    tkg*(dc_produccion["primera"]["mult"] + dc_produccion["tercera"]["mult"] + dc_produccion["segunda"]["mult"])/1000
                 )
 
     # EGRESOS (perdidas)
@@ -663,18 +692,49 @@ class Base_presupuestal(models.Model):
         cipc = self.cipc.getSums()
 
     # MANO DE OBRA
-        leldpE = establecimiento
+        leldpE = {}
     # Labores de Establecimiento, Levante, Desarrollo y Producción.
         leldpE["preparacionTerreno"] = establecimiento["preparacionTerreno"]
-        leldpE["trazo"] = establecimiento["trazo"]*datos_g["densidad"]
-        leldpE["hoyado"] = establecimiento["hoyado"]*datos_g["densidad"]
-        leldpE["distribucionColino"] = establecimiento["distribucionColino"]*datos_g["densidad"]
-        leldpE["aplicacionCorrectivos"] = establecimiento["aplicacionCorrectivos"]*datos_g["densidad"]
-        leldpE["aplicacionMicorriza"] = establecimiento["aplicacionMicorriza"]*datos_g["densidad"]
-        leldpE["aplicacionMateriaOrganica"] = establecimiento["aplicacionMateriaOrganica"]*datos_g["densidad"]
-        leldpE["siembra"] = establecimiento["siembra"]*datos_g["densidad"]
-        leldpE["resiembra"] = establecimiento["resiembra"]*datos_g["densidad"]
+        if establecimiento["trazo"] != 0:
+            leldpE["trazo"] = datos_g["densidad"] / establecimiento["trazo"]
+        else:
+            leldpE["trazo"] = 0
 
+        if establecimiento["hoyado"] != 0:
+            leldpE["hoyado"] = datos_g["densidad"] / establecimiento["hoyado"]
+        else:
+            leldpE["hoyado"] = 0
+
+        if establecimiento["distribucionColino"] != 0:
+            leldpE["distribucionColino"] = datos_g["densidad"] / establecimiento["distribucionColino"]
+        else:
+            leldpE["distribucionColino"] = 0
+
+        if establecimiento["aplicacionCorrectivos"] != 0:
+            leldpE["aplicacionCorrectivos"] = datos_g["densidad"] / establecimiento["aplicacionCorrectivos"]
+        else:
+            leldpE["aplicacionCorrectivos"] =0
+
+        if establecimiento["aplicacionMicorriza"] != 0:
+            leldpE["aplicacionMicorriza"] = datos_g["densidad"] / establecimiento["aplicacionMicorriza"]
+        else:
+            leldpE["aplicacionMicorriza"] =0
+
+        if establecimiento["aplicacionMateriaOrganica"] != 0:
+            leldpE["aplicacionMateriaOrganica"] = datos_g["densidad"] / establecimiento["aplicacionMateriaOrganica"]
+        else:
+            leldpE["aplicacionMateriaOrganica"] =0
+
+        if establecimiento["siembra"] != 0:
+            leldpE["siembra"] = datos_g["densidad"] / establecimiento["siembra"]
+        else:
+            leldpE["siembra"] =0
+        
+        if establecimiento["resiembra"] != 0:
+            leldpE["resiembra"] = (datos_g["densidad"]*preparacion["dap"])/ establecimiento["resiembra"]
+        else:
+            leldpE["resiembra"] =0
+        
         leldpR = {
             "siembra" : [],
             "resiembra" : [],
@@ -713,7 +773,7 @@ class Base_presupuestal(models.Model):
                 if data_mo["rendimiento"]*data_mo["frecuencia"] == 0:
                     leldpR[k].append(0)
                 else:
-                    leldpR[k].append(datos_g["densidad"]/data_mo["rendimiento"]*data_mo["frecuencia"])
+                    leldpR[k].append(datos_g["densidad"]/(data_mo["rendimiento"]*data_mo["frecuencia"]))
 
 
         for counter,data_mo in enumerate(insumos_mo["recoleccionContrato"]):
@@ -771,7 +831,6 @@ class Base_presupuestal(models.Model):
 
     # INSUMOS
         totalInsumos = self.totalInsumos()
-
     # result
         for x in range(0,15):
             egresos.append((totalMO[x] + cipc[x] + totalInsumos[x])*-1) #Agregado para quedar negativo

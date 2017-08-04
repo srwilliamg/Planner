@@ -43,7 +43,13 @@
 	background-color: green !important;
 }
 
+.riesgodiv{
+	width: 100% !important;
+	
+}
+
 .riesgoform{
-	width: 10px !important;
-	float:left !important;
+	width: 20% !important;
+	float: left !important;
+	
 }

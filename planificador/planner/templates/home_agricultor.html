@@ -155,6 +155,7 @@
 				        success: function (data){
 
 				        	if(data["ok"]){
+				        		console.log(data["egresos"])
 					            var ctxLote = document.getElementById("myChart");
 								var chartLote = new Chart(ctxLote, {
 								type: 'line',

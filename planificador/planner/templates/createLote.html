@@ -6,10 +6,11 @@
   <form method="post" accept-charset="utf-8">
     {% csrf_token %}
     {{loteform.as_p}}
-    <h3>Riesgo</h3>
-    <br>
-    {{riesgoform.as_p}}
-    <button type="submit" class="btn-success btn b-t-1">Crear</button>
+    <h3>Riesgos</h3>
+    <div class = "riesgodiv">
+    	{{riesgoform.as_p}}
+    </div>
+    <button type="submit" class="btn-success btn b-t-1" style="margin-top: 2em;">Crear</button>
   </form>
 {% endblock %}
 
