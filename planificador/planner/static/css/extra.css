@@ -45,11 +45,24 @@
 
 .riesgodiv{
 	width: 100% !important;
-	
 }
 
 .riesgoform{
 	width: 20% !important;
+	float: left !important;	
+}
+
+.yearsform{
+	width: 100% !important;
+}
+
+.produccionform{
+	width: 30% !important;
 	float: left !important;
-	
+	margin-right: 2em !important;
+}
+
+.hiddenthing{
+	visibility: hidden;
+	display: none;
 }

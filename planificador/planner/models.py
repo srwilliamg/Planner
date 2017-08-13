@@ -16,7 +16,7 @@ CULTIVO_OPTIONS = (("limon", "Limón"), ("agroforestal", "Agroforestal"), ("lulo
 VARIEDAD_OPTIONS = (("tahiti", "Tahití"),("selva", "La selva"), ("sin espinas", "Sin espinas"), ("arbustivo", "Arbustivo"), ("nogal", "Nogal"), ("calavera", "Calavera"), ("bandola", "Bandola"))
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser): #
     document_type = models.CharField(max_length=5, choices=DOCUMENT_OPTIONS, default="CC")
     document_number = models.CharField(max_length=30)
 
@@ -63,7 +63,7 @@ class User(AbstractBaseUser):
 
     __unicode__ = __str__
 
-class Finca(models.Model):
+class Finca(models.Model): #
     name = models.CharField(max_length=150, default="Finca")
     area = models.FloatField(default=320)
     agricultor = models.ForeignKey(User, blank=False,related_name= "finca_agricultor")
@@ -74,7 +74,7 @@ class Finca(models.Model):
     def getValues(self):
         return {"nombre":self.name, "area":self.area, "agricultor": self.agricultor.getValues()}
 
-class Riesgo(models.Model):
+class Riesgo(models.Model): #
     mercado = models.FloatField(default=1)
     fitosanitario = models.FloatField(default=1)
     fluctuacion_precio = models.FloatField(default=1)
@@ -100,7 +100,7 @@ class Riesgo(models.Model):
             self.inseguridad
         ]
 
-class Lote(models.Model):
+class Lote(models.Model): #
     name = models.CharField(max_length=150, null=False, default="Lote")
     tipo = models.CharField(max_length=15, choices=TIPO_OPTIONS, blank=False)
     cultivo = models.CharField(max_length=15, choices=CULTIVO_OPTIONS, blank=False)
@@ -125,7 +125,7 @@ class Lote(models.Model):
         "riesgo": self.riesgo
         }
 
-class Insumos_generales(models.Model):
+class Insumos_generales(models.Model): #
     arbol = models.FloatField(default=400)
     fungicida = models.FloatField(default=400)
     insecticida = models.FloatField(default=400)
@@ -151,9 +151,9 @@ class Insumos_generales(models.Model):
             "ridomil": self.ridomil
         }
 
-class Porcentaje_precio(models.Model):
-    precio = models.FloatField()
-    porcentaje = models.FloatField()
+class Porcentaje_precio(models.Model): #
+    precio = models.FloatField(default=1)
+    porcentaje = models.FloatField(default=1)
 
     def __str__(self):
         return u"{}$-{}%".format(self.precio, self.porcentaje)
@@ -164,7 +164,7 @@ class Porcentaje_precio(models.Model):
     def getValues(self):
         return {"precio":self.precio, "porcentaje":self.porcentaje, "mult": self.mult()}
 
-class Produccion(models.Model):
+class Produccion(models.Model):#
     ano1 = models.FloatField(default=120)
     ano2 = models.FloatField(default=120)
     ano3 = models.FloatField(default=120)
@@ -200,7 +200,7 @@ class Produccion(models.Model):
             self.ano15
         ]
 
-class Distribucion_calidad(models.Model):
+class Distribucion_calidad(models.Model):#
     primera = models.OneToOneField(Porcentaje_precio, related_name= "dc_primera")
     segunda = models.OneToOneField(Porcentaje_precio, related_name= "dc_segunda")
     tercera = models.OneToOneField(Porcentaje_precio, related_name= "dc_tercera")
@@ -211,9 +211,9 @@ class Distribucion_calidad(models.Model):
                 "tercera": self.primera.getValues(),"produccion":self.produccion.getValues()}
 
 class Datos_generales(models.Model):
-    empresa = models.CharField(max_length= 125, default="empresa")
-    departamento = models.CharField(max_length= 125, default="Risaralda")
-    vereda = models.CharField(max_length= 125, default="El cedral")
+    #empresa = models.CharField(max_length= 125, default="empresa")
+    #departamento = models.CharField(max_length= 125, default="Risaralda")
+    #vereda = models.CharField(max_length= 125, default="El cedral")
     gastos_operacionales = models.FloatField(default=300)
     valor_de_tierra = models.FloatField(default=400)
     densidad = models.FloatField(default=400)
@@ -222,9 +222,9 @@ class Datos_generales(models.Model):
 
     def getValues(self):
         return{
-            "empresa":self.empresa,
-            "departamento":self.departamento,
-            "vereda":self.vereda,
+            #"empresa":self.empresa,
+            #"departamento":self.departamento,
+            #"vereda":self.vereda,
             "gastos_operacionales":self.gastos_operacionales,
             "valor_de_tierra":self.valor_de_tierra,
             "densidad":self.densidad,
@@ -425,7 +425,7 @@ class CIPC(models.Model):
 
     gastosGenerales = models.FloatField(default=100)
     prestacionesSociales = models.FloatField(default=200)
-    impuestoPredial = models.FloatField(default=3000)
+    impuestoPredial = models.FloatField(default=100)
     gastosFinancieros = models.FloatField(default=200)
 
     def __str__(self):

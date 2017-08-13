@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block header %}{{titulo}}{{block.super}}{% endblock %}
+
+{% block wrapper %}
+  
+    <div style="">
+	    <div class="list-inline">
+	        <div class="col-lg-4">
+	            <div class="panel panel-green">
+	            	<div class = "panel-heading">
+				    	<h4 class="panel-tittle">Insumos generales</h4>
+			    	</div>
+					<div class="panel-body">
+						<div class="list-group">
+						<form method="post" accept-charset="utf-8">
+    						{% csrf_token %}
+							{{Insumos_generalesform.as_p}}
+						<button type="submit" name = "insumosGenerales" class="btn-success btn b-t-1">Crear</button>
+  						</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="hiddenthing" style="">
+	    <div class="list-inline">
+	        <div class="col-lg-4">
+	            <div class="panel panel-green">
+	            	<div class = "panel-heading">
+				    	<h4 class="panel-tittle">Establecimiento</h4>
+			    	</div>
+					<div class="panel-body">
+						<div class="list-group">
+						{{establecimientoform.as_p}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="hiddenthing" style="">
+	    <div class="list-inline">
+	        <div class="col-lg-4">
+	            <div class="panel panel-green">
+	            	<div class = "panel-heading">
+				    	<h4 class="panel-tittle">Costes de preparación</h4>
+			    	</div>
+					<div class="panel-body">
+						<div class="list-group">
+						{{preparacionform.as_p}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="hiddenthing" style="clear: left;">
+	    <div class="list-inline">
+	        <div>
+	            <div class="panel panel-green">
+	            	<div class = "panel-heading">
+				    	<h4 class="panel-tittle">Datos generales</h4>
+			    	</div>
+					<div class="panel-body">
+						<div class="list-group">
+							{{datos_generalesform.as_p}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+    <div class="hiddenthing" style="">
+    <h3>CIPC</h3>
+    <br>
+    	<form method="post" accept-charset="utf-8">
+    	{% csrf_token %}
+    	{% for value in cipc %}
+	    <div class="list-inline">
+	        <div class="col-lg-4">
+	            <div class="panel panel-green">
+				    <div class = "panel-heading">
+				    	<h4 class="panel-tittle">Año {{forloop.counter}}</h4>
+			    	</div>
+					<div class="panel-body">
+						<div class="list-group">
+						{{value.as_p}}	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+		<button type="submit" name = "cipc" class="btn-success btn b-t-1">Crear</button>
+  		</form>
+	</div>
+	
+	<div class="hiddenthing" style="clear: left;">
+		<h3>Distribución de calidad</h3>
+		<br>
+		<br>
+		<form method="post" accept-charset="utf-8">
+    	{% csrf_token %}
+		 <div class="list-inline">
+	        <div class="col-lg-4">
+	            <div class="panel panel-green">
+				    <div class = "panel-heading">
+				    	<h4 class="panel-tittle">Primera</h4>
+			    	</div>
+					<div class="panel-body">
+						<div class="list-group">
+						{{porcentaje_precio1form.as_p}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="list-inline">
+	        <div class="col-lg-4">
+	            <div class="panel panel-green">
+					<div class = "panel-heading">
+						<h4 class="panel-tittle">Segunda</h4>
+					</div>
+					<div class="panel-body">
+						<div class="list-group">
+						{{porcentaje_precio2form.as_p}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="list-inline">
+	        <div class="col-lg-4">
+	            <div class="panel panel-green">
+					<div class = "panel-heading">
+						<h4 class="panel-tittle">Tercera</h4>
+					</div>
+					<div class="panel-body">
+						<div class="list-group">
+						{{porcentaje_precio3form.as_p}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="submit" name = "distribucioncalidad" class="btn-success btn b-t-1">Crear</button>
+  		</form>
+	</div>
+
+	<div class="hiddenthing" style="clear: left;">
+		<div class="list-inline">
+	        <div class="">
+	            <div class="panel panel-green">
+				    <div class = "panel-heading">
+				    	<h4 class="panel-tittle">Producción por año</h4>
+			    	</div>
+					<div class="panel-body">
+						<div class="list-group">
+						<form method="post" accept-charset="utf-8">
+    					{% csrf_token %}
+						{{produccionform.as_table}}
+						<button type="submit" name = "produccion" class="btn-success btn b-t-1">Crear</button>
+  						</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="hiddenthing" style="">
+		<h3>Mano de obra</h3>
+		<br>
+		<form method="post" accept-charset="utf-8">
+    	{% csrf_token %}
+		{% for key, value in manoobra.items %}
+		    <h3>{{key}}</h3>
+		    <br>
+		    	{% for v in value %}
+			    <div class="list-inline">
+			        <div class="col-lg-4">
+			            <div class="panel panel-green">
+						    <div class = "panel-heading">
+						    	<h4 class="panel-tittle">Año {{forloop.counter}}</h4>
+					    	</div>
+							<div class="panel-body">
+								<div class="list-group">
+								{{v.as_p}}	
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+		{% endfor %}
+		<button type="submit" name = "Manoobra" class="btn-success btn b-t-1">Crear</button>
+  		</form>
+	</div>
+
+	<div class="hiddenthing" style="">
+		<h3>Costos de insumos</h3>
+		<form method="post" accept-charset="utf-8">
+    	{% csrf_token %}
+		{% for key, value in data_costos.items %}
+		    <h3>Costos de {{key}}</h3>
+		    <br>
+		    	{% for v in value %}
+			    <div class="list-inline">
+			        <div class="col-lg-4">
+			            <div class="panel panel-green">
+						    <div class = "panel-heading">
+						    	<h4 class="panel-tittle">Año {{forloop.counter}}</h4>
+					    	</div>
+							<div class="panel-body">
+								<div class="list-group">
+								{{v.as_p}}	
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+		{% endfor %}
+		<button type="submit" name = "costoinsumos" class="btn-success btn b-t-1">Crear</button>
+  		</form>
+	</div>
+	</div>
+{% endblock %}
+
+
+{% block table %}
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+{% block footer %}{% endblock %}

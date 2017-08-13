@@ -219,6 +219,604 @@ def createLote(request):
         ctx['riesgoform'] = AddRiesgoForm
     return render(request, template_name, ctx)
 
+def createbp(request):
+    template_name = "base_presupuestal.html"
+    ctx = {}
+    if request.POST:
+        print(request.POST)
+        #loteform = AddLoteForm(request.POST or None)
+        #riesgoform = AddRiesgoForm(request.POST or None)
+
+        #objlote = loteform.save(commit=False)
+        #objlote.agricultor = request.user
+        #objriesgo = riesgoform.save()
+        #objlote.riesgo = objriesgo
+        #objlote.save()
+
+        #qbp = Base_presupuestal.objects.filter(tipo=objlote.tipo, cultivo=objlote.cultivo, variedad=objlote.variedad)
+        #if qbp.__len__() != 0:
+        #    bp= qbp[0]
+        #    lhbp = lote_has_bp(lote = objlote,bp = bp)
+        #    lhbp.save()
+        return redirect('createbp')
+    else:
+        cipc =[
+         AddcipcForm,
+         AddcipcForm,
+         AddcipcForm,
+         AddcipcForm,
+         AddcipcForm,
+         AddcipcForm,
+         AddcipcForm,
+         AddcipcForm,
+         AddcipcForm,
+         AddcipcForm,
+         AddcipcForm,
+         AddcipcForm,
+         AddcipcForm,
+         AddcipcForm,
+         AddcipcForm
+        ]
+
+        data_manoobra = {}
+        data_mo_siembra =[
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm
+        ]
+        data_manoobra['Siembra'] = data_mo_siembra
+        data_mo_resiembra =[
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm
+        ]
+        data_manoobra['Resiembra'] = data_mo_resiembra
+        data_mo_lgc =[
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm
+        ]
+        data_manoobra['Limpia-guadaña-calles'] = data_mo_lgc
+        data_mo_ah =[
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm
+        ]
+        data_manoobra['Aplicación de herbicida'] = data_mo_ah
+        data_mo_plateo =[
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm
+        ]
+        data_manoobra['Plateo'] = data_mo_plateo
+        data_mo_fertilizacion =[
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm
+        ]
+        data_manoobra['Fertilización'] = data_mo_fertilizacion
+        data_mo_amo =[
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm
+        ]
+        data_manoobra['Aplicación de materia orgánica'] = data_mo_amo
+        data_mo_fungicidas =[
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm
+        ]
+        data_manoobra['Fungicidas'] = data_mo_fungicidas
+        data_mo_biocontroladores =[
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm
+        ]
+        data_manoobra['Biocontroladores'] = data_mo_biocontroladores
+        data_mo_aspersiones =[
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm
+        ]
+        data_manoobra['Aspersiones'] = data_mo_aspersiones
+        data_mo_tutorado =[
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm
+        ]
+        data_manoobra['Tutorado'] = data_mo_tutorado
+        data_mo_podas =[
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm
+        ]
+        data_manoobra['Podas'] = data_mo_podas
+        data_mo_rc =[
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm
+        ]
+        data_manoobra['Recolección contrato'] = data_mo_rc
+        data_mo_rd =[
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm,
+            AddData_moForm
+        ]
+        data_manoobra['Recolección por día'] = data_mo_rd
+
+        data_costos = {}
+        materiaOrganica =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['materia organica'] = materiaOrganica
+        herbicidaCalles =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['herbicida calles'] = herbicidaCalles
+        herbicidaPlatos =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['herbicida platos'] = herbicidaPlatos
+        insecticidas =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['insecticidas'] = insecticidas
+        fungicidas =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['fungicidas'] = fungicidas
+        fertilizante =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['fertilizante'] = fertilizante
+        ridomil =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['ridomil'] = ridomil
+        fertilizanteFoliar =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['fertilizante foliar'] = fertilizanteFoliar
+        biocontroladores =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['biocontroladores'] = biocontroladores
+        guadana =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['guadaña'] = guadana
+        selectores =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['selectores'] = selectores
+        bombasEspalda =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['bombas espalda'] = bombasEspalda
+        bombasEstacionarias =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['bombas estacionarias'] = bombasEstacionarias
+        canastillas =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['canastillas'] = canastillas
+        herramientas =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['herramientas'] = herramientas
+        lycra =[
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm,
+            AddCostosForm
+            ]
+        data_costos['lycra'] = lycra
+
+        ctx['titulo'] = "Crear nueva base presupuestal"
+        ctx['establecimientoform'] = AddEstablecimientoForm
+        ctx['manoobra'] = data_manoobra
+        ctx['preparacionform'] = AddPreparacion_costosForm
+        ctx['data_costos'] = data_costos
+        ctx['datos_generalesform'] = AddDatos_generalesForm
+        ctx['produccionform'] = AddProduccionForm
+        ctx['porcentaje_precio1form'] = AddPorcentaje_precioForm
+        ctx['porcentaje_precio2form'] = AddPorcentaje_precioForm
+        ctx['porcentaje_precio3form'] = AddPorcentaje_precioForm
+        ctx['cipc'] = cipc
+        ctx['Insumos_generalesform'] = AddInsumos_generalesForm
+    return render(request, template_name, ctx)
+
+
 class IndexView(TemplateView):
     template_name = "index.html"
     def get_context_data(self, *args, **kwargs):
