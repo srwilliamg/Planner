@@ -3,21 +3,19 @@
 {% block header %}{{titulo}}{{block.super}}{% endblock %}
 
 {% block wrapper %}
-  
-    <div style="">
-	    <div class="list-inline">
-	        <div class="col-lg-4">
+<form method="post" accept-charset="utf-8">
+	{% csrf_token %}
+
+<div style="">
+	    <div>
+	        <div class="">
 	            <div class="panel panel-green">
 	            	<div class = "panel-heading">
-				    	<h4 class="panel-tittle">Insumos generales</h4>
+				    	<h4 class="panel-tittle">Tipo de base presupuestal</h4>
 			    	</div>
 					<div class="panel-body">
 						<div class="list-group">
-						<form method="post" accept-charset="utf-8">
-    						{% csrf_token %}
-							{{Insumos_generalesform.as_p}}
-						<button type="submit" name = "insumosGenerales" class="btn-success btn b-t-1">Crear</button>
-  						</form>
+							{{base_presupuestal.as_p}}
 						</div>
 					</div>
 				</div>
@@ -25,8 +23,25 @@
 		</div>
 	</div>
 
-	<div class="hiddenthing" style="">
-	    <div class="list-inline">
+    <div style="">
+	    <div>
+	        <div class="col-lg-4">
+	            <div class="panel panel-green">
+	            	<div class = "panel-heading">
+				    	<h4 class="panel-tittle">Insumos generales</h4>
+			    	</div>
+					<div class="panel-body">
+						<div class="list-group">
+							{{Insumos_generalesform.as_p}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div style="">
+	    <div>
 	        <div class="col-lg-4">
 	            <div class="panel panel-green">
 	            	<div class = "panel-heading">
@@ -42,8 +57,8 @@
 		</div>
 	</div>
 
-	<div class="hiddenthing" style="">
-	    <div class="list-inline">
+	<div style="">
+	    <div>
 	        <div class="col-lg-4">
 	            <div class="panel panel-green">
 	            	<div class = "panel-heading">
@@ -59,9 +74,9 @@
 		</div>
 	</div>
 
-	<div class="hiddenthing" style="clear: left;">
-	    <div class="list-inline">
-	        <div>
+	<div>
+	    <div style="clear:left;">
+	        <div class="">
 	            <div class="panel panel-green">
 	            	<div class = "panel-heading">
 				    	<h4 class="panel-tittle">Datos generales</h4>
@@ -76,11 +91,9 @@
 		</div>
 	</div>
     
-    <div class="hiddenthing" style="">
+    <div style="">
     <h3>CIPC</h3>
     <br>
-    	<form method="post" accept-charset="utf-8">
-    	{% csrf_token %}
     	{% for value in cipc %}
 	    <div class="list-inline">
 	        <div class="col-lg-4">
@@ -97,16 +110,12 @@
 			</div>
 		</div>
 		{% endfor %}
-		<button type="submit" name = "cipc" class="btn-success btn b-t-1">Crear</button>
-  		</form>
 	</div>
 	
-	<div class="hiddenthing" style="clear: left;">
+	<div style="clear: left;">
 		<h3>Distribución de calidad</h3>
 		<br>
 		<br>
-		<form method="post" accept-charset="utf-8">
-    	{% csrf_token %}
 		 <div class="list-inline">
 	        <div class="col-lg-4">
 	            <div class="panel panel-green">
@@ -149,11 +158,9 @@
 				</div>
 			</div>
 		</div>
-		<button type="submit" name = "distribucioncalidad" class="btn-success btn b-t-1">Crear</button>
-  		</form>
 	</div>
 
-	<div class="hiddenthing" style="clear: left;">
+	<div style="clear: left;">
 		<div class="list-inline">
 	        <div class="">
 	            <div class="panel panel-green">
@@ -162,11 +169,7 @@
 			    	</div>
 					<div class="panel-body">
 						<div class="list-group">
-						<form method="post" accept-charset="utf-8">
-    					{% csrf_token %}
 						{{produccionform.as_table}}
-						<button type="submit" name = "produccion" class="btn-success btn b-t-1">Crear</button>
-  						</form>
 						</div>
 					</div>
 				</div>
@@ -174,11 +177,9 @@
 		</div>
 	</div>
 	
-	<div class="hiddenthing" style="">
+	<div style="">
 		<h3>Mano de obra</h3>
 		<br>
-		<form method="post" accept-charset="utf-8">
-    	{% csrf_token %}
 		{% for key, value in manoobra.items %}
 		    <h3>{{key}}</h3>
 		    <br>
@@ -199,14 +200,10 @@
 				</div>
 				{% endfor %}
 		{% endfor %}
-		<button type="submit" name = "Manoobra" class="btn-success btn b-t-1">Crear</button>
-  		</form>
 	</div>
 
-	<div class="hiddenthing" style="">
+	<div style="">
 		<h3>Costos de insumos</h3>
-		<form method="post" accept-charset="utf-8">
-    	{% csrf_token %}
 		{% for key, value in data_costos.items %}
 		    <h3>Costos de {{key}}</h3>
 		    <br>
@@ -227,10 +224,10 @@
 				</div>
 				{% endfor %}
 		{% endfor %}
-		<button type="submit" name = "costoinsumos" class="btn-success btn b-t-1">Crear</button>
-  		</form>
 	</div>
 	</div>
+<button type="submit" name = "costoinsumos" class="btn-success btn b-t-1">Crear</button>
+</form>
 {% endblock %}
 
 

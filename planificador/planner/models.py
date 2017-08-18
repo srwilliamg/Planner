@@ -545,19 +545,6 @@ class Base_presupuestal(models.Model):
         datos_g = self.datos_g.getValues()
         costos_insumos = self.costos_insumos.getValues()
         preparacion = self.preparacion.getValues()
-    #
-        #colino = (preparacion["colino"]["cantidadS"]*datos_g["densidad"]) + (preparacion["colino"]["cantidadH"]*datos_g["densidad"]/100)
-        #pmo_costo = {
-        #    "colino" : colino, #
-        #    "estacas" :(preparacion["estacas"]["cantidadS"]*datos_g["densidad"]),#
-        #    "cal" :(preparacion["cal"]["cantidadS"]*datos_g["densidad"]/1000), #
-        #    "dap" :(preparacion["dap"]["cantidadS"]*datos_g["densidad"]/1000), #
-        #    "micorriza" :(preparacion["micorriza"]["cantidadS"]*datos_g["densidad"]/1000), #
-        #    "vinilo" : (colino)*preparacion["vinilo"]["cantidadS"]*preparacion["vinilo"]["frecuencia"]/1000,#
-        #    "paecilomyces" :(colino*preparacion["paecilomyces"]["cantidadS"]*preparacion["paecilomyces"]["frecuencia"]/1000),
-        #    "trichoderma" :(colino*preparacion["trichoderma"]["cantidadS"]*preparacion["trichoderma"]["frecuencia"]/1000),
-        #    "melaza" :(colino)*preparacion["melaza"]["cantidadS"]*preparacion["melaza"]["frecuencia"]/1000,
-        #}
 
         ci_costo ={
             "materiaOrganica" : [],
@@ -588,33 +575,6 @@ class Base_presupuestal(models.Model):
                 for d in value:
                     ci_costo[key].append(datos_g["densidad"]*d["cantidadS"]*d["frecuencia"]/1000)
 
-        """subTotalInsumos = {
-            "colino":[self.insumos_g.arbol*pmo_costo["colino"]/1000],
-            "estacas":[ pmo_costo["estacas"]/1000 ],
-            "cal":[ pmo_costo["cal"]/1000 ],
-            "dap":[ pmo_costo["dap"]/1000 ],
-            "micorriza":[pmo_costo["micorriza"]/1000],
-            "vinilo":[ pmo_costo["vinilo"]/1000 ],
-            "paecilomyces":[ pmo_costo["paecilomyces"]/1000 ],
-            "trichoderma":[ pmo_costo["trichoderma"]/1000 ],
-            "melaza":[ pmo_costo["melaza"]/1000 ],
-            "materiaOrganica":[],
-            "herbicidaCalles":[],
-            "herbicidaPlatos":[],
-            "insecticidas":[],
-            "fungicidas":[],
-            "fertilizante":[],
-            "ridomil":[],
-            "fertilizanteFoliar":[],
-            "biocontroladores":[],
-            "guadana":[],
-            "selectores":[],
-            "bombasEspalda":[],
-            "bombasEstacionarias":[],
-            "canastillas":[],
-            "herramientas":[],
-            "lycra":[]
-        }"""
 
         subTotalInsumos = {
             "colino":[preparacion["colino"]],

@@ -205,31 +205,31 @@ class AddEstablecimientoForm(forms.ModelForm):
         ]
 
     preparacionTerreno = forms.FloatField(
-        required=True, label= "Preparacion de terreno", initial = 123,
+        required=True, label= "Preparacion de terreno", initial = 6666,
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"$", "class": "form-control"}))
     trazo = forms.FloatField(
-        required=True, label= "Trazo", initial = 123,
+        required=True, label= "Trazo", initial = 6666,
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"$", "class": "form-control"}))
     hoyado = forms.FloatField(
-        required=True, label= "Hoyado", initial = 123,
+        required=True, label= "Hoyado", initial = 6666,
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"$", "class": "form-control"}))
     distribucionColino = forms.FloatField(
-        required=True, label= "Distribución de colino",initial = 123, 
+        required=True, label= "Distribución de colino",initial = 6666, 
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"$", "class": "form-control"}))
     aplicacionCorrectivos = forms.FloatField(
-        required=True, label= "Aplicacion correctivos",initial = 123, 
+        required=True, label= "Aplicacion correctivos",initial = 6666, 
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"$", "class": "form-control"}))
     aplicacionMicorriza = forms.FloatField(
-        required=True, label= "Aplicacion micorriza", initial = 123,
+        required=True, label= "Aplicacion micorriza", initial = 6666,
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"$", "class": "form-control"}))
     aplicacionMateriaOrganica = forms.FloatField(
-        required=True, label= "Aplicación de materia organica", initial = 123,
+        required=True, label= "Aplicación de materia organica", initial = 6666,
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"$", "class": "form-control"}))
     siembra = forms.FloatField(
-        required=True, label= "Siembra", initial = 123,
+        required=True, label= "Siembra", initial = 6666,
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"$", "class": "form-control"}))
     resiembra = forms.FloatField(
-        required=True, label= "Resiembra",initial = 123,
+        required=True, label= "Resiembra",initial = 6666,
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"$", "class": "form-control"}))
 
 class AddcipcForm(forms.ModelForm):
@@ -243,16 +243,16 @@ class AddcipcForm(forms.ModelForm):
         ]
 
     gastosGenerales = forms.FloatField(
-        required=True, label= "Gastos generales", min_value=0,initial = 12, 
+        required=True, label= "Gastos generales", min_value=0,initial = 123, 
         widget=forms.NumberInput(attrs={"placeholder":"$", "class": "yearsform form-control"}))
     prestacionesSociales = forms.FloatField(
-        required=True, label= "Prestaciones sociales", min_value=0,initial = 12, 
+        required=True, label= "Prestaciones sociales", min_value=0,initial = 123, 
         widget=forms.NumberInput(attrs={"placeholder":"$", "class": "yearsform form-control"}))
     impuestoPredial = forms.FloatField(
-        required=True, label= "Impuesto predial", min_value=0,initial = 12, 
+        required=True, label= "Impuesto predial", min_value=0,initial = 123, 
         widget=forms.NumberInput(attrs={"placeholder":"$", "class": "yearsform form-control"}))
     gastosFinancieros = forms.FloatField(
-        required=True, label= "Gastos financieros", min_value=0,initial = 12, 
+        required=True, label= "Gastos financieros", min_value=0,initial = 123, 
         widget=forms.NumberInput(attrs={"placeholder":"$", "class": "yearsform form-control"}))
 
 class AddData_moForm(forms.ModelForm):
@@ -291,34 +291,34 @@ class AddPreparacion_costosForm(forms.ModelForm):
         ]
 
     resiembra = forms.FloatField(
-    required=True, label= "Resiembra", min_value=0,initial = 12, 
+    required=True, label= "Resiembra", min_value=0,initial = 4444, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     colino = forms.FloatField(
-    required=True, label= "Colino", min_value=0,initial = 12, 
+    required=True, label= "Colino", min_value=0,initial = 4444, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     estacas = forms.FloatField(
-    required=True, label= "Estacas", min_value=0,initial = 12, 
+    required=True, label= "Estacas", min_value=0,initial = 4444, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     cal = forms.FloatField(
-    required=True, label= "Cal", min_value=0,initial = 12, 
+    required=True, label= "Cal", min_value=0,initial = 4444, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     dap = forms.FloatField(
-    required=True, label= "Dap", min_value=0,initial = 12, 
+    required=True, label= "Dap", min_value=0,initial = 4444, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     micorriza = forms.FloatField(
-    required=True, label= "Micorriza", min_value=0,initial = 12, 
+    required=True, label= "Micorriza", min_value=0,initial = 4444, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     vinilo = forms.FloatField(
-    required=True, label= "Vinilo", min_value=0,initial = 12, 
+    required=True, label= "Vinilo", min_value=0,initial = 4444, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     paecilomyces = forms.FloatField(
-    required=True, label= "Paecilomyces", min_value=0,initial = 12, 
+    required=True, label= "Paecilomyces", min_value=0,initial = 4444, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     trichoderma = forms.FloatField(
-    required=True, label= "Trichoderma", min_value=0,initial = 12, 
+    required=True, label= "Trichoderma", min_value=0,initial = 4444, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     melaza = forms.FloatField(
-    required=True, label= "Melaza", min_value=0,initial = 12, 
+    required=True, label= "Melaza", min_value=0,initial = 4444, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
 
 class AddCostosForm(forms.ModelForm):
@@ -331,13 +331,13 @@ class AddCostosForm(forms.ModelForm):
         ]
 
     cantidadSitio = forms.FloatField(
-    required=True, label= "Cantidad por sitio", min_value=0,initial = 12, 
+    required=True, label= "Cantidad por sitio", min_value=0,initial = 1, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     cantidadHectarea = forms.FloatField(
-    required=True, label= "Cantidad por hectarea", min_value=0,initial = 12, 
+    required=True, label= "Cantidad por hectarea", min_value=0,initial = 1, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     frecuencia = forms.FloatField(
-    required=True, label= "Frecuencia", min_value=0,initial = 12, 
+    required=True, label= "Frecuencia", min_value=0,initial = 1, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
 
 class AddDatos_generalesForm(forms.ModelForm):
@@ -355,19 +355,19 @@ class AddDatos_generalesForm(forms.ModelForm):
         ]
 
     gastos_operacionales = forms.FloatField(
-    required=True, label= "Gastos operacionales", min_value=0,initial = 12, 
+    required=True, label= "Gastos operacionales", min_value=0,initial = 3333, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     valor_de_tierra = forms.FloatField(
-    required=True, label= "Valor de tierra", min_value=0,initial = 12, 
+    required=True, label= "Valor de tierra", min_value=0,initial = 3333, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     densidad = forms.FloatField(
-    required=True, label= "Densidad", min_value=0,initial = 12, 
+    required=True, label= "Densidad", min_value=0,initial = 3333, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     jornal = forms.FloatField(
-    required=True, label= "Jornal", min_value=0,initial = 12, 
+    required=True, label= "Jornal", min_value=0,initial = 3333, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     altitud = forms.FloatField(
-    required=True, label= "Altitud", min_value=0,initial = 12, 
+    required=True, label= "Altitud", min_value=0,initial = 3333, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
 
 class AddProduccionForm(forms.ModelForm):
@@ -392,49 +392,49 @@ class AddProduccionForm(forms.ModelForm):
         ]
 
     ano1 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 12, 
+    required=True, label= "", min_value=0,initial = 1111, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 1", "class": "produccionform form-control"}))
     ano2 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 12, 
+    required=True, label= "", min_value=0,initial = 1111, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 2", "class": "produccionform form-control"}))
     ano3 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 12, 
+    required=True, label= "", min_value=0,initial = 1111, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 3", "class": "produccionform form-control"}))
     ano4 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 12, 
+    required=True, label= "", min_value=0,initial = 1111, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 4", "class": "produccionform form-control"}))
     ano5 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 12, 
+    required=True, label= "", min_value=0,initial = 1111, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 5", "class": "produccionform form-control"}))
     ano6 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 12, 
+    required=True, label= "", min_value=0,initial = 1111, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 6", "class": "produccionform form-control"}))
     ano7 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 12, 
+    required=True, label= "", min_value=0,initial = 1111, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 7", "class": "produccionform form-control"}))
     ano8 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 12, 
+    required=True, label= "", min_value=0,initial = 1111, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 8", "class": "produccionform form-control"}))
     ano9 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 12, 
+    required=True, label= "", min_value=0,initial = 1111, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 9", "class": "produccionform form-control"}))
     ano10 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 12, 
+    required=True, label= "", min_value=0,initial = 1111, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 10", "class": "produccionform form-control"}))
     ano11 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 12, 
+    required=True, label= "", min_value=0,initial = 1111, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 11", "class": "produccionform form-control"}))
     ano12 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 12, 
+    required=True, label= "", min_value=0,initial = 1111, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 12", "class": "produccionform form-control"}))
     ano13 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 12, 
+    required=True, label= "", min_value=0,initial = 1111, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 13", "class": "produccionform form-control"}))
     ano14 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 12, 
+    required=True, label= "", min_value=0,initial = 1111, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 14", "class": "produccionform form-control"}))
     ano15 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 12, 
+    required=True, label= "", min_value=0,initial = 1111, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 15", "class": "produccionform form-control"}))        
 
 class AddPorcentaje_precioForm(forms.ModelForm):
@@ -469,35 +469,68 @@ class AddInsumos_generalesForm(forms.ModelForm):
         ]
 
     arbol = forms.FloatField(
-    required=True, label= "Arbol", min_value=0,initial = 12,
+    required=True, label= "Arbol", min_value=0,initial = 2222,
     widget=forms.NumberInput(attrs={"placeholder":"$", "class": "yearsform form-control"}))
     fungicida = forms.FloatField(
-    required=True, label= "Fungicida", min_value=0,initial = 12, 
+    required=True, label= "Fungicida", min_value=0,initial = 2222, 
     widget=forms.NumberInput(attrs={"placeholder":"$", "class": "yearsform form-control"}))
     insecticida = forms.FloatField(
-    required=True, label= "Insecticida", min_value=0,initial = 12, 
+    required=True, label= "Insecticida", min_value=0,initial = 2222, 
     widget=forms.NumberInput(attrs={"placeholder":"$", "class": "yearsform form-control"}))
     herbicida = forms.FloatField(
-    required=True, label= "Herbicida", min_value=0,initial = 12, 
+    required=True, label= "Herbicida", min_value=0,initial = 2222, 
     widget=forms.NumberInput(attrs={"placeholder":"$", "class": "yearsform form-control"}))
     canatillas = forms.FloatField(
-    required=True, label= "Canatillas", min_value=0,initial = 12, 
+    required=True, label= "Canatillas", min_value=0,initial = 2222, 
     widget=forms.NumberInput(attrs={"placeholder":"$", "class": "yearsform form-control"}))
     materiaOrganica = forms.FloatField(
-    required=True, label= "Materia organica", min_value=0,initial = 12, 
+    required=True, label= "Materia organica", min_value=0,initial = 2222, 
     widget=forms.NumberInput(attrs={"placeholder":"$", "class": "yearsform form-control"}))
     proteina_hidrolizada = forms.FloatField(
-    required=True, label= "Proteina hidrolizada", min_value=0,initial = 12, 
+    required=True, label= "Proteina hidrolizada", min_value=0,initial = 2222, 
     widget=forms.NumberInput(attrs={"placeholder":"$", "class": "yearsform form-control"}))
     coadyuvantes = forms.FloatField(
-    required=True, label= "coadyuvante", min_value=0,initial = 12, 
+    required=True, label= "coadyuvante", min_value=0,initial = 2222, 
     widget=forms.NumberInput(attrs={"placeholder":"$", "class": "yearsform form-control"}))
     fertilizante = forms.FloatField(
-    required=True, label= "fertilizante", min_value=0,initial = 12, 
+    required=True, label= "fertilizante", min_value=0,initial = 2222, 
     widget=forms.NumberInput(attrs={"placeholder":"$", "class": "yearsform form-control"}))
     ridomil = forms.FloatField(
-    required=True, label= "ridomil", min_value=0,initial = 12, 
+    required=True, label= "ridomil", min_value=0,initial = 2222, 
     widget=forms.NumberInput(attrs={"placeholder":"$", "class": "yearsform form-control"}))
+
+class AddBase_presupuestalForm(forms.ModelForm):
+    class Meta:
+        model = Base_presupuestal
+        fields = [
+            'tipo',
+            'cultivo',
+            'variedad',
+            'nombre'
+            #'rentabilidad',
+            #'datos_g',
+            #'insumos_g',
+            #'preparacion',
+            #'costos_insumos',
+            #'insumos_mo',
+            #'distribucion_calidad',
+            #'establecimiento_r',
+            #'cipc'
+        ]
+
+    tipo = forms.ChoiceField(
+        required=True, label="Tipo", widget=forms.Select(attrs={"class": "form-control"}), choices=TIPO_OPTIONS)
+
+    cultivo = forms.ChoiceField(
+        required=True, label="Cultivo", widget=forms.Select(attrs={"class": "form-control"}), choices=CULTIVO_OPTIONS)
+
+    variedad = forms.ChoiceField(
+        required=True, label="Variedad", widget=forms.Select(attrs={"class": "form-control"}), choices=VARIEDAD_OPTIONS)
+
+    nombre = forms.CharField(
+        required=True, label="Nombre",
+        widget=forms.TextInput(
+            attrs={"size": 20, "title": "Nombre", "class": "form-control"}))
 
 class EditUserProfileForm(forms.ModelForm):
 

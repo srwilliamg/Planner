@@ -130,3 +130,5 @@ AUTHENTICATION_BACKENDS = [
     # "django.contrib.auth.backends.ModelBackend",
     "planner.backends.UserBackend"
 ]
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None
