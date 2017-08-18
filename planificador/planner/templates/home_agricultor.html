@@ -28,7 +28,9 @@
 								        </a>
 								    </div>
 								    <div class="text-right">
-								        <a href="lotes/{{obj.id}}"> Ver finca <i class="fa fa-arrow-circle-right"></i></a>
+								    	<a id="buttonfinca" data-finca="{{obj.id}}"> Ver finca <i class="fa fa-bar-chart"></i></a> 	
+								    	&nbsp;&nbsp;
+								        <a href="lotes/{{obj.id}}"> Ver lotes <i class="fa fa-arrow-circle-right"></i></a>
 								    </div>
 								</div>
 			                </div>
@@ -141,7 +143,6 @@
 
 	    		$('a[id="buttonId"]').click(function() {    
 	    			var $this = $(this);
-        			//var finca = $this.data('finca');
         			var lote = $this.data('lote');
         			
 				    $.ajax({
@@ -211,7 +212,76 @@
 				        }
 				    });
 				});
+
+				$('a[id="buttonfinca"]').click(function() {    
+	    			var $this = $(this);
+        			var finca = $this.data('finca');
+        			
+				    $.ajax({
+				        url: "{% url 'fincaChart' %}",
+				        method: 'POST',
+				        data: {
+				            'finca': finca,
+				            'csrfmiddlewaretoken': '{{ csrf_token }}'
+				        },
+				        success: function (data){
+
+				        	if(data["ok"]){
+				        		console.log(data["egresos"])
+					            var ctxLote = document.getElementById("myChart");
+								var chartLote = new Chart(ctxLote, {
+								type: 'line',
+								data: {
+									labels: data["years"],
+									datasets: [
+										{
+											label: 'Margen',
+											data: data["margen"],
+											backgroundColor: ['rgba(125, 125, 125, 0.3)']
+										},
+										{
+											label: 'Ingresos',
+											data: data["ingresos"],
+											backgroundColor: ['rgba(0, 255, 0, 0.3)']
+										},
+										{
+											label: 'Egresos',
+											data: data["egresos"],
+											backgroundColor: ['rgba(255, 0, 0, 0.3)']
+										}
+									]
+									},
+								options: {
+										scales: {
+											yAxes: [{
+												ticks: {
+													beginAtZero:true
+												}
+											}]
+										}
+									}
+								});
+
+								var campo = document.getElementById("campoChart");
+								campo.style.visibility='visible';
+								campo.style.display ='initial';
+							}
+							
+							if(!data["ok"]){
+								var campo = document.getElementById("campoChart");
+								campo.style.visibility='hidden';
+								campo.style.display ='none';
+							}
+				        },
+
+				        error : function() {
+				            alert("error");
+				        }
+				    });
+				});
 			});
+
+
 
 	    	function calcularMargen(){
 	    		var ctx = document.getElementById("myChart");

@@ -819,6 +819,35 @@ class Base_presupuestal(models.Model):
             margen[i+pos] = (ingresos[i]+egresos[i])
 
         return margen
+
+    def MIE(self, edad, minimo, maximo):
+        ie = self.IngresosEgresos()
+        egresos = ie["egresos"]
+        ingresos = ie["ingresos"]
+        ing = []
+        egr = []
+        margen = []
+
+        if edad == 0:
+            pos = int(abs(minimo))
+        elif edad < 0:
+            pos = int(abs(minimo) - abs(edad))
+        else:
+            pos = int(abs(minimo) + abs(edad))
+
+        totalyears = int(abs(minimo) + abs(maximo) + 15)
+
+        for x in range(totalyears):
+            margen.append(0)
+            ing.append(0)
+            egr.append(0)
+
+        for i in range(len(ingresos)):
+            margen[i+pos] = (ingresos[i]+egresos[i])
+            ing[i+pos] = ingresos[i]
+            egr[i+pos] = egresos[i]
+
+        return (margen, ing, egr)
             
         
 class lote_has_bp(models.Model):

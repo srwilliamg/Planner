@@ -42,6 +42,87 @@ def log_out(request):
     logout(request)
     return redirect("login")
 
+@login_required()
+def fincaChart(request):
+    data = {}
+    margenes = []
+    ingresos = []
+    egresos = []
+    margenTotal = []
+    ingresosTotal = []
+    egresosTotal = []
+    years = []
+    edades = []
+
+    if request.is_ajax():
+        lnum = request.POST["finca"]
+        finca = Finca.objects.filter(pk=lnum)[0]
+        print(finca)
+
+        lotes = finca.lote_finca.all()
+        for l in lotes:
+            edades.append(l.edad)
+
+        if len(edades)!= 0:
+            maximo = max(edades)
+            minimo = min(edades)
+            totalyears = int(abs(minimo) + abs(maximo) + 15)
+            now = datetime.datetime.now()
+            first_year = now.year - abs(minimo)
+
+            for x in range(totalyears):
+                margenTotal.append(0)
+                ingresosTotal.append(0)
+                egresosTotal.append(0)
+                years.append(x+first_year)
+
+            lotes = finca.lote_finca.all()
+            for l in lotes:
+                qbp = l.lotebp_lote.all()
+                if qbp.__len__() !=0:
+                    bp = l.lotebp_lote.all()[0].bp
+                    MIE = bp.MIE(l.edad, minimo, maximo)
+                    margenes.append(
+                        [i * l.area for i in MIE[0]]
+                    )
+                    ingresos.append(
+                        [i * l.area for i in MIE[1]]
+                    )
+                    egresos.append(
+                        [i * l.area for i in MIE[2]]
+                    )
+
+            for x in margenes:
+                for counter,y in enumerate(x):
+                    margenTotal[counter] += y
+
+            for i in ingresos:
+                for c,i in enumerate(i):
+                    ingresosTotal[c] += i
+
+            for e in egresos:
+                for cont,w in enumerate(e):
+                    egresosTotal[cont] += w
+
+            if len(margenTotal) == 0:
+                print("Was false")
+                data = {
+                    "ok": False,
+                }
+                return HttpResponse(json.dumps(data), content_type="application/json")
+            else:
+                print("was true")
+                data = {
+                    "ok": True,
+                    "ingresos":ingresosTotal,
+                    "egresos":egresosTotal,
+                    "margen": margenTotal,
+                    "years":years
+                }
+
+        return HttpResponse(json.dumps(data), content_type="application/json")
+
+@login_required()
 def loteChart(request):
     if request.is_ajax():
         #fnum = request.POST["finca"]
@@ -197,6 +278,7 @@ class createFinca(CreateView):
         ctx['titulo'] = "Crear nueva finca"
         return ctx
 
+@login_required()
 def createLote(request):
     template_name = "createLote.html"
     ctx = {}
@@ -223,6 +305,7 @@ def createLote(request):
         ctx['riesgoform'] = AddRiesgoForm
     return render(request, template_name, ctx)
 
+@login_required()
 def createbp(request):
     template_name = "base_presupuestal.html"
     ctx = {}
@@ -561,7 +644,6 @@ def createbp(request):
 
     return render(request, template_name, ctx)
 
-
 class IndexView(TemplateView):
     template_name = "index.html"
     def get_context_data(self, *args, **kwargs):
@@ -575,11 +657,9 @@ def listLotes(request):
     context = {"Lotes" : queryset}
     return render(request, template_name, context)
 
-
 class LotesListView(ListView):
     queryset = Lote.objects.all()
     template_name = 'home.html'
-
 
 class UserListView(ListView):
     queryset = User.objects.all()

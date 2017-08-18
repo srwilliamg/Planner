@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^logout/$', views.log_out, name="logout"),
     url(r'^profile/$', views.updateProfile, name="profile"),
     url(r'^home_agricultor/$', views.home_agricultor, name='home_agricultor'),
+    url(r'^home_agricultor/finca/chart/$', views.fincaChart, name='fincaChart'),
     url(r'^home_agricultor/lotes/(?P<var>\w+)/$', LoteListView.as_view(), name='lotes'),
     url(r'^home_agricultor/lotes/\d+/loteChart/$', views.loteChart, name='loteChart'),
     url(r'^home_admin/$', views.home_admin, name='home_admin'),
