@@ -139,37 +139,41 @@ def home_agricultor(request):
     edades = []
 
     fincas = request.user.finca_agricultor.all()
+    if fincas.__len__() != 0:
+        for f in fincas:
+            lotes = f.lote_finca.all()
+            for l in lotes:
+                edades.append(l.edad)
+        if len(edades)!= 0:
+            maximo = max(edades)
+            minimo = min(edades)
+            totalyears = int(abs(minimo) + abs(maximo) + 15)
+            now = datetime.datetime.now()
+            first_year = now.year - abs(minimo)
 
-    for f in fincas:
-        lotes = f.lote_finca.all()
-        for l in lotes:
-            edades.append(l.edad)
+            for x in range(totalyears):
+                margenTotal.append(0)
+                years.append(x+first_year)
 
-    maximo = max(edades)
-    minimo = min(edades)
-    totalyears = int(abs(minimo) + abs(maximo) + 15)
-    now = datetime.datetime.now()
-    first_year = now.year - abs(minimo)
+            for f in fincas:
+                lotes = f.lote_finca.all()
+                for l in lotes:
+                    qbp = l.lotebp_lote.all()
+                    if qbp.__len__() !=0:
+                        bp = l.lotebp_lote.all()[0].bp
+                        margenes.append(
+                            [i * l.area for i in bp.margen(l.edad, minimo, maximo)]
+                        )
 
-    for x in range(totalyears):
-        margenTotal.append(0)
-        years.append(x+first_year)
+            for x in margenes:
+                for counter,y in enumerate(x):
+                    margenTotal[counter] += y
 
-    for f in fincas:
-        lotes = f.lote_finca.all()
-        for l in lotes:
-            qbp = l.lotebp_lote.all()
-            if qbp.__len__() !=0:
-                bp = l.lotebp_lote.all()[0].bp
-                margenes.append(
-                    [i * l.area for i in bp.margen(l.edad, minimo, maximo)]
-                    )
-
-    for x in margenes:
-        for counter,y in enumerate(x):
-            margenTotal[counter] += y
-
-    context = {"fincas":fincas, "margen": margenTotal, "years":years ,"titulo": ("Fincas")}
+            context = {"fincas":fincas, "margen": margenTotal, "years":years ,"titulo": ("Fincas")}
+        else:
+            context = {"fincas":fincas, "margen": [], "years":[] ,"titulo": ("Fincas")}
+    else:
+        context = {"fincas":[], "margen": [], "years":[],"titulo": ("Fincas")}
     return render(request, "home_agricultor.html", context)
 
 @login_required()
@@ -194,7 +198,6 @@ class createFinca(CreateView):
         return ctx
 
 def createLote(request):
-    form_class = AddLoteForm
     template_name = "createLote.html"
     ctx = {}
     if request.POST:
@@ -216,6 +219,7 @@ def createLote(request):
     else:
         ctx['titulo'] = "Crear nuevo lote"
         ctx['loteform'] = AddLoteForm
+        ctx['loteform'].declared_fields['finca'].queryset = Finca.objects.filter(agricultor=request.user)
         ctx['riesgoform'] = AddRiesgoForm
     return render(request, template_name, ctx)
 

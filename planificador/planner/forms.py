@@ -99,6 +99,7 @@ class AddFincaForm(forms.ModelForm):
         required=True, label= "Area", min_value=1, widget=forms.NumberInput(attrs={"class": "form-control"}))
 
 class AddLoteForm(forms.ModelForm):
+    
     class Meta:
         model = Lote
         fields = [
