@@ -261,7 +261,12 @@ def home_agricultor(request):
 def home_admin(request):
     if request.user.role != 'A':
         return RedirectToHome(request.user)
-    return render(request, "home_admin.html")
+
+    template_name = "home_admin.html"
+
+    ctx = {"users":User.objects.all()}
+
+    return render(request, template_name, ctx )
 
 class createFinca(CreateView):
     form_class = AddFincaForm
