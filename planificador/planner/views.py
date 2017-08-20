@@ -125,14 +125,12 @@ def fincaChart(request):
 @login_required()
 def loteChart(request):
     if request.is_ajax():
-        #fnum = request.POST["finca"]
         lnum = request.POST["lote"]
         lote = Lote.objects.filter(pk=lnum)[0]
-        #lotes = finca[0].lote_finca.all()
         years = []
 
         now = datetime.datetime.now()
-        first_year = now.year - lote.edad
+        first_year = now.year + lote.edad
 
         for year in range(15):
             years.append(year+first_year)
@@ -282,6 +280,36 @@ class createFinca(CreateView):
         ctx = super(createFinca, self).get_context_data(**kwargs)
         ctx['titulo'] = "Crear nueva finca"
         return ctx
+
+@login_required()
+def deleteFinca(request):
+    data ={}
+    if request.is_ajax():
+        fnum = request.POST["finca"]
+        finca = Finca.objects.get(pk=fnum)
+        finca.delete()
+        data['message'] = "La finca ha sido eliminada exitosamente"
+        return HttpResponse(json.dumps(data), content_type="application/json")
+
+@login_required()
+def deleteUser(request):
+    data ={}
+    if request.is_ajax():
+        unum = request.POST["user"]
+        user = User.objects.get(pk=unum)
+        user.delete()
+        data['message'] = "El usuario ha sido eliminado exitosamente"
+        return HttpResponse(json.dumps(data), content_type="application/json")
+
+@login_required()
+def deleteLote(request):
+    data ={}
+    if request.is_ajax():
+        fnum = request.POST["lote"]
+        lote = Lote.objects.get(pk=fnum)
+        lote.delete()
+        data['message'] = "El lote ha sido eliminado exitosamente"
+        return HttpResponse(json.dumps(data), content_type="application/json")
 
 @login_required()
 def createLote(request):
@@ -649,13 +677,13 @@ def createbp(request):
 
     return render(request, template_name, ctx)
 
+#############################################################3
 class IndexView(TemplateView):
     template_name = "index.html"
     def get_context_data(self, *args, **kwargs):
         context = super(IndexView, self).get_context_data(*args,**kwargs)
         return context
 
-@login_required()
 def listLotes(request):
     template_name = 'home.html'
     queryset = Lote.objects.all()

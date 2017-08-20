@@ -8,7 +8,10 @@
 			<canvas id="myChart"></canvas>	
 		</div>
 	</div>
+	<div id="divmessage">
+	</div><!-- Espacio para insertar mensajes por javascript -->
 	{% if fincas %}
+	<div id="divFincas">
 	    {% for obj in fincas %}
 			<div class=" list-inline">
 		            <div class="col-lg-4">
@@ -28,7 +31,9 @@
 								        </a>
 								    </div>
 								    <div class="text-right">
-								    	<a id="buttonfinca" data-finca="{{obj.id}}"> Ver finca <i class="fa fa-bar-chart"></i></a> 	
+								    	<a href="#" id="deletefinca" data-finca="{{obj.id}}"> Eliminar <i class="fa fa-trash"></i></a> 	
+								    	&nbsp;&nbsp;
+								    	<a href="#" id="buttonfinca" data-finca="{{obj.id}}"> Ver finca <i class="fa fa-bar-chart"></i></a> 	
 								    	&nbsp;&nbsp;
 								        <a href="lotes/{{obj.id}}"> Ver lotes <i class="fa fa-arrow-circle-right"></i></a>
 								    </div>
@@ -37,6 +42,7 @@
 		            </div> <!-- Horas -->
 		    </div>
     	{% endfor %}
+    </div>
 	{% endif %}
 
 	<div class="list-inline" id="tableRiesgo" style='visibility:hidden; display:none;'>
@@ -79,11 +85,12 @@
                 </div>
             </div>
         </div>
-    </div> <!-- Tablas -->
+    </div> 
 
 	{% if lote_list %}
+	<div id="divLotes">
 	    {% for value in lotes %}
-			<div class=" list-inline">
+			<div id="divLote{{value.id}}" class=" list-inline">
 		            <div class="col-lg-4">
 		                <div class="panel panel-green">
 		                    <div class="panel-heading">
@@ -113,7 +120,9 @@
 								        </a>
 								    </div>
 								    <div class="text-right">
-								        <a href="javascript:void(0)" id="buttonId" data-lote="{{value.id}}"> 
+								    	<a href="#" id="deletelote" data-lote="{{value.id}}"> Eliminar <i class="fa fa-trash"></i></a> 	
+								    	&nbsp;&nbsp;
+								        <a href="#" id="buttonId" data-lote="{{value.id}}"> 
 								        	Ver lote <i class="fa fa-arrow-circle-right"></i></a>
 								    </div>
 								</div>
@@ -121,13 +130,12 @@
 		            </div> <!-- Horas -->
 		    </div>
     	{% endfor %}
+    </div>
 	{% endif %}
 {% endblock %}
 
 
 {% block table %}
-
-
 {% endblock %}
 
 {% block script %}
@@ -140,6 +148,49 @@
 	    		{% if fincas %}
 			    calcularMargen();
 	    		{% endif %}
+
+	    		$('a[id="deletelote"]').click(function() {
+	    			var $this = $(this);
+        			var lote = $this.data('lote');
+        			console.log(lote);
+
+        			$.ajax({
+				        url: "{% url 'deleteLote' %}",
+				        method: 'POST',
+				        data: {
+				            'lote': lote,
+				            'csrfmiddlewaretoken': '{{ csrf_token }}'
+				        },
+				        success: function (data){
+				        	$("#divLotes").load(location.href + " #divLotes");
+				        	bootstrap_alert.success(data['message']);
+				        },
+				        error : function() {
+				            bootstrap_alert.warning("Ha ocurrido un error al intentar borrar el lote");
+				        }
+	    			});
+        		});
+
+	    		$('a[id="deletefinca"]').click(function() {
+	    			var $this = $(this);
+        			var finca = $this.data('finca');
+
+        			$.ajax({
+				        url: "{% url 'deleteFinca' %}",
+				        method: 'POST',
+				        data: {
+				            'finca': finca,
+				            'csrfmiddlewaretoken': '{{ csrf_token }}'
+				        },
+				        success: function (data){
+				        	$("#divFincas").load(location.href + " #divFincas");
+				        	bootstrap_alert.success(data['message']);
+				        },
+				        error : function() {
+				            bootstrap_alert.warning("Ha ocurrido un error al intentar borrar la finca");
+				        }
+	    			});
+        		});
 
 	    		$('a[id="buttonId"]').click(function() {    
 	    			var $this = $(this);
@@ -281,7 +332,13 @@
 				});
 			});
 
-
+			bootstrap_alert = function() {}
+			bootstrap_alert.success = function(message) {
+			    $('#divmessage').html("<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Success!</strong> "+message+"</div>")
+			}
+  			bootstrap_alert.warning = function(message) {
+			    $('#divmessage').html("<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Warning!</strong> "+message+"</div>")
+			}
 
 	    	function calcularMargen(){
 	    		var ctx = document.getElementById("myChart");

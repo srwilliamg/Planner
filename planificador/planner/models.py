@@ -111,7 +111,7 @@ class Lote(models.Model): #
     riesgo = models.OneToOneField(Riesgo, related_name= "lote_riesgo")
 
     def __str__(self):
-        return u"{} {} {}".format(self.tipo, self.cultivo, self.variedad)
+        return u"Lote: {}".format(self.name)
 
     def getValues(self):
         return {
@@ -311,13 +311,13 @@ class Costos_insumos(models.Model):
     ridomil = models.OneToOneField(Ano_costo, related_name="ridomil_anocosto")
     fertilizanteFoliar = models.OneToOneField(Ano_costo, related_name="fertilizanteFoliar_anocosto")
     biocontroladores = models.OneToOneField(Ano_costo, related_name="biocontroladores_anocosto")
-    guadana = models.OneToOneField(Ano_costo, related_name="guadana_anocosto")
+    guadana = models.OneToOneField(Ano_costo, related_name="guadana_anocosto")#
     selectores = models.OneToOneField(Ano_costo, related_name="selectores_anocosto")
     bombasEspalda = models.OneToOneField(Ano_costo, related_name="bombasEspalda_anocosto")
     bombasEstacionarias = models.OneToOneField(Ano_costo, related_name="bombasEstacionarias_anocosto")
     canastillas = models.OneToOneField(Ano_costo, related_name="canastillas_anocosto")
-    herramientas = models.OneToOneField(Ano_costo, related_name="herramientas_anocosto")
-    lycra = models.OneToOneField(Ano_costo, related_name="lycra_anocosto")
+    herramientas = models.OneToOneField(Ano_costo, related_name="herramientas_anocosto")#
+    lycra = models.OneToOneField(Ano_costo, related_name="lycra_anocosto")#
 
     def getValues(self):
         return {
@@ -522,9 +522,9 @@ class Establecimiento(models.Model):
         }
 
 class Base_presupuestal(models.Model):
-    tipo = models.CharField(max_length=15, choices=TIPO_OPTIONS, blank=False, default="frutales")
-    cultivo = models.CharField(max_length=15, choices=CULTIVO_OPTIONS, blank=False, default="frutales")
-    variedad = models.CharField(max_length=15, choices=VARIEDAD_OPTIONS, blank=False, default="frutales")
+    tipo = models.CharField(max_length=15, choices=TIPO_OPTIONS, blank=False)
+    cultivo = models.CharField(max_length=15, choices=CULTIVO_OPTIONS, blank=False)
+    variedad = models.CharField(max_length=15, choices=VARIEDAD_OPTIONS, blank=False)
     nombre = models.CharField(max_length=125, null=False, default="bp")
     rentabilidad = models.FloatField(default=0)
     datos_g = models.OneToOneField(Datos_generales,related_name="bp_dg")
@@ -537,7 +537,7 @@ class Base_presupuestal(models.Model):
     cipc = models.OneToOneField(Ano_cipc, related_name = "bp_cipc")
 
     def __str__(self):
-        return u"{} {}".format(self.nombre, self.rentabilidad)
+        return u"BP : {}, tipo: {}-{}-{}".format(self.nombre, self.tipo, self.variedad, self.cultivo)
 
     def totalInsumos(self):
     # Variables
@@ -849,7 +849,9 @@ class Base_presupuestal(models.Model):
 
         return (margen, ing, egr)
             
-        
 class lote_has_bp(models.Model):
     lote = models.ForeignKey(Lote, blank=False, related_name= "lotebp_lote")
     bp = models.ForeignKey(Base_presupuestal, blank=False, related_name= "lotebp_bp")
+
+    def __str__(self):
+        return u"{} -- {}".format(self.lote, self.bp)

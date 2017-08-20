@@ -19,7 +19,10 @@ urlpatterns = [
     url(r'^home_agricultor/lotes/(?P<var>\w+)/$', LoteListView.as_view(), name='lotes'),
     url(r'^home_agricultor/lotes/\d+/loteChart/$', views.loteChart, name='loteChart'),
     url(r'^home_admin/$', views.home_admin, name='home_admin'),
+    url(r'^home_admin/deleteuser/$', views.deleteUser, name='deleteUser'),
     url(r'^home_agricultor/crearf/$', createFinca.as_view(), name = "createFinca"),
+    url(r'^home_agricultor/deletef/$', views.deleteFinca, name = "deleteFinca"),
     url(r'^home_agricultor/crearl/$', views.createLote, name = "createLote"),
+    url(r'^home_agricultor/deletel/$', views.deleteLote, name = "deleteLote"),
     url(r'^home_agricultor/crearbp/$', views.createbp, name = "createbp"),
 ]

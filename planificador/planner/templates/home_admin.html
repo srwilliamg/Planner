@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block wrapper %}
+	<div id="divmessage">
+	</div><!-- Espacio para insertar mensajes por javascript -->
+		<div id="divUsers">
 		{% for value in users %}
 		{% if value.role != 'R' %}
 			<div class=" list-inline">
@@ -34,7 +37,7 @@
 								        </a>
 								    </div>
 								    <div class="text-right">
-								        <a href="javascript:void(0)" id="buttonId" data-lote="{{value.id}}"> 
+								        <a href="javascript:void(0)" id="deleteuser" data-user="{{value.id}}"> 
 								        	Eliminar <i class="fa fa-trash"></i></a>
 								    </div>
 								</div>
@@ -43,7 +46,42 @@
 		    </div>
 		{% endif %}
     	{% endfor %}
+    	</div>
 {% endblock %}
 
 {% block script %}
+	<script type="text/javascript">
+
+	$( document ).ready(function() {
+		$('a[id="deleteuser"]').click(function() {
+			var $this = $(this);
+			var user = $this.data('user');
+			console.log(user);
+
+			$.ajax({
+		        url: "{% url 'deleteUser' %}",
+		        method: 'POST',
+		        data: {
+		            'user': user,
+		            'csrfmiddlewaretoken': '{{ csrf_token }}'
+		        },
+		        success: function (data){
+		        	$("#divUsers").load(location.href + " #divUsers");
+		        	bootstrap_alert.success(data['message']);
+		        },
+		        error : function() {
+		            bootstrap_alert.warning("Ha ocurrido un error al intentar eliminar el usuario");
+		        }
+			});
+		});
+	});
+
+	bootstrap_alert = function() {}
+	bootstrap_alert.success = function(message) {
+	    $('#divmessage').html("<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Success!</strong> "+message+"</div>")
+	}
+	bootstrap_alert.warning = function(message) {
+    $('#divmessage').html("<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Warning!</strong> "+message+"</div>")
+	}
+	</script>
 {% endblock %}
