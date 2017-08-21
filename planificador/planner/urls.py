@@ -1,3 +1,5 @@
+  # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.conf.urls import url
 from django.views.generic import TemplateView
 from . import views
@@ -22,7 +24,9 @@ urlpatterns = [
     url(r'^home_admin/deleteuser/$', views.deleteUser, name='deleteUser'),
     url(r'^home_agricultor/crearf/$', createFinca.as_view(), name = "createFinca"),
     url(r'^home_agricultor/deletef/$', views.deleteFinca, name = "deleteFinca"),
+    url(r'^home_agricultor/updatef/(?P<var>\d+)/$', views.updateFinca, name='updateFinca'),
     url(r'^home_agricultor/crearl/$', views.createLote, name = "createLote"),
     url(r'^home_agricultor/deletel/$', views.deleteLote, name = "deleteLote"),
+    url(r'^home_agricultor/updatel/(?P<var>\d+)/$', views.updateLote, name='updateLote'),
     url(r'^home_agricultor/crearbp/$', views.createbp, name = "createbp"),
 ]

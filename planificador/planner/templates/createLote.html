@@ -3,15 +3,39 @@
 {% block header %}{{titulo}}{{block.super}}{% endblock %}
 
 {% block wrapper %}
-  <form method="post" accept-charset="utf-8">
-    {% csrf_token %}
-    {{loteform.as_p}}
-    <h3>Riesgos</h3>
-    <div class = "riesgodiv">
-    	{{riesgoform.as_p}}
-    </div>
-    <button type="submit" class="btn-success btn b-t-1" style="margin-top: 2em;">Crear</button>
-  </form>
+
+	<div id="divmessage">
+    </div><!-- Espacio para insertar mensajes por javascript -->
+
+    <div class="col-sm-12">
+	  <form method="post" accept-charset="utf-8">
+	    {% csrf_token %}
+	    <div class="col-sm-6">
+	    	<h3>Lote</h3>
+		    <table class="table table-striped .table-hover">
+		    	{{loteform.as_table}}
+			    <tr> 
+			    	<th>Escala de evaluación:</th>
+			    	<td>Valore el riesgo en cada uno de los siguientes items de 1 a 10, siendo 1 el menos riesgo y 10 mayor riesgo.</td>
+			    </tr>
+			    <tr> 
+			    	<th>Información:</th>
+			    	<td>Al poner el puntero sobre cada campo puede obtener más información sobre la entrada.</td>
+			    </tr>
+		    </table>
+	    </div>
+
+	    <div class="col-sm-6">
+		    <table class="table table-striped .table-hover">
+				<h3>Riesgos</h3>
+			   	{{riesgoform.as_table}}
+		    </table>
+		</div>
+		<button type="submit" class="btn-success btn b-t-1" name="continue" style="float:left;">Guardar y seguir</button>
+		<button type="submit" class="btn-primary btn b-t-1" name="exit" value="exit" style="float:right;">Guardar y salir</button>
+	  </form>
+	</div>
+
 {% endblock %}
 
 
@@ -20,6 +44,25 @@
 {% endblock %}
 
 {% block script %}
+
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function(){
+		{% if messageSuccess %}
+	    	bootstrap_alert.success({{messageSuccess}})
+		{% endif %}
+		{% if messageWarning %}
+			bootstrap_alert.warning({{messageWarning}})
+		{% endif %}
+	});
+
+	bootstrap_alert = function() {}
+	bootstrap_alert.success = function(message) {
+	    $('#divmessage').html("<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Success!</strong> "+message+"</div>")
+	}
+	bootstrap_alert.warning = function(message) {
+		$('#divmessage').html("<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Warning!</strong> "+message+"</div>")
+	}
+</script>
 {% endblock %}
 
 {% block footer %}{% endblock %}

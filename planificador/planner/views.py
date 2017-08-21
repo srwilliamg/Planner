@@ -164,7 +164,6 @@ def register(request):
             obj.is_active = True
             obj.role = 'S'
             obj.save()
-            mensaje = ("El usuario ha sido registrado exitosamente.")
             return redirect('login')
         else:
             errors = form.errors
@@ -274,7 +273,7 @@ class createFinca(CreateView):
         obj = form.save(commit=False)
         obj.agricultor = self.request.user
         obj.save()
-        return redirect('home_agricultor')
+        return redirect('createLote')
 
     def get_context_data(self, **kwargs):
         ctx = super(createFinca, self).get_context_data(**kwargs)
@@ -290,6 +289,48 @@ def deleteFinca(request):
         finca.delete()
         data['message'] = "La finca ha sido eliminada exitosamente"
         return HttpResponse(json.dumps(data), content_type="application/json")
+
+@login_required()
+def updateFinca(request, var):
+    data ={}
+    finca = Finca.objects.get(pk=var)
+    if request.method == "POST":
+        fincaform = AddFincaForm(request.POST or None, instance=finca)
+        if fincaform.is_valid():
+            fincaform.save()
+        return redirect('home_agricultor')
+
+    data['finca'] = AddFincaForm(instance = finca)
+    data['titulo'] = "Modificar finca"
+    return render(request, "updateFinca.html", data)
+
+@login_required()
+def updateLote(request, var):
+    data ={}
+    lote = Lote.objects.get(pk=var)
+    riesgo = lote.riesgo
+    if request.method == "POST":
+        loteform = AddLoteForm(request.POST or None, instance=lote)
+        riesgoform = AddRiesgoForm(request.POST or None, instance=riesgo)
+
+        if loteform.is_valid() and riesgoform.is_valid():
+            lote = loteform.save(commit=False)
+            qbp = Base_presupuestal.objects.filter(tipo=lote.tipo, cultivo=lote.cultivo, variedad=lote.variedad)
+            if qbp.__len__() != 0:
+                bp= qbp[0]
+                lhbp = lote_has_bp(lote = lote,bp = bp)
+                lhbp.save()
+            else:
+                lote_has_bp.objects.filter(lote=lote).delete()
+            loteform.save()
+            riesgoform.save()
+
+        return redirect('home_agricultor')
+
+    data['lote'] = AddLoteForm(instance = lote)
+    data['riesgo'] = AddRiesgoForm(instance = riesgo)
+    data['titulo'] = "Modificar lote"
+    return render(request, "updateLote.html", data)
 
 @login_required()
 def deleteUser(request):
@@ -319,22 +360,37 @@ def createLote(request):
         loteform = AddLoteForm(request.POST or None)
         riesgoform = AddRiesgoForm(request.POST or None)
 
-        objlote = loteform.save(commit=False)
-        objlote.agricultor = request.user
-        objriesgo = riesgoform.save()
-        objlote.riesgo = objriesgo
-        objlote.save()
+        if loteform.is_valid() and riesgoform.is_valid():
+            objlote = loteform.save(commit=False)
+            objlote.agricultor = request.user
+            objriesgo = riesgoform.save()
+            objlote.riesgo = objriesgo
+            objlote.save()
 
-        qbp = Base_presupuestal.objects.filter(tipo=objlote.tipo, cultivo=objlote.cultivo, variedad=objlote.variedad)
-        if qbp.__len__() != 0:
-            bp= qbp[0]
-            lhbp = lote_has_bp(lote = objlote,bp = bp)
-            lhbp.save()
-        return redirect('home_agricultor')
+            qbp = Base_presupuestal.objects.filter(tipo=objlote.tipo, cultivo=objlote.cultivo, variedad=objlote.variedad)
+            if qbp.__len__() != 0:
+                bp= qbp[0]
+                lhbp = lote_has_bp(lote = objlote,bp = bp)
+                lhbp.save()
+            else:
+                ctx["messageWarning"] = "No se ha asignado ninguna base presupuestal a el lote "+request.POST["name"]
+
+            ctx["messageSuccess"] = "El lote "+request.POST["name"]+" ha sido creado exitosamente."
+
+            if 'exit' in request.POST:
+                return redirect('home_agricultor')
+            else:
+                ctx['titulo'] = "Crear nuevo lote"
+                ctx['loteform'] = AddLoteForm
+                ctx['loteform'].declared_fields['finca'].queryset = Finca.objects.filter(agricultor=request.user)
+                ctx['riesgoform'] = AddRiesgoForm
+
     else:
         ctx['titulo'] = "Crear nuevo lote"
         ctx['loteform'] = AddLoteForm
-        ctx['loteform'].declared_fields['finca'].queryset = Finca.objects.filter(agricultor=request.user)
+        qset = Finca.objects.filter(agricultor=request.user)
+        ctx['loteform'].declared_fields['finca'].queryset = qset
+        ctx['loteform'].declared_fields['finca'].initial = qset[0]
         ctx['riesgoform'] = AddRiesgoForm
     return render(request, template_name, ctx)
 

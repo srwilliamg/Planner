@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block header %}{{titulo}}{{block.super}}{% endblock %}
+
+{% block wrapper %}
+	<div id="divmessage"><!-- Espacio para insertar mensajes por javascript -->
+	</div>
+
+	{% if finca %}
+		<form method="POST" accept-charset="utf-8">
+			{% csrf_token %}
+			<table class="table table-striped .table-hover">
+				{{finca.as_table}}
+			</table>
+			<button type="submit" style="clear: left;" class="btn btn-primary">Modificar</button>
+		</form>
+	{% endif %}
+{% endblock %}
+
+
+{% block script %}
+    	<script type="text/javascript">
+    	</script>
+{% endblock %}
+
+{% block footer %}{% endblock %}

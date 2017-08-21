@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django import forms
 from .models import *
 
@@ -71,13 +72,11 @@ class AddUserForm(forms.ModelForm):
 
     #is_active = forms.BooleanField(required=True, label="Es usuario activo")
 
-
 class AddAgricultorForm(AddUserForm):
     def __init__(self, *args, **kwargs):
         initial = kwargs.get("initial")
         initial.update({"role": "S"})
         super(AddAgricultorForm, self).__init__(args, kwargs)
-
 
 class AddAdministratorForm(AddUserForm):
     def __init__(self, *args, **kwargs):
@@ -91,12 +90,13 @@ class AddFincaForm(forms.ModelForm):
         fields = ['name', 'area']
 
     name = forms.CharField(
-        required=True, label="Nombre de la finca",
+        required=True, label="Nombre",
         widget=forms.TextInput(
-            attrs={"size": 25, "class": "form-control"}))
+            attrs={"size": 25, "class": "form-control", "placeholder":"Nombre de la finca"}))
 
     area = forms.FloatField(
-        required=True, label= "Area", min_value=1, widget=forms.NumberInput(attrs={"class": "form-control"}))
+        required=True, label= "Area", min_value=1, 
+        widget=forms.NumberInput(attrs={"title":"Ingrese el área en unidades de hectárea","placeholder":"Hectareas" ,"class": "form-control"}))
 
 class AddLoteForm(forms.ModelForm):
     
@@ -114,32 +114,35 @@ class AddLoteForm(forms.ModelForm):
         ]
 
     name = forms.CharField(
-        required=True, label="Nombre del lote",
+        required=False, label="Nombre",
         widget=forms.TextInput(
-            attrs={"size": 25, "class": "form-control"}))
+        attrs={"title":"Nombre del lote","placeholder":"Nombre" ,"size": 25, "class": "form-control"}))
 
     tipo = forms.ChoiceField(
-        required=True, label="Tipo",
+        required=False, label="Tipo de cultivo",
         widget=forms.Select(
             attrs={"class": "form-control"}), choices=TIPO_OPTIONS)
 
     cultivo = forms.ChoiceField(
-        required=True, label="Cultivo",
+        required=False, label="Cultivo",
         widget=forms.Select(
             attrs={"class": "form-control"}), choices=CULTIVO_OPTIONS)
 
     variedad = forms.ChoiceField(
-        required=True, label="Variedad",
+        required=False, label="Variedad",
         widget=forms.Select(
             attrs={"class": "form-control"}), choices=VARIEDAD_OPTIONS)
 
     edad = forms.FloatField(
-        required=True, label= "Edad", widget=forms.NumberInput(attrs={"class": "form-control"}))
+        required=False, label= "Edad en años", widget=forms.NumberInput(attrs={"placeholder":"Años < 0: pasado | Años > 0: futuro" 
+            ,"title":"Ingrese en años hace cuanto se hizo o se hará la inversión. \n Ejemplo:\n 1)Digite -4 si la inversión fue hecha hace 4 años.\n 2)Digite 6 si la inversión se hará en 6 años.", "class": "form-control"}))
 
     area = forms.FloatField(
-        required=True, label= "Area", min_value=1, widget=forms.NumberInput(attrs={"class": "form-control"}))
+        required=False, label= "Área", min_value=1, 
+        widget=forms.NumberInput(attrs={"title":"Ingrese el area en unidades de hectarea","placeholder":"hectareas" ,"class": "form-control"}))
 
-    finca = forms.ModelChoiceField(queryset = Finca.objects.all(),label = "Pertenece a la finca", widget=forms.Select(attrs={"class": "form-control"}))
+    finca = forms.ModelChoiceField(queryset = Finca.objects.all(),label = "Pertenece a la finca", 
+        widget=forms.Select(attrs={"title":"Seleccione la finca en la que estará este lote.", "class": "form-control"}))
 
     #riesgo = forms.ModelChoiceField(queryset = Riesgo.objects.all(),label = "Cuales son sus riesgos", widget=forms.Select(attrs={"class": "form-control"}))
 
@@ -160,35 +163,45 @@ class AddRiesgoForm(forms.ModelForm):
         ]
 
     mercado = forms.FloatField(
-        required=True, label= "", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Mercado[0,10]", "class": "riesgoform form-control"}))
+        required=False, label= "Mercado", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Mercado[0,10]", "class": "form-control",
+            "title":"Califique del 1 a 10 la probabilidad de que los precios del mercado perjudicen que la inversión a futuro."}))
     fitosanitario = forms.FloatField(
-        required=True, label= "", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Fitosanitario[0,10]", "class": "riesgoform form-control"}))
+        required=False, label= "Fitosanitario", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Fitosanitario[0,10]", "class": "form-control",
+            "title":"Califique del 1 a 10 la probabilidad de que insectos, ácaros, moluscos, roedores, hongos, malas hierbas, bacterias y otras formas de vida animal o vegetal puedan perjudidar la inversión."}))
     fluctuacion_precio = forms.FloatField(
-        required=True, label= "", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Fluctuacion de precio[0,10]", "class": "riesgoform form-control"}))
+        required=False, label= "Fluctuacion", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Fluctuacion de precio[0,10]", "class": "form-control",
+            "title":"Califique del 1 a 10 la probabilidad de que los precios del cultivo varien con el tiempo."}))
     administracion = forms.FloatField(
-        required=True, label= "", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Administracion[0,10]", "class": "riesgoform form-control"}))
+        required=False, label= "Administracion", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Administracion[0,10]", "class": "form-control",
+            "title":"Califique del 1 a 10 los costos de administración, donde 1 es bajo y 10 es muy alto."}))
     tecnologia = forms.FloatField(
-        required=True, label= "", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Tecnologia[0,10]", "class": "riesgoform form-control"}))
+        required=False, label= "Tecnologia", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Tecnologia[0,10]", "class": "form-control",
+            "title":"Califique del 1 a 10 los costos tecnológicos que conlleva la inversión a futuro, donde 1 es bajo y 10 es muy alto."}))
     mano_de_obra = forms.FloatField(
-        required=True, label= "", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Mano de obra[0,10]", "class": "riesgoform form-control"}))
+        required=False, label= "Mano de obra", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Mano de obra[0,10]", "class": "form-control",
+            "title":"Califique del 1 a 10 los costos de mano de obra que conlleva la inversión a futuro, donde 1 es bajo y 10 es muy alto."}))
     clima = forms.FloatField(
-        required=True, label= "", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Clima[0,10]", "class": "riesgoform form-control"}))
+        required=False, label= "Clima", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Clima[0,10]", "class": "form-control",
+            "title":"Califique del 1 a 10 la probabilidad de que el clima no sea favorable para el tipo de cultivo"}))
     perecedero = forms.FloatField(
-        required=True, label= "", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Perecedero[0,10]", "class": "riesgoform form-control"}))
+        required=False, label= "Perecedero", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Perecedero[0,10]", "class": "form-control",
+            "title":"Califique del 1 a 10 la probabilidad de que el cultivo perezca antes de que de ingresos."}))
     agremiacion = forms.FloatField(
-        required=True, label= "", min_value=0, max_value=10,
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Agremiacion[0,10]", "class": "riesgoform form-control"}))
+        required=False, label= "Agremiacion", min_value=0, max_value=10,
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Agremiacion[0,10]", "class": "form-control",
+            "title":"Califique del 1 a 10 los costos de agremiación que conlleva la inversión a futuro, donde 1 es bajo y 10 es muy alto."}))
     inseguridad = forms.FloatField(
-        required=True, label= "", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Inseguridad[0,10]", "class": "riesgoform form-control"}))
+        required=False, label= "Inseguridad", min_value=0, max_value=10, 
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Inseguridad[0,10]", "class": "form-control",
+            "title":"Califique del 1 a 10 la probabilidad de que roben en los cultivos."}))
 
 class AddEstablecimientoForm(forms.ModelForm):
     class Meta:
@@ -336,7 +349,7 @@ class AddCostosForm(forms.ModelForm):
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     cantidadHectarea = forms.FloatField(
     required=True, label= "Cantidad por hectarea", min_value=0,initial = 1, 
-    widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
+    widget=forms.NumberInput(attrs={"placeholder":"Hectareas", "class": "form-control"}))
     frecuencia = forms.FloatField(
     required=True, label= "Frecuencia", min_value=0,initial = 1, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
@@ -584,3 +597,5 @@ class EditUserProfileForm(forms.ModelForm):
         required=True, label="Email", widget=forms.TextInput())
     password = forms.CharField(
         required=True, label="Password", widget=forms.PasswordInput())
+
+    

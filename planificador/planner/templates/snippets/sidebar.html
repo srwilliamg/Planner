@@ -44,27 +44,11 @@
                     <li >
                         <a href="{% url 'createbp' %}"><i class="fa fa-fw fa-dashboard"></i> Base presupuestal </a>
                     </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#finca"><i class="fa fa-fw fa-arrows-v"></i> Finca <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="finca" class="collapse">
-                            <li>
-                                <a href="{% url 'createFinca' %}">Crear</a>
-                            </li>
-                            <li>
-                                <a href="#">Actualizar</a>
-                            </li>
-                        </ul>
+                    <li >
+                        <a href="{% url 'createFinca' %}"><i class="fa fa-picture-o"></i> Crear finca </a>
                     </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#lote"><i class="fa fa-fw fa-arrows-v"></i> Lote <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="lote" class="collapse">
-                            <li>
-                                <a href="{% url 'createLote' %}">Crear</a>
-                            </li>
-                            <li>
-                                <a href="#">Actualizar</a>
-                            </li>
-                        </ul>
+                    <li >
+                        <a href="{% url 'createLote' %}"><i class="fa fa-puzzle-piece"></i> Crear lote</a>
                     </li>
                 </ul>
             </div>

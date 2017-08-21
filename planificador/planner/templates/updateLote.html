@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block header %}{{titulo}}{{block.super}}{% endblock %}
+
+{% block wrapper %}
+	<div id="divmessage"><!-- Espacio para insertar mensajes por javascript -->
+	</div>
+
+	{% if lote %}
+		<form method="POST" accept-charset="utf-8">
+			{% csrf_token %}
+			<div class="col-sm-6">
+	    	<h3>Lote</h3>
+			    <table class="table table-striped .table-hover">
+			    	{{lote.as_table}}
+				    <tr> 
+				    	<th>Escala de evaluación:</th>
+				    	<td>Valore el riesgo en cada uno de los siguientes items de 1 a 10, siendo 1 el menos riesgo y 10 mayor riesgo.</td>
+				    </tr>
+				    <tr> 
+				    	<th>Información:</th>
+				    	<td>Al poner el puntero sobre cada campo puede obtener más información sobre la entrada.</td>
+				    </tr>
+			    </table>
+	   		</div>
+
+		    <div class="col-sm-6">
+			    <table class="table table-striped .table-hover">
+					<h3>Riesgos</h3>
+				   	{{riesgo.as_table}}
+			    </table>
+			</div>
+			<button type="submit" style="clear: left;" class="btn btn-primary">Modificar</button>
+		</form>
+	{% endif %}
+{% endblock %}
+
+
+{% block script %}
+    	<script type="text/javascript">
+    	</script>
+{% endblock %}
+
+{% block footer %}{% endblock %}

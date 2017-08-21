@@ -11,9 +11,25 @@ ROLE_OPTIONS = (("R", "Root"), ("A", "Administrador"),("S", "Agricultor"))
 DOCUMENT_OPTIONS = (("TI", "Tarjeta de Identidad"), ("CC", "Cedula de Ciudadania"), ("CE", "Cedula de Extranjería"))
 GENDER_OPTIONS = (("M", "Masculino"), ("F", "Femenino"), ("O", "Other"))
 
-TIPO_OPTIONS = (("frutales", "Frutales"), ("cafe", "Café"), ("forestales", "Forestales"), ("hortalizas", "Hortalizas"))
-CULTIVO_OPTIONS = (("limon", "Limón"), ("agroforestal", "Agroforestal"), ("lulo", "Lulo"), ("frijol", "Frijol"), ("mora", "Mora"), ("zoca", "Zoca"))
-VARIEDAD_OPTIONS = (("tahiti", "Tahití"),("selva", "La selva"), ("sin espinas", "Sin espinas"), ("arbustivo", "Arbustivo"), ("nogal", "Nogal"), ("calavera", "Calavera"), ("bandola", "Bandola"))
+TIPO_OPTIONS = (("frutales", "Frutales"), ("cafe", "Café"), 
+                ("forestales", "Forestales"), ("hortalizas", "Hortalizas"), 
+                ("musas", "Musas"), ("hortalizas", "Hortalizas"))
+
+CULTIVO_OPTIONS = (("limon", "Limón"), ("agroforestal", "Agroforestal"), 
+                    ("lulo", "Lulo"), ("frijol", "Fríjol"), 
+                    ("mora", "Mora"), ("zoca", "Zoca"), 
+                    ("siembra", "Siembra"), ("mandarina", "Mandarina"), 
+                    ("aguacate", "Aguacate"), ("platano", "Plátano"),
+                    ("guayaba", "Guayaba"), ("maiz", "Maíz"))
+
+VARIEDAD_OPTIONS = (("tahiti", "Tahití"),("selva", "La selva"), 
+                    ("sin espinas", "Sin espinas"), ("arbustivo", "Arbustivo"), 
+                    ("nogal", "Nogal"), ("calavera", "Calavera"), 
+                    ("bandola", "Bandola"), ("valencia", "Valencia"),
+                    ("castillo", "Castillo"), ("arrayana", "Arrayana"),
+                    ("lorena", "Lorena"), ("monocultivo", "Monocultivo"),
+                    ("pera", "Pera"), ("amarillo", "Amarillo"),
+                    ("blanco", "Blanco"), ("Nogal-arbol", "Nogal(árbol)"))
 
 
 class User(AbstractBaseUser): #
@@ -522,9 +538,9 @@ class Establecimiento(models.Model):
         }
 
 class Base_presupuestal(models.Model):
-    tipo = models.CharField(max_length=15, choices=TIPO_OPTIONS, blank=False)
-    cultivo = models.CharField(max_length=15, choices=CULTIVO_OPTIONS, blank=False)
-    variedad = models.CharField(max_length=15, choices=VARIEDAD_OPTIONS, blank=False)
+    tipo = models.CharField(max_length=15, choices=TIPO_OPTIONS, blank=False, default="Frutales")
+    cultivo = models.CharField(max_length=15, choices=CULTIVO_OPTIONS, blank=False, default="Limón")
+    variedad = models.CharField(max_length=15, choices=VARIEDAD_OPTIONS, blank=False, default="Tahití")
     nombre = models.CharField(max_length=125, null=False, default="bp")
     rentabilidad = models.FloatField(default=0)
     datos_g = models.OneToOneField(Datos_generales,related_name="bp_dg")
@@ -855,3 +871,4 @@ class lote_has_bp(models.Model):
 
     def __str__(self):
         return u"{} -- {}".format(self.lote, self.bp)
+
