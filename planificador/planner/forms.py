@@ -171,15 +171,15 @@ class AddRiesgoForm(forms.ModelForm):
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"Fitosanitario[0,10]", "class": "form-control",
             "title":"Califique del 1 a 10 la probabilidad de que insectos, ácaros, moluscos, roedores, hongos, malas hierbas, bacterias y otras formas de vida animal o vegetal puedan perjudidar la inversión."}))
     fluctuacion_precio = forms.FloatField(
-        required=False, label= "Fluctuacion", min_value=0, max_value=10, 
+        required=False, label= "Fluctuación", min_value=0, max_value=10, 
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"Fluctuacion de precio[0,10]", "class": "form-control",
-            "title":"Califique del 1 a 10 la probabilidad de que los precios del cultivo varien con el tiempo."}))
+            "title":"Califique del 1 a 10 respecto a la oferta y la demanda, la probabilidad de que los precios del cultivo varien con el tiempo."}))
     administracion = forms.FloatField(
-        required=False, label= "Administracion", min_value=0, max_value=10, 
+        required=False, label= "Administración", min_value=0, max_value=10, 
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"Administracion[0,10]", "class": "form-control",
             "title":"Califique del 1 a 10 los costos de administración, donde 1 es bajo y 10 es muy alto."}))
     tecnologia = forms.FloatField(
-        required=False, label= "Tecnologia", min_value=0, max_value=10, 
+        required=False, label= "Tecnología", min_value=0, max_value=10, 
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"Tecnologia[0,10]", "class": "form-control",
             "title":"Califique del 1 a 10 los costos tecnológicos que conlleva la inversión a futuro, donde 1 es bajo y 10 es muy alto."}))
     mano_de_obra = forms.FloatField(
@@ -195,7 +195,7 @@ class AddRiesgoForm(forms.ModelForm):
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"Perecedero[0,10]", "class": "form-control",
             "title":"Califique del 1 a 10 la probabilidad de que el cultivo perezca antes de que de ingresos."}))
     agremiacion = forms.FloatField(
-        required=False, label= "Agremiacion", min_value=0, max_value=10,
+        required=False, label= "Agremiación", min_value=0, max_value=10,
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"Agremiacion[0,10]", "class": "form-control",
             "title":"Califique del 1 a 10 los costos de agremiación que conlleva la inversión a futuro, donde 1 es bajo y 10 es muy alto."}))
     inseguridad = forms.FloatField(

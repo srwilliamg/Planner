@@ -192,8 +192,9 @@
 				            'csrfmiddlewaretoken': '{{ csrf_token }}'
 				        },
 				        success: function (data){
+				        	//$('#divFincas').load(location.href+ ' #divFincas');
+				        	location.reload();
 				        	bootstrap_alert.success(data['message']);
-				        	$("#divFincas").load(location.href+ ' #divFincas');
 				        },
 				        error : function() {
 				            bootstrap_alert.warning("Ha ocurrido un error al intentar borrar la finca");
