@@ -5,7 +5,10 @@
 {% block wrapper %}
   <form method="post" accept-charset="utf-8">
     {% csrf_token %}
-    {{form.as_p}}
+    <table class="table table-striped .table-hover">
+    	{{form.as_table}}
+    </table>
+    
     <button type="submit" class="btn-success btn b-t-1">Crear</button>
   </form>
 {% endblock %}
