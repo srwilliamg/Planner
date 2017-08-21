@@ -3,8 +3,8 @@
 {% block header %}{{titulo}}{{block.super}}{% endblock %}
 
 {% block wrapper %}
-	<div id="campoChart" style='visibility:hidden; display:none;' >
-		<div class=" panel panel-green">
+	<div id="campoChart" align="center" style='visibility:hidden; display:none;' >
+		<div class="panel">
 			<canvas id="myChart"></canvas>	
 		</div>
 	</div>
@@ -53,7 +53,7 @@
 
 	<div id="divmessage">
 	</div><!-- Espacio para insertar mensajes por javascript -->
-	
+
 	{% if fincas %}
 	<div id="divFincas">
 	    {% for obj in fincas %}
@@ -162,7 +162,6 @@
 	    		$(document).on("click",'a[id="deletelote"]', function() {
 	    			var $this = $(this);
         			var lote = $this.data('lote');
-        			console.log(lote);
 
         			$.ajax({
 				        url: "{% url 'deleteLote' %}",
@@ -181,7 +180,7 @@
 	    			});
         		});
 
-	    		$(document).on("click", 'a[id="deletefinca"]' ,function() {
+	    		$(document).on("click",'a[id="deletefinca"]' ,function() {
 	    			var $this = $(this);
         			var finca = $this.data('finca');
 
@@ -216,7 +215,6 @@
 				        success: function (data){
 
 				        	if(data["ok"]){
-				        		console.log(data["egresos"])
 					            var ctxLote = document.getElementById("myChart");
 								var chartLote = new Chart(ctxLote, {
 								type: 'line',
@@ -288,7 +286,6 @@
 				        success: function (data){
 
 				        	if(data["ok"]){
-				        		console.log(data["egresos"])
 					            var ctxLote = document.getElementById("myChart");
 								var chartLote = new Chart(ctxLote, {
 								type: 'line',
@@ -351,33 +348,54 @@
 			}
 
 	    	function calcularMargen(){
-	    		var ctx = document.getElementById("myChart");
-				var myChart = new Chart(ctx, {
-				type: 'line',
-				data: {
-					labels: {{years}},
-					datasets: [
-						{
-							label: 'Margen total',
-							data: {{margen}},
-							backgroundColor: ['rgba(255, 99, 132, 0.3)']
-						},
-					]
-					},
-				options: {
-						scales: {
-							yAxes: [{
-								ticks: {
-									beginAtZero:true
-								}
-							}]
-						}
-					}
-				});
-
-				var campo = document.getElementById("campoChart");
+	    		var campo = document.getElementById("campoChart");
 				campo.style.visibility='visible';
 				campo.style.display ='initial';
+
+				var canvas = document.getElementById("myChart");
+				var ctx = canvas.getContext("2d");
+				ctx.font = "30px Comic Sans MS";
+				ctx.fillStyle = "green";
+				ctx.textAlign = "center";
+				ctx.fillText("Cargando gráfica",canvas.width/2, canvas.height/2);
+
+			    $.ajax({
+			        url: "{% url 'home_agricultor' %}",
+			        method: 'POST',
+			        data: {
+			            'Margen': "Margen total",
+			            'csrfmiddlewaretoken': '{{ csrf_token }}'
+			        },
+			        success: function (data){
+			            var ctxLote = document.getElementById("myChart");
+						var chartLote = new Chart(ctxLote, {
+						type: 'line',
+						data: {
+							labels: data["years"],
+							datasets: [
+								{
+									label: 'Margen total de todas las fincas',
+									data: data["margen"],
+									backgroundColor: ['rgba(125, 125, 125, 0.3)']
+								}
+							]
+							},
+						options: {
+								scales: {
+									yAxes: [{
+										ticks: {
+											beginAtZero:true
+										}
+									}]
+								},
+							}
+						});
+			        },
+
+			        error : function() {
+			            //alert("error");
+			        }
+			    });
 	    	}
 		</script>
 {% endblock %}

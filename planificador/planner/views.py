@@ -215,43 +215,48 @@ def home_agricultor(request):
     margenTotal = []
     years = []
     edades = []
+    context ={}
 
     fincas = request.user.finca_agricultor.all()
-    if fincas.__len__() != 0:
-        for f in fincas:
-            lotes = f.lote_finca.all()
-            for l in lotes:
-                edades.append(l.edad)
-        if len(edades)!= 0:
-            maximo = max(edades)
-            minimo = min(edades)
-            totalyears = int(abs(minimo) + abs(maximo) + 15)
-            now = datetime.datetime.now()
-            first_year = now.year - abs(minimo)
-
-            for x in range(totalyears):
-                margenTotal.append(0)
-                years.append(x+first_year)
-
+    if request.is_ajax():
+        if fincas.__len__() != 0:
             for f in fincas:
                 lotes = f.lote_finca.all()
                 for l in lotes:
-                    qbp = l.lotebp_lote.all()
-                    if qbp.__len__() !=0:
-                        bp = l.lotebp_lote.all()[0].bp
-                        margenes.append(
-                            [i * l.area for i in bp.margen(l.edad, minimo, maximo)]
-                        )
+                    edades.append(l.edad)
+            if len(edades)!= 0:
+                maximo = max(edades)
+                minimo = min(edades)
+                totalyears = int(abs(minimo) + abs(maximo) + 15)
+                now = datetime.datetime.now()
+                first_year = now.year - abs(minimo)
 
-            for x in margenes:
-                for counter,y in enumerate(x):
-                    margenTotal[counter] += y
+                for x in range(totalyears):
+                    margenTotal.append(0)
+                    years.append(x+first_year)
 
-            context = {"fincas":fincas, "margen": margenTotal, "years":years ,"titulo": ("Fincas")}
+                for f in fincas:
+                    lotes = f.lote_finca.all()
+                    for l in lotes:
+                        qbp = l.lotebp_lote.all()
+                        if qbp.__len__() !=0:
+                            bp = l.lotebp_lote.all()[0].bp
+                            margenes.append(
+                                [i * l.area for i in bp.margen(l.edad, minimo, maximo)]
+                            )
+                for x in margenes:
+                    for counter,y in enumerate(x):
+                        margenTotal[counter] += y
+
+                context = {"margen": margenTotal, "years":years}
+                
+            else:
+                context = {"margen": [], "years":[]}
         else:
-            context = {"fincas":fincas, "margen": [], "years":[] ,"titulo": ("Fincas")}
-    else:
-        context = {"fincas":[], "margen": [], "years":[],"titulo": ("Fincas")}
+            context = {"margen": [], "years":[]}
+        return HttpResponse(json.dumps(context), content_type="application/json")
+    context['fincas'] = fincas
+    context['titulos'] = "Fincas"
     return render(request, "home_agricultor.html", context)
 
 @login_required()
