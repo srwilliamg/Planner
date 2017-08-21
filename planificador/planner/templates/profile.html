@@ -39,16 +39,22 @@ Perfil de usuario{{block.super}}
 		    <div class="form-group row flex-items-md-middle">
 		      <label for="born-date-input" class="col-md-3 col-form-label">Fecha de Nacimiento</label>
 		      <div class="col-md-9">
-		        <input name = "birthdate" type="date" class="form-control" value="{{ user.birthdate}}" placeholder="DD/MM/YY" disabled >
+		        <input name = "birthdate" type="text" class="form-control" value="{{user.birthdate|date:"SHORT_DATE_FORMAT"}}" placeholder="DD/MM/YY" disabled >
 		      </div>
 		    </div>
 		    <div class="form-group row flex-items-md-middle">
 		      <label for="formd-gender" class="col-md-3 col-form-label">Genero</label>
 		      <div class="col-md-9">
-		        <select name="gender" id="formd-gender" class="form-control w-100" value="{{user.gender}}" disabled>
-		          <option value="M">Masculino</option>
-		          <option value="F">Femenino</option>
-		          <option value="O">Other</option>
+		        <select name="gender" id="formd-gender" class="form-control w-100" disabled>
+		        	{% if user.gender == "M" %}<option value="M" selected>Masculino</option>
+		        	{% else %}<option value="M">Masculino</option>
+		        	{% endif %}
+		        	{% if user.gender == "F" %}<option value="F" selected>Femenino</option>
+		        	{% else %}<option value="F">Femenino</option>
+		        	{% endif %}
+		        	{% if user.gender == "O" %}<option value="O" selected>Other</option>
+		        	{% else %}<option value="O">Otro</option>
+		        	{% endif %}
 		        </select>
 		      </div>
 		    </div>

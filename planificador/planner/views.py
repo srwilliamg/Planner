@@ -174,10 +174,13 @@ def register(request):
 
 @login_required()
 def updateProfile(request):
+    print(request.POST)
     if request.method == "POST":
         form = EditUserProfileForm(data=request.POST, instance=request.user)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+            user.gender = request.POST["gender"]
+            user.save()
         else:
             print form.errors
     return render(request,'profile.html')

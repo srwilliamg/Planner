@@ -9,7 +9,7 @@ from django.utils.translation import gettext as _
 
 ROLE_OPTIONS = (("R", "Root"), ("A", "Administrador"),("S", "Agricultor"))
 DOCUMENT_OPTIONS = (("TI", "Tarjeta de Identidad"), ("CC", "Cedula de Ciudadania"), ("CE", "Cedula de Extranjería"))
-GENDER_OPTIONS = (("M", "Masculino"), ("F", "Femenino"), ("O", "Other"))
+GENDER_OPTIONS = (("M", "Masculino"), ("F", "Femenino"), ("O", "Otro"))
 
 TIPO_OPTIONS = (("frutales", "Frutales"), ("cafe", "Café"), 
                 ("forestales", "Forestales"), ("hortalizas", "Hortalizas"), 
