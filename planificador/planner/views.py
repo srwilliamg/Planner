@@ -143,12 +143,13 @@ def loteChart(request):
             }
             return HttpResponse(json.dumps(data), content_type="application/json")
         else:
-            loteIE = rel[0].bp.IngresosEgresos()
+            loteMIE = rel[0].bp.MIE(lote.edad, 0, 0)
             data = {
                 "ok": True,
                 "riesgo":lote.riesgo.getValues(),
-                "ingresos":[i * lote.area for i in loteIE["ingresos"]],
-                "egresos":[i * lote.area for i in loteIE["egresos"]],
+                "ingresos":[i * lote.area for i in loteMIE[1]],
+                "egresos":[i * lote.area for i in loteMIE[2]],
+                "margen":[i * lote.area for i in loteMIE[0]],
                 "years":years
             }
             
@@ -737,39 +738,3 @@ def createbp(request):
         ctx['base_presupuestal'] = AddBase_presupuestalForm(prefix="bp")
 
     return render(request, template_name, ctx)
-
-#############################################################3
-class IndexView(TemplateView):
-    template_name = "index.html"
-    def get_context_data(self, *args, **kwargs):
-        context = super(IndexView, self).get_context_data(*args,**kwargs)
-        return context
-
-def listLotes(request):
-    template_name = 'home.html'
-    queryset = Lote.objects.all()
-    context = {"Lotes" : queryset}
-    return render(request, template_name, context)
-
-class LotesListView(ListView):
-    queryset = Lote.objects.all()
-    template_name = 'home.html'
-
-class UserListView(ListView):
-    queryset = User.objects.all()
-    template_name = 'home.html'
-
-class FincasDetailView(DetailView):
-    template_name = 'home.html'
-    queryset = Finca.objects.all()
-
-    def get_context_data(self, *args, **kwargs): #this is using pk like var in URL
-        context = super(FincasDetailView, self).get_context_data(*args, **kwargs)
-        #print(context)
-        return context
-
-    def get_object(self, *args, **kwargs): #this is using 'key' like var in URL
-        key = self.kwargs.get('key')
-        obj = get_object_or_404(Finca, id=key)
-        return obj
-#############################################################3

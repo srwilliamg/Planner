@@ -844,24 +844,29 @@ class Base_presupuestal(models.Model):
         egr = []
         margen = []
 
-        if edad == 0:
-            pos = int(abs(minimo))
-        elif edad < 0:
-            pos = int(abs(minimo) - abs(edad))
+        if minimo!=0 and maximo!=0:
+            if edad == 0:
+                pos = int(abs(minimo))
+            elif edad < 0:
+                pos = int(abs(minimo) - abs(edad))
+            else:
+                pos = int(abs(minimo) + abs(edad))
+
+            totalyears = int(abs(minimo) + abs(maximo) + 15)
+
+            for x in range(totalyears):
+                margen.append(0)
+                ing.append(0)
+                egr.append(0)
+
+            for i in range(len(ingresos)):
+                margen[i+pos] = (ingresos[i]+egresos[i])
+                ing[i+pos] = ingresos[i]
+                egr[i+pos] = egresos[i]
         else:
-            pos = int(abs(minimo) + abs(edad))
-
-        totalyears = int(abs(minimo) + abs(maximo) + 15)
-
-        for x in range(totalyears):
-            margen.append(0)
-            ing.append(0)
-            egr.append(0)
-
-        for i in range(len(ingresos)):
-            margen[i+pos] = (ingresos[i]+egresos[i])
-            ing[i+pos] = ingresos[i]
-            egr[i+pos] = egresos[i]
+            for i in range(len(ingresos)):
+                margen.append(ingresos[i]+egresos[i])
+            return (margen, ingresos, egresos)
 
         return (margen, ing, egr)
             
