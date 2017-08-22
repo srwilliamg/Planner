@@ -22,6 +22,10 @@
 			    	<th>Información:</th>
 			    	<td>Al poner el puntero sobre cada campo puede obtener más información sobre la entrada.</td>
 			    </tr>
+			    <tr>
+		    		<th>Valoración:</th>
+		    		<td>Riesgo total se valora de 1 a 10, donde 1 es una inversión segura, 100 es una inversión imposible.</td>
+		    	</tr>
 		    </table>
 	    </div>
 
@@ -29,8 +33,13 @@
 		    <table class="table table-striped .table-hover">
 				<h3>Riesgos</h3>
 			   	{{riesgoform.as_table}}
+			   	<tr>
+		    		<th><label class="">Riesgo total:</label></th>
+		    		<td><input disable style="border:0px;" class="form-control" type="text" id="sum"></td>
+		    	</tr>
 		    </table>
 		</div>
+
 		<button type="submit" class="btn-success btn b-t-1" name="continue" style="float:left;">Guardar y seguir</button>
 		<button type="submit" class="btn-primary btn b-t-1" name="exit" value="exit" style="float:right;">Guardar y salir</button>
 	  </form>
@@ -53,7 +62,54 @@
 		{% if messageWarning %}
 			bootstrap_alert.warning({{messageWarning}})
 		{% endif %}
+
+		window.setInterval(function(){
+		   calcRiesgo();
+		}, 1000);
+
 	});
+
+	function calcRiesgo() {
+		if (
+			document.getElementById('id_mercado').value != "" &&
+			document.getElementById('id_fitosanitario').value != "" &&
+			document.getElementById('id_fluctuacion_precio').value != "" &&
+			document.getElementById('id_administracion').value != "" &&
+			document.getElementById('id_tecnologia').value != "" &&
+			document.getElementById('id_mano_de_obra').value != "" &&
+			document.getElementById('id_clima').value != "" &&
+			document.getElementById('id_perecedero').value != "" &&
+			document.getElementById('id_agremiacion').value != "" &&
+			document.getElementById('id_inseguridad').value != ""
+			) {
+    			var mercado = document.getElementById('id_mercado').value;
+				var fitosanitario = document.getElementById('id_fitosanitario').value;
+				var fluctuacion_precio = document.getElementById('id_fluctuacion_precio').value;
+				var administracion = document.getElementById('id_administracion').value;
+				var tecnologia = document.getElementById('id_tecnologia').value;
+				var mano_de_obra = document.getElementById('id_mano_de_obra').value;
+				var clima = document.getElementById('id_clima').value;
+				var perecedero = document.getElementById('id_perecedero').value;
+				var agremiacion = document.getElementById('id_agremiacion').value;
+				var inseguridad = document.getElementById('id_inseguridad').value;
+
+				var sum = 
+				parseInt(mercado,10) + 
+				parseInt(fitosanitario,10) + 
+				parseInt(fluctuacion_precio,10) + 
+				parseInt(administracion,10) + 
+				parseInt(tecnologia,10) + 
+				parseInt(mano_de_obra,10) + 
+				parseInt(clima,10) + 
+				parseInt(perecedero,10) + 
+				parseInt(agremiacion,10) + 
+				parseInt(inseguridad,10);
+
+				document.getElementById('sum').value = sum;
+				console.log(sum);
+				setTimeout(calcRiesgo, 5000);
+    		}
+		}
 
 	bootstrap_alert = function() {}
 	bootstrap_alert.success = function(message) {
