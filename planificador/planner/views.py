@@ -260,7 +260,7 @@ def home_agricultor(request):
             context = {"margen": [], "years":[]}
         return HttpResponse(json.dumps(context), content_type="application/json")
     context['fincas'] = fincas
-    context['titulos'] = "Fincas"
+    context['titulo'] = "Fincas"
     return render(request, "home_agricultor.html", context)
 
 @login_required()

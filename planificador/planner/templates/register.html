@@ -29,14 +29,12 @@
 
 {% block form %}
 		<div class="panel panel-green">
-			<div class="panel-heading">
-				<h3 class="panel-title"><i class="fa fa-photo fa-fw"></i> Formulario de registro</h3>
-			</div>
 			<div class="panel-body">
 				<form action="" method="POST" accept-charset="utf-8">
 					{% csrf_token %}
-				   	{{ form.as_p}}
-				   	<button class="btn btn-success btn-block" type="submit">Enviar</button>
+					<table class="table">{{ form.as_table}}</table>
+				   	
+				   	<button class="btn btn-fill btn-success btn-block" type="submit">Enviar</button>
 				</form>
 	    	</div>
     	</div>

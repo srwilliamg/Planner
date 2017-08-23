@@ -1,0 +1,68 @@
+.backwall{
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	background-size: cover !important;
+}
+
+.container-login{
+	justify-content: center; 
+	align-items: center; 
+	display: flex;
+}
+
+.title-login{
+	color: green; 
+	text-shadow: -2px -2px 1px rgba(150, 191, 145, 1);
+}
+
+.sidebar-test > ul > li > ul > li:focus{
+	background-color: blue !important;
+}
+
+.sidebar-test > ul > li > ul > li >a{
+	color: black !important;
+}
+
+.sidebar-test > ul > li > ul > li >a:hover,
+.sidebar-test > ul > li > ul > li >a:focus{
+	background-color: #5cb85c !important;
+}
+
+.sidebar-test > ul > li > a{
+	background-color: #E8E8E8;
+	color: black !important;
+}
+
+.sidebar-test > ul > li > a:hover,
+.sidebar-test > ul > li > a:focus{
+	background-color: #5cb85c !important;
+}
+
+.logged-name:focus,
+.logged-name:hover{
+	background-color: green !important;
+}
+
+.riesgodiv{
+	width: 100% !important;
+}
+
+.riesgoform{
+	width: 20% !important;
+	float: left !important;	
+}
+
+.yearsform{
+	width: 100% !important;
+}
+
+.produccionform{
+	width: 30% !important;
+	float: left !important;
+	margin-right: 2em !important;
+}
+
+.hiddenthing{
+	visibility: hidden;
+	display: none;
+}

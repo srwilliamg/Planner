@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block header %}{{titulo}}{{block.super}}{% endblock %}
+{% block header %}{{titulo}}{% endblock %}
 
 {% block wrapper %}
 	<div id="campoChart" align="center" style='visibility:hidden; display:none;' >
@@ -10,11 +10,11 @@
 	</div>
 
 	<div class="list-inline" id="tableRiesgo" style='visibility:hidden; display:none;'>
-        <div class="panel panel-green">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-exclamation-triangle fa-fw"></i> Riesgos</h3>
+        <div class="card">
+            <div class="header">
+                <h4 class="title"><i class="fa fa-exclamation-triangle fa-fw"></i> Riesgos</h4>
             </div>
-            <div class="panel-body">
+            <div class="content">
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover table-striped" id="riesgos">
                         <thead>
@@ -59,11 +59,11 @@
 	    {% for obj in fincas %}
 			<div class=" list-inline">
 		            <div class="col-lg-4">
-		                <div class="panel panel-green">
-		                    <div class="panel-heading">
-		                        <h3 class="panel-title"><i class="fa fa-photo fa-fw"></i> {{obj.name}}</h3>
+		                <div class="card">
+		                    <div class="header">
+		                        <h4 class="title"><i class="fa fa-photo fa-fw"></i> {{obj.name}}</h4>
 		                    </div>
-								<div class="panel-body">
+								<div class="content">
 								    <div class="list-group">
 								        <a href="#" class="list-group-item">
 								            <span class="badge">{{obj.id}}</span>
@@ -96,11 +96,11 @@
 	    {% for value in lotes %}
 			<div id="divLote{{value.id}}" class=" list-inline">
 		            <div class="col-lg-4">
-		                <div class="panel panel-green">
-		                    <div class="panel-heading">
-		                        <h3 class="panel-title"><i class="fa fa-photo fa-fw"></i>{{value.name}}</h3>
+		                <div class="card">
+		                    <div class="header">
+		                        <h4 class="title"><i class="fa fa-photo fa-fw"></i>{{value.name}}</h4>
 		                    </div>
-								<div class="panel-body">
+								<div class="content">
 								    <div class="list-group">
 								    	<a href="#" class="list-group-item">
 								            <span class="badge">{{value.tipo}}</span>
@@ -360,7 +360,6 @@
 
 				var canvas = document.getElementById("myChart");
 				var ctx = canvas.getContext("2d");
-				ctx.font = "30px Comic Sans MS";
 				ctx.fillStyle = "green";
 				ctx.textAlign = "center";
 				ctx.fillText("Cargando gráfica",canvas.width/2, canvas.height/2);

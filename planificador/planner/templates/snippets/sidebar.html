@@ -1,56 +1,43 @@
-<nav class="navbar navbar-inverse navbar-fixed-top panel-green" role="navigation" style="background-color:#5cb85c; border-color: black;">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header" >
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{% url 'home_agricultor' %}" style="color:white;">
-                {% if request.user.role == "S" %}
-                    Agricultor
-                {% endif %}
-                {% if request.user.role == "A" %}
-                    Administrador
-                {% endif %}
+{% load staticfiles %}
+<div class="sidebar" data-color="green" data-image="{% static 'images/sidebar5.jpg' %}">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="{% url 'home_agricultor' %}" class="simple-text">
+                    {% if request.user.role == "S" %}
+                        Agricultor
+                    {% endif %}
+                    {% if request.user.role == "A" %}
+                        Administrador
+                    {% endif %}
                 </a>
             </div>
-            <!-- Top Menu Items -->
-            <ul class="nav navbar-right top-nav" >
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle logged-name" data-toggle="dropdown" style="color:white;">
-                        <i class="fa fa-user"></i> 
-                            {{request.user.first_name}} {{request.user.last_name}} 
-                        <b class="caret"></b>
+
+            <ul class="nav">
+                <li class="active">
+                    <a href="{% url 'home_agricultor' %}">
+                        <i class="pe-7s-photo"></i>
+                        <p>Fincas</p>
                     </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="{% url 'profile' %}" style=""><i class="fa fa-fw fa-user"></i> Profile</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="{% url 'logout' %}"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                        </li>
-                    </ul>
+                </li>
+                <li>
+                    <a href="{% url 'createbp' %}">
+                        <i class="pe-7s-note2"></i>
+                        <p>Base presupuestal</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'createFinca' %}">
+                        <i class="pe-7s-map-2"></i>
+                        <p>Crear finca</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'createLote' %}">
+                        <i class="pe-7s-map"></i>
+                        <p>Crear lote</p>
+                    </a>
                 </li>
             </ul>
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse sidebar-test" >
-                <ul class="nav navbar-nav side-nav" style="background-color: #E8E8E8;">
-                    <li >
-                        <a href="{% url 'home_agricultor' %}"><i class="fa fa-fw fa-bar-chart-o"></i> Gráfica de fincas </a>
-                    </li>
-                    <li >
-                        <a href="{% url 'createbp' %}"><i class="fa fa-fw fa-dashboard"></i> Base presupuestal </a>
-                    </li>
-                    <li >
-                        <a href="{% url 'createFinca' %}"><i class="fa fa-picture-o"></i> Crear finca </a>
-                    </li>
-                    <li >
-                        <a href="{% url 'createLote' %}"><i class="fa fa-puzzle-piece"></i> Crear lote</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </nav>
+        </div>
+</div>
+
