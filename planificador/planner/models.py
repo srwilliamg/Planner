@@ -167,6 +167,20 @@ class Insumos_generales(models.Model): #
             "ridomil": self.ridomil
         }
 
+    def getValuesT(self):
+        return {
+            "Arbol": self.arbol,
+            "Fungicida": self.fungicida,
+            "Insecticida": self.insecticida,
+            "Herbicida": self.herbicida,
+            "Canatillas": self.canatillas,
+            "Materia organica":self.materiaOrganica,
+            "Proteina hidrolizada": self.proteina_hidrolizada,
+            "Coadyuvantes": self.coadyuvantes,
+            "Fertilizante": self.fertilizante,
+            "Ridomil": self.ridomil
+        }
+
 class Porcentaje_precio(models.Model): #
     precio = models.FloatField(default=1)
     porcentaje = models.FloatField(default=1)
@@ -179,6 +193,9 @@ class Porcentaje_precio(models.Model): #
 
     def getValues(self):
         return {"precio":self.precio, "porcentaje":self.porcentaje, "mult": self.mult()}
+
+    def getValuesT(self):
+        return {"Precio":self.precio, "Porcentaje":self.porcentaje}
 
 class Produccion(models.Model):#
     ano1 = models.FloatField(default=120)
@@ -226,6 +243,10 @@ class Distribucion_calidad(models.Model):#
         return {"primera":self.primera.getValues(), "segunda":self.primera.getValues(),
                 "tercera": self.primera.getValues(),"produccion":self.produccion.getValues()}
 
+    def getValuesT(self):
+        return {"Primera":self.primera.getValuesT(), "Segunda":self.primera.getValuesT(),
+                "Tercera": self.primera.getValuesT(),"Producción":self.produccion.getValues()}
+
 class Datos_generales(models.Model):
     #empresa = models.CharField(max_length= 125, default="empresa")
     #departamento = models.CharField(max_length= 125, default="Risaralda")
@@ -248,6 +269,18 @@ class Datos_generales(models.Model):
             "altitud":self.altitud
         }
 
+    def getValuesT(self):
+        return{
+            #"empresa":self.empresa,
+            #"departamento":self.departamento,
+            #"vereda":self.vereda,
+            "Gastos operacionales":self.gastos_operacionales,
+            "Valor de tierra":self.valor_de_tierra,
+            "Densidad":self.densidad,
+            "Jornal":self.jornal,
+            "Altitud":self.altitud
+        }
+
 class Costos(models.Model):
     cantidadSitio = models.FloatField(default= 2)
     cantidadHectarea = models.FloatField(default= 4)
@@ -255,6 +288,9 @@ class Costos(models.Model):
 
     def getValues(self):
         return {"cantidadH":self.cantidadHectarea, "cantidadS":self.cantidadSitio, "frecuencia": self.frecuencia}
+
+    def getValuesT(self):
+        return {"Cantidad por hectareas":self.cantidadHectarea, "Cantidad por sitio":self.cantidadSitio, "Frecuencia": self.frecuencia}
     
 class Preparacion_costos(models.Model):
     resiembra = models.FloatField(default = 2)
@@ -279,6 +315,19 @@ class Preparacion_costos(models.Model):
             "paecilomyces": self.paecilomyces,
             "trichoderma": self.trichoderma,
             "melaza": self.melaza,
+        }
+
+    def getValuesT(self):
+        return {
+            "Colino": self.colino,
+            "Estacas": self.estacas,
+            "Cal": self.cal,
+            "Dap": self.dap,
+            "Micorriza": self.micorriza,
+            "Vinilo": self.vinilo,
+            "Paecilomyces": self.paecilomyces,
+            "Trichoderma": self.trichoderma,
+            "Melaza": self.melaza,
         }
 
 class Ano_costo(models.Model):
@@ -317,6 +366,25 @@ class Ano_costo(models.Model):
             self.ano15.getValues()
         ]
 
+    def getValuesT(self):
+        return [
+            self.ano1.getValuesT(),
+            self.ano2.getValuesT(),
+            self.ano3.getValuesT(),
+            self.ano4.getValuesT(),
+            self.ano5.getValuesT(),
+            self.ano6.getValuesT(),
+            self.ano7.getValuesT(),
+            self.ano8.getValuesT(),
+            self.ano9.getValuesT(),
+            self.ano10.getValuesT(),
+            self.ano11.getValuesT(),
+            self.ano12.getValuesT(),
+            self.ano13.getValuesT(),
+            self.ano14.getValuesT(),
+            self.ano15.getValuesT()
+        ]
+
 class Costos_insumos(models.Model):
     materiaOrganica = models.OneToOneField(Ano_costo, related_name="materiaOrganica_anocosto")
     herbicidaCalles = models.OneToOneField(Ano_costo, related_name="herbicidaCalles_anocosto")
@@ -353,6 +421,26 @@ class Costos_insumos(models.Model):
             "canastillas" : self.canastillas.getValues(),
             "herramientas" : self.herramientas.getValues(),
             "lycra" : self.lycra.getValues()
+        }
+
+    def getValuesT(self):
+        return {
+            "Materia organica" : self.materiaOrganica.getValuesT(),
+            "Herbicida calles" : self.herbicidaCalles.getValuesT(),
+            "Herbicida platos" : self.herbicidaPlatos.getValuesT(),
+            "Insecticidas" : self.insecticidas.getValuesT(),
+            "Fungicidas" : self.fungicidas.getValuesT(),
+            "Fertilizante" : self.fertilizante.getValuesT(),
+            "Ridomil" : self.ridomil.getValuesT(),
+            "Fertilizante foliar" : self.fertilizanteFoliar.getValuesT(),
+            "Biocontroladores" : self.biocontroladores.getValuesT(),
+            "Guadaña" : self.guadana.getValuesT(),
+            "Selectores" : self.selectores.getValuesT(),
+            "Bombas espalda" : self.bombasEspalda.getValuesT(),
+            "Bombas estacionarias" : self.bombasEstacionarias.getValuesT(),
+            "Canastillas" : self.canastillas.getValuesT(),
+            "Herramientas" : self.herramientas.getValuesT(),
+            "Lycra" : self.lycra.getValuesT()
         }
 
 class Data_mo(models.Model):
@@ -437,6 +525,24 @@ class Insumos_mo(models.Model):
             "recoleccionDia" : self.recoleccionDia.getValues()
         }
 
+    def getValuesT(self):
+        return {
+            "Siembra" : self.siembra.getValues(),
+            "Resiembra" : self.resiembra.getValues(),
+            "Limpia guadaña calles" : self.limpiaGuadanaCalles.getValues(),
+            "Aplicación de herbicida" : self.aplicacionHerbicida.getValues(),
+            "Plateo" : self.plateo.getValues(),
+            "Fertilización" : self.fertilizacion.getValues(),
+            "Aplicacion de materia orgánica" : self.aplicacionMateriaOrganica.getValues(),
+            "Fungicidas" : self.fungicidas.getValues(),
+            "Biocontroladores" : self.biocontroladores.getValues(),
+            "Aspersiones" : self.aspersiones.getValues(),
+            "Tutorado" : self.tutorado.getValues(),
+            "Podas" : self.podas.getValues(),
+            "Recolección contrato" : self.recoleccionContrato.getValues(),
+            "Recolección día" : self.recoleccionDia.getValues()
+        }
+
 class CIPC(models.Model):
 
     gastosGenerales = models.FloatField(default=100)
@@ -453,6 +559,14 @@ class CIPC(models.Model):
             "prestacionesSociales":self.prestacionesSociales,
             "impuestoPredial":self.impuestoPredial,
             "gastosFinancieros":self.gastosFinancieros
+        }
+
+    def getValuesT(self):
+        return {
+            "Gastos generales":self.gastosGenerales,
+            "Prestaciones sociales":self.prestacionesSociales,
+            "Impuesto predial":self.impuestoPredial,
+            "Gastos financieros":self.gastosFinancieros
         }
 
     def getSum(self):
@@ -492,6 +606,25 @@ class Ano_cipc(models.Model):
             self.ano13.getValues(),
             self.ano14.getValues(),
             self.ano15.getValues()
+        ]
+
+    def getValuesT(self):
+        return [
+            self.ano1.getValuesT(),
+            self.ano2.getValuesT(),
+            self.ano3.getValuesT(),
+            self.ano4.getValuesT(),
+            self.ano5.getValuesT(),
+            self.ano6.getValuesT(),
+            self.ano7.getValuesT(),
+            self.ano8.getValuesT(),
+            self.ano9.getValuesT(),
+            self.ano10.getValuesT(),
+            self.ano11.getValuesT(),
+            self.ano12.getValuesT(),
+            self.ano13.getValuesT(),
+            self.ano14.getValuesT(),
+            self.ano15.getValuesT()
         ]
 
     def getSums(self):
@@ -537,6 +670,19 @@ class Establecimiento(models.Model):
             "resiembra":self.resiembra
         }
 
+    def getValuesT(self):
+        return {
+            "Preparación de terreno":self.preparacionTerreno,
+            "Trazo":self.trazo,
+            "Hoyado":self.hoyado,
+            "Distribución de colino":self.distribucionColino,
+            "Aplicación de correctivos":self.aplicacionCorrectivos,
+            "Aplicación de micorriza":self.aplicacionMicorriza,
+            "Aplicación de materia orgánica":self.aplicacionMateriaOrganica,
+            "Siembra":self.siembra,
+            "Resiembra":self.resiembra
+        }
+
 class Base_presupuestal(models.Model):
     tipo = models.CharField(max_length=15, choices=TIPO_OPTIONS, blank=False, default="Frutales")
     cultivo = models.CharField(max_length=15, choices=CULTIVO_OPTIONS, blank=False, default="Limón")
@@ -554,6 +700,23 @@ class Base_presupuestal(models.Model):
 
     def __str__(self):
         return u"BP : {}, tipo: {}-{}-{}".format(self.nombre, self.tipo, self.variedad, self.cultivo)
+
+    def getValues(self):
+        return {
+            "tipo": self.tipo,
+            "cultivo": self.cultivo,
+            "variedad": self.variedad,
+            "nombre": self.nombre,
+            "rentabilidad": self.rentabilidad,
+            "datos_generales": self.datos_g.getValuesT(),
+            "insumos_generales": self.insumos_g.getValuesT(),
+            "preparacion": self.preparacion.getValuesT(),
+            "costos_insumos": self.costos_insumos.getValuesT(),
+            "insumos_mo": self.insumos_mo.getValuesT(),
+            "distribucion_calidad": self.distribucion_calidad.getValuesT(),
+            "costos_establecimiento": self.establecimiento_r.getValuesT(),
+            "cipc": self.cipc.getValuesT()
+        }
 
     def totalInsumos(self):
     # Variables

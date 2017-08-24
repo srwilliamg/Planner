@@ -741,3 +741,39 @@ def createbp(request):
         ctx['base_presupuestal'] = AddBase_presupuestalForm(prefix="bp")
 
     return render(request, template_name, ctx)
+
+@login_required()
+def updatebp(request):
+    template_name = "update_bp.html"
+    ctx ={}
+    ctx['bps'] = chooseBD()
+    ctx['titulo'] = "Consultar base presupuestal"
+    if request.method == "POST":
+        bpform = chooseBD(request.POST)
+        if bpform.is_valid():
+            keybp = bpform.cleaned_data['bp']
+            ctx['bpelegida'] = keybp.getValues()
+            return render(request, template_name, ctx)
+        else:
+            ctx['message'] = "error"
+            return render(request, template_name, ctx)
+
+    return render(request, template_name, ctx)
+
+@login_required()
+def deletebp(request):
+    template_name = "delete_bp.html"
+    ctx ={}
+    ctx['bps'] = chooseBD()
+    ctx['titulo'] = "Eliminar base presupuestal"
+    if request.method == "POST":
+        bpform = chooseBD(request.POST)
+        if bpform.is_valid():
+            keybp = bpform.cleaned_data['bp']
+            Base_presupuestal.objects.filter(pk = keybp.id).delete()
+            ctx['messages'] = "La base presupuestal ha sido eliminada exitosamente."
+            return render(request, template_name, ctx)
+        else:
+            ctx['messagew'] = "error"
+            return render(request, template_name, ctx)
+    return render(request, template_name, ctx)

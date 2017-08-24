@@ -1,0 +1,283 @@
+{% extends "base.html" %}
+
+{% block header %}{{titulo}}{{block.super}}{% endblock %}
+
+{% block wrapper %}
+	
+  {% if bpelegida %}
+  	<h1>{{bpelegida.Nombre}}</h1>
+  	<div class="col-sm-6">
+  		<div class="card">
+  			<div class="header">
+  				<h2><strong>Información</strong></h2>
+  			</div>
+  			<div class="content">
+	  		<table class="table table-striped">
+	  			<tr>
+		  			<th><strong>Nombre</strong></th>
+		  			<td>{{bpelegida.nombre}}</td>
+	  			</tr>
+	  			<tr>
+		  			<th><strong>Tipo</strong></th>
+		  			<td>{{bpelegida.tipo}}</td>
+	  			</tr>
+	  			<tr>
+		  			<th><strong>Cultivo</strong></th>
+		  			<td>{{bpelegida.cultivo}}</td>
+	  			</tr>
+	  			<tr>
+		  			<th><strong>Variedad</strong></th>
+		  			<td>{{bpelegida.variedad}}</td>
+	  			</tr>
+	  			<tr>
+		  			<th><strong>Rentabilidad</strong></th>
+		  			<td>{{bpelegida.rentabilidad}}</td>
+	  			</tr>
+	  		</table>
+	  		</div>
+  		</div>
+	</div>
+
+	<div class="col-sm-6">
+	<div class="card">
+		<div class="header">
+			<h2><strong>Datos generales</strong></h2>
+		</div>
+		<div class="content">
+			<table class="table table-striped">
+				{% for key,value in bpelegida.datos_generales.items %}
+				<tr>
+				    <th>{{key}}</th>
+				    <td>{{value}}</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>	
+	</div>
+	</div>
+
+	<div class="col-sm-6">
+	<div class="card" style="clear: left;">
+		<div class="header">
+			<h2><strong>Insumos generales</strong></h2>
+		</div>
+		<div class="content">
+			<table class="table table-striped">
+				{% for key,value in bpelegida.insumos_generales.items %}
+				<tr>
+				    <th><strong>{{key}}</strong></th>
+				    <td>{{value}}</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>	
+	</div>
+	</div>
+
+	<div class="col-sm-6">
+	<div class="card">
+		<div class="header">
+			<h2><strong>Costos de preparación</strong></h2>
+		</div>
+		<div class="content">
+			<table class="table table-striped">
+				{% for key,value in bpelegida.preparacion.items %}
+				<tr>
+				    <th><strong>{{key}}</strong></th>
+				    <td>{{value}}</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>	
+	</div>
+	</div>
+
+	<div class="col-sm-12" style="clear:left;">
+	<div class="card">
+		<div class="header">
+			<h2><strong>Distribución de calidad</strong></h2>
+		</div>
+		<div class="content">
+			<div class="col-sm-4">
+			<h3>Primera</h3>
+				<table class="table table-striped">
+					{% for k,v in bpelegida.distribucion_calidad.Primera.items %}
+						<tr>
+					        <th><strong>{{k}}</strong></th>
+					        <td>{{v}}</td>
+					    </tr>
+					{% endfor %}
+				</table>
+			</div>
+
+			<div class="col-sm-4">
+			<h3>Segunda</h3>
+				<table class="table table-striped">
+					{% for k,v in bpelegida.distribucion_calidad.Segunda.items %}
+						<tr>
+					        <th><strong>{{k}}</strong></th>
+					        <td>{{v}}</td>
+					    </tr>
+					{% endfor %}
+				</table>
+			</div>
+
+			<div class="col-sm-4">
+			<h3>Tercera</h3>
+				<table class="table table-striped">
+					{% for k,v in bpelegida.distribucion_calidad.Tercera.items %}
+						<tr>
+					        <th><strong>{{k}}</strong></th>
+					        <td>{{v}}</td>
+					    </tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>	
+	</div>
+	</div>
+
+	<div class="col-sm-6">
+		<div class="card">
+			<div class="header">
+				<h3>Producción</h3>
+			</div>
+			<div class="content">
+					<table class="table table-striped">
+						{% for val in bpelegida.distribucion_calidad.Producción %}
+							<tr>
+							    <th><strong>Año {{forloop.counter}}</strong></th>
+							    <td>{{val}}</td>
+							</tr>
+						{% endfor %}
+					</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-sm-6">
+	<div class="card">
+		<div class="header">
+			<h2><strong>Costos de establecimiento</strong></h2>
+		</div>
+		<div class="content">
+			<table class="table table-striped">
+				{% for key,value in bpelegida.costos_establecimiento.items %}
+				<tr>
+				    <th><strong>{{key}}</strong></th>
+				    <td>{{value}}</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>	
+	</div>
+	</div>
+
+	<div class="col-sm-12" style="clear:left;">
+	<div class="card">
+		<div class="header">
+			<h2><strong>Costos indirectos de producción y comercialización</strong></h2>
+		</div>
+		<div class="content">
+				{% for value in bpelegida.cipc %}
+				<div class="col-sm-4">
+					<table class="table table-striped">
+						<tr>
+							<th>Año {{forloop.counter}}</th>
+						</tr>
+						{% for k,v in value.items %}
+							<tr>
+							    <th><strong>{{k}}</strong></th>
+							    <td>{{v}}</td>
+							</tr>
+						{% endfor %}
+					</table>
+				</div>
+				{% endfor %}
+		</div>	
+	</div>
+	</div>
+
+	<div class="col-sm-12" style="clear:left;">
+	<div class="card">
+		<div class="header">
+			<h2> <strong>Costos de insumos</strong></h2>
+		</div>
+		<div class="content">
+			{% for key,value in bpelegida.costos_insumos.items %}
+				<h2>{{key}}</h2>
+				{% for val in value %}
+					<div class="col-sm-4">
+					<table class="table table-striped">
+						<tr>
+						    <th><strong>Año {{forloop.counter}}</strong></th>
+						</tr>
+					{% for k,v in val.items %}
+						<tr>
+						    <th><strong>{{k}}</strong></th>
+						    <td>{{v}}</td>
+						</tr>
+					{% endfor %}
+					</table>
+					</div>
+				{% endfor %}
+				<div style="clear:left;"></div>
+			{% endfor %}
+		</div>	
+	</div>
+	</div>
+
+	<div class="col-sm-12" style="clear:left;">
+	<div class="card">
+		<div class="header">
+			<h2><strong>Insumos de mano de obra</strong></h2>
+		</div>
+		<div class="content">
+			{% for key,value in bpelegida.insumos_mo.items %}
+				<h2>{{key}}</h2>
+				{% for val in value %}
+					<div class="col-sm-4">
+					<table class="table table-striped">
+						<tr>
+						    <th><strong>Año {{forloop.counter}}</strong></th>
+						</tr>
+					{% for k,v in val.items %}
+						<tr>
+						    <th><strong>{{k}}</strong></th>
+						    <td>{{v}}</td>
+						</tr>
+					{% endfor %}
+					</table>
+					</div>
+				{% endfor %}
+				<div style="clear:left;"></div>
+			{% endfor %}
+		</div>	
+	</div>
+	</div>
+	
+  {% endif %}
+
+<div id="formdiv" style="clear:left;">
+	<form method="POST" accept-charset="utf-8">
+			{% csrf_token %}
+			<table>{{bps.as_table}}</table>
+			<button type="submit" id="buttons" class="btn btn-success btn-fill">Enviar</button>
+	</form>
+</div>
+
+{% endblock %}
+
+
+{% block table %}
+
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript" charset="utf-8">
+
+</script>
+{% endblock %}
+
+{% block footer %}{% endblock %}

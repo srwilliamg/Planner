@@ -42,10 +42,11 @@
             <div class="row col-md-7">
                 <div class="panel-heading">
                     {% block message %}
-                        
                     {% endblock message %}
                    <div class="panel-title text-center">
-                        <h1 class="title title-login">{% block titulo %}{% endblock titulo %}</h1>
+                        <h1 class="title-login">
+                            <strong>{% block titulo %}{% endblock titulo %}</strong>
+                        </h1>
                         <hr style="border-color:green;">
                     </div>
                 </div> 

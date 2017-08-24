@@ -29,4 +29,6 @@ urlpatterns = [
     url(r'^home_agricultor/deletel/$', views.deleteLote, name = "deleteLote"),
     url(r'^home_agricultor/updatel/(?P<var>\d+)/$', views.updateLote, name='updateLote'),
     url(r'^home_agricultor/crearbp/$', views.createbp, name = "createbp"),
+    url(r'^home_agricultor/updatebp/$', views.updatebp, name = "updatebp"),
+    url(r'^home_agricultor/deletebp/$', views.deletebp, name = "deletebp"),
 ]

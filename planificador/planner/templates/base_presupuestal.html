@@ -6,16 +6,46 @@
 <form method="post" accept-charset="utf-8">
 	{% csrf_token %}
 
-<div style="">
-	    <div>
+<div style="" class="">
 	        <div class="">
-	            <div class="panel panel-green">
-	            	<div class = "panel-heading">
-				    	<h4 class="panel-tittle">Tipo de base presupuestal</h4>
+	            <div class="card">
+	            	<div class = "header">
+				    	<h4 class="title"> <strong>Tipo de base presupuestal </strong> </h4>
 			    	</div>
-					<div class="panel-body">
+					<div class="content">
 						<div class="list-group">
-							{{base_presupuestal.as_p}}
+							<table class="table table-striped">{{base_presupuestal.as_table}}</table>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+
+    <div style="" class="">
+	        <div class="col-lg-4">
+	            <div class="card">
+	            	<div class = "header">
+				    	<h4 class="title"> <strong>Insumos generales </strong> </h4>
+			    	</div>
+					<div class="content">
+						<div class="list-group">
+							<table class="table table-striped">{{Insumos_generalesform.as_table}}</table>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+
+	<div style="" class="">
+	    <div>
+	        <div class="col-lg-4">
+	            <div class="card">
+	            	<div class = "header">
+				    	<h4 class="title"> <strong>Establecimiento </strong></h4>
+			    	</div>
+					<div class="content">
+						<div class="list-group">
+						<table class="table table-striped">{{establecimientoform.as_table}}</table>
 						</div>
 					</div>
 				</div>
@@ -23,50 +53,16 @@
 		</div>
 	</div>
 
-    <div style="">
+	<div style="" class="">
 	    <div>
 	        <div class="col-lg-4">
-	            <div class="panel panel-green">
-	            	<div class = "panel-heading">
-				    	<h4 class="panel-tittle">Insumos generales</h4>
+	            <div class="card">
+	            	<div class = "header">
+				    	<h4 class="title"> <strong>Costes de preparación </strong> </h4>
 			    	</div>
-					<div class="panel-body">
+					<div class="content">
 						<div class="list-group">
-							{{Insumos_generalesform.as_p}}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div style="">
-	    <div>
-	        <div class="col-lg-4">
-	            <div class="panel panel-green">
-	            	<div class = "panel-heading">
-				    	<h4 class="panel-tittle">Establecimiento</h4>
-			    	</div>
-					<div class="panel-body">
-						<div class="list-group">
-						{{establecimientoform.as_p}}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div style="">
-	    <div>
-	        <div class="col-lg-4">
-	            <div class="panel panel-green">
-	            	<div class = "panel-heading">
-				    	<h4 class="panel-tittle">Costes de preparación</h4>
-			    	</div>
-					<div class="panel-body">
-						<div class="list-group">
-						{{preparacionform.as_p}}
+						<table class="table table-striped">{{preparacionform.as_table}}</table>
 						</div>
 					</div>
 				</div>
@@ -77,13 +73,13 @@
 	<div>
 	    <div style="clear:left;">
 	        <div class="">
-	            <div class="panel panel-green">
-	            	<div class = "panel-heading">
-				    	<h4 class="panel-tittle">Datos generales</h4>
+	            <div class="card">
+	            	<div class = "header">
+				    	<h4 class="title"> <strong>Datos generales </strong> </h4>
 			    	</div>
-					<div class="panel-body">
+					<div class="content">
 						<div class="list-group">
-							{{datos_generalesform.as_p}}
+							<table class="table table-striped">{{datos_generalesform.as_table}}</table>
 						</div>
 					</div>
 				</div>
@@ -91,19 +87,19 @@
 		</div>
 	</div>
     
-    <div style="">
-    <h3>Costos indirectos de producción y comercialización</h3>
+    <div style="" class="">
+    <h3> <strong>Costos indirectos de producción y comercialización</strong> </h3>
     <br>
     	{% for value in cipc %}
 	    <div class="list-inline">
 	        <div class="col-lg-4">
-	            <div class="panel panel-green">
-				    <div class = "panel-heading">
-				    	<h4 class="panel-tittle">Año {{forloop.counter}}</h4>
+	            <div class="card">
+				    <div class = "header">
+				    	<h4 class="title"> <strong>Año {{forloop.counter}} </strong> </h4>
 			    	</div>
-					<div class="panel-body">
+					<div class="content">
 						<div class="list-group">
-						{{value.as_p}}	
+							<table class="table table-striped">{{value.as_table}}</table>
 						</div>
 					</div>
 				</div>
@@ -113,18 +109,17 @@
 	</div>
 	
 	<div style="clear: left;">
-		<h3>Distribución de calidad</h3>
-		<br>
+		<h3> <strong>Distribución de calidad</strong></h3>
 		<br>
 		 <div class="list-inline">
 	        <div class="col-lg-4">
-	            <div class="panel panel-green">
-				    <div class = "panel-heading">
-				    	<h4 class="panel-tittle">Primera</h4>
+	            <div class="card">
+				    <div class = "header">
+				    	<h4 class="title"> <strong>Primera </strong> </h4>
 			    	</div>
-					<div class="panel-body">
+					<div class="content">
 						<div class="list-group">
-						{{porcentaje_precio1form.as_p}}
+						<table class="table table-striped">{{porcentaje_precio1form.as_table}}</table>
 						</div>
 					</div>
 				</div>
@@ -132,13 +127,13 @@
 		</div>
 		<div class="list-inline">
 	        <div class="col-lg-4">
-	            <div class="panel panel-green">
-					<div class = "panel-heading">
-						<h4 class="panel-tittle">Segunda</h4>
+	            <div class="card">
+					<div class = "header">
+						<h4 class="title"> <strong>Segunda </strong> </h4>
 					</div>
-					<div class="panel-body">
+					<div class="content">
 						<div class="list-group">
-						{{porcentaje_precio2form.as_p}}
+						<table class="table table-striped">{{porcentaje_precio2form.as_table}}</table>
 						</div>
 					</div>
 				</div>
@@ -146,13 +141,13 @@
 		</div>
 		<div class="list-inline">
 	        <div class="col-lg-4">
-	            <div class="panel panel-green">
-					<div class = "panel-heading">
-						<h4 class="panel-tittle">Tercera</h4>
+	            <div class="card">
+					<div class = "header">
+						<h4 class="title"> <strong>Tercera </strong> </h4>
 					</div>
-					<div class="panel-body">
+					<div class="content">
 						<div class="list-group">
-						{{porcentaje_precio3form.as_p}}
+						<table class="table table-striped">{{porcentaje_precio3form.as_table}}</table>
 						</div>
 					</div>
 				</div>
@@ -163,13 +158,13 @@
 	<div style="clear: left;">
 		<div class="list-inline">
 	        <div class="">
-	            <div class="panel panel-green">
-				    <div class = "panel-heading">
-				    	<h4 class="panel-tittle">Producción por año</h4>
+	            <div class="card">
+				    <div class = "header">
+				    	<h4 class="title"> <strong>Producción por año </strong> </h4>
 			    	</div>
-					<div class="panel-body">
+					<div class="content">
 						<div class="list-group">
-						{{produccionform.as_table}}
+							{{produccionform.as_table}}
 						</div>
 					</div>
 				</div>
@@ -177,22 +172,22 @@
 		</div>
 	</div>
 	
-	<div style="">
-		<h3>Mano de obra</h3>
+	<div style="" class="">
 		<br>
+		<h3><strong>Mano de obra</strong></h3>
 		{% for key, value in manoobra.items %}
-		    <h3>{{key}}</h3>
+		    <h3> <strong>{{key}}</strong> </h3>
 		    <br>
 		    	{% for v in value %}
 			    <div class="list-inline">
 			        <div class="col-lg-4">
-			            <div class="panel panel-green">
-						    <div class = "panel-heading">
-						    	<h4 class="panel-tittle">Año {{forloop.counter}}</h4>
+			            <div class="card">
+						    <div class = "header">
+						    	<h4 class="title"> <strong>Año {{forloop.counter}} </strong> </h4>
 					    	</div>
-							<div class="panel-body">
+							<div class="content">
 								<div class="list-group">
-								{{v.as_p}}	
+									<table class="table table-striped">{{v.as_table}}</table>
 								</div>
 							</div>
 						</div>
@@ -202,21 +197,21 @@
 		{% endfor %}
 	</div>
 
-	<div style="">
-		<h3>Costos de insumos</h3>
+	<div style="" class="">
+		<h3><strong>Costos de insumos</strong></h3>
 		{% for key, value in data_costos.items %}
 		    <h3>Costos de {{key}}</h3>
 		    <br>
 		    	{% for v in value %}
 			    <div class="list-inline">
 			        <div class="col-lg-4">
-			            <div class="panel panel-green">
-						    <div class = "panel-heading">
-						    	<h4 class="panel-tittle">Año {{forloop.counter}}</h4>
+			            <div class="card">
+						    <div class = "header">
+						    	<h4 class="title"> <strong>Año {{forloop.counter}} </strong> </h4>
 					    	</div>
-							<div class="panel-body">
+							<div class="content">
 								<div class="list-group">
-								{{v.as_p}}	
+									<table class="table table-striped">{{v.as_table}}</table>
 								</div>
 							</div>
 						</div>
@@ -226,7 +221,7 @@
 		{% endfor %}
 	</div>
 	</div>
-<button type="submit" name = "costoinsumos" class="btn-success btn-fill btn b-t-1">Crear</button>
+<button type="submit" class="btn-success btn-fill btn b-t-1">Guardar</button>
 <br>
 </form>
 {% endblock %}

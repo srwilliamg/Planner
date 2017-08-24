@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block header %}{{titulo}}{{block.super}}{% endblock %}
+
+{% block wrapper %}
+
+<div id="formdiv" style="clear:left;">
+	<form method="POST" accept-charset="utf-8">
+			{% csrf_token %}
+			<table>{{bps.as_table}}</table>
+			<button type="submit" id="buttons" class="btn btn-success btn-fill">Enviar</button>
+	</form>
+</div>
+
+{% endblock %}
+
+
+{% block table %}
+
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript" charset="utf-8">
+
+	$( document ).ready(function() {
+		{% if messages %}
+		    bootstrap_alert.success({{message}});
+		{% endif %}
+		{% if messagew %}
+		    bootstrap_alert.warning({{message}});
+		{% endif %}
+
+	});
+
+	bootstrap_alert = function() {}
+	bootstrap_alert.success = function(message) {
+	    $('#divmessage').html("<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Success!</strong> "+message+"</div>")
+	}
+		bootstrap_alert.warning = function(message) {
+	    $('#divmessage').html("<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Warning!</strong> "+message+"</div>")
+	}
+</script>
+{% endblock %}
+
+{% block footer %}{% endblock %}

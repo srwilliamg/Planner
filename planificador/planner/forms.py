@@ -406,49 +406,49 @@ class AddProduccionForm(forms.ModelForm):
         ]
 
     ano1 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 1111, 
+    required=True, label= "Año 1", min_value=0,initial = 9000, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 1", "class": "produccionform form-control"}))
     ano2 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 1111, 
+    required=True, label= "Año 2", min_value=0,initial = 9000, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 2", "class": "produccionform form-control"}))
     ano3 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 1111, 
+    required=True, label= "Año 3", min_value=0,initial = 9000, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 3", "class": "produccionform form-control"}))
     ano4 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 1111, 
+    required=True, label= "Año 4", min_value=0,initial = 9000, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 4", "class": "produccionform form-control"}))
     ano5 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 1111, 
+    required=True, label= "Año 5", min_value=0,initial = 9000, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 5", "class": "produccionform form-control"}))
     ano6 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 1111, 
+    required=True, label= "Año 6", min_value=0,initial = 9000, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 6", "class": "produccionform form-control"}))
     ano7 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 1111, 
+    required=True, label= "Año 7", min_value=0,initial = 9000, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 7", "class": "produccionform form-control"}))
     ano8 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 1111, 
+    required=True, label= "Año 8", min_value=0,initial = 9000, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 8", "class": "produccionform form-control"}))
     ano9 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 1111, 
+    required=True, label= "Año 9", min_value=0,initial = 9000, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 9", "class": "produccionform form-control"}))
     ano10 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 1111, 
+    required=True, label= "Año 10", min_value=0,initial = 9000, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 10", "class": "produccionform form-control"}))
     ano11 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 1111, 
+    required=True, label= "Año 11", min_value=0,initial = 9000, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 11", "class": "produccionform form-control"}))
     ano12 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 1111, 
+    required=True, label= "Año 12", min_value=0,initial = 9000, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 12", "class": "produccionform form-control"}))
     ano13 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 1111, 
+    required=True, label= "Año 13", min_value=0,initial = 9000, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 13", "class": "produccionform form-control"}))
     ano14 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 1111, 
+    required=True, label= "Año 14", min_value=0,initial = 9000, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 14", "class": "produccionform form-control"}))
     ano15 = forms.FloatField(
-    required=True, label= "", min_value=0,initial = 1111, 
+    required=True, label= "Año 15", min_value=0,initial = 9000, 
     widget=forms.NumberInput(attrs={"placeholder":"produccion 15", "class": "produccionform form-control"}))        
 
 class AddPorcentaje_precioForm(forms.ModelForm):
@@ -598,4 +598,59 @@ class EditUserProfileForm(forms.ModelForm):
     password = forms.CharField(
         required=True, label="Password", widget=forms.PasswordInput())
 
-    
+class EditBase_presupuestalForm(forms.ModelForm):
+    class Meta:
+        model = Base_presupuestal
+        fields = [
+            'tipo',
+            'cultivo',
+            'variedad',
+            'nombre',
+            'rentabilidad',
+            'datos_g',
+            'insumos_g',
+            'preparacion',
+            'costos_insumos',
+            'insumos_mo',
+            'distribucion_calidad',
+            'establecimiento_r',
+            'cipc'
+        ]
+
+    tipo = forms.ChoiceField(
+        required=True, label="Tipo", widget=forms.Select(attrs={"class": "form-control"}), choices=TIPO_OPTIONS)
+
+    cultivo = forms.ChoiceField(
+        required=True, label="Cultivo", widget=forms.Select(attrs={"class": "form-control"}), choices=CULTIVO_OPTIONS)
+
+    variedad = forms.ChoiceField(
+        required=True, label="Variedad", widget=forms.Select(attrs={"class": "form-control"}), choices=VARIEDAD_OPTIONS)
+
+    nombre = forms.CharField(
+        required=True, label="Nombre",
+        widget=forms.TextInput(
+            attrs={"size": 20, "title": "Nombre", "class": "form-control"}))
+
+    rentabilidad = forms.FloatField(
+        required=True, label= "rentabilidad", min_value=0,initial = 12, 
+        widget=forms.NumberInput(attrs={"placeholder":"$", "class": "yearsform form-control"}))
+    datos_g = forms.ModelChoiceField(
+        required=True, label="Género", widget=forms.Select(attrs={"class": "form-control"}), queryset = Datos_generales.objects.all())
+    insumos_g = forms.ModelChoiceField(
+        required=True, label="Género", widget=forms.Select(attrs={"class": "form-control"}), queryset = Insumos_generales.objects.all())
+    preparacion = forms.ModelChoiceField(
+        required=True, label="Género", widget=forms.Select(attrs={"class": "form-control"}), queryset = Preparacion_costos.objects.all())
+    costos_insumos = forms.ModelChoiceField(
+        required=True, label="Género", widget=forms.Select(attrs={"class": "form-control"}), queryset = Costos_insumos.objects.all())
+    insumos_mo = forms.ModelChoiceField(
+        required=True, label="Género", widget=forms.Select(attrs={"class": "form-control"}), queryset = Insumos_mo.objects.all())
+    distribucion_calidad = forms.ModelChoiceField(
+        required=True, label="Género", widget=forms.Select(attrs={"class": "form-control"}), queryset = Distribucion_calidad.objects.all())
+    establecimiento_r = forms.ModelChoiceField(
+        required=True, label="Género", widget=forms.Select(attrs={"class": "form-control"}), queryset = Establecimiento.objects.all())
+    cipc = forms.ModelChoiceField(
+        required=True, label="Género", widget=forms.Select(attrs={"class": "form-control"}), queryset = Ano_cipc.objects.all())
+
+class chooseBD(forms.Form):
+    bp = forms.ModelChoiceField(queryset = Base_presupuestal.objects.all(),label = "Elige la base presupuestal", 
+        widget=forms.Select(attrs={"title":"Seleccione la base presupuestal.", "class": "form-control"}))
