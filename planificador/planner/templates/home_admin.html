@@ -6,34 +6,34 @@
 		<div id="divUsers">
 		{% for value in users %}
 		{% if value.role != 'R' %}
-			<div class=" list-inline">
+			<div class="">
 		            <div class="col-lg-4">
-		                <div class="panel panel-green">
-		                    <div class="panel-heading">
-		                        <h3 class="panel-title"><i class="fa fa-user" aria-hidden="true"></i>
-		                        {{value.first_name}} {{value.last_name}}</h3>
+		                <div class="card">
+		                    <div class="header">
+		                        <h4 class="title"><i class="fa fa-user" aria-hidden="true"></i>
+		                        {{value.first_name}} {{value.last_name}}</h4>
 		                    </div>
-								<div class="panel-body">
+								<div class="content">
 								    <div class="list-group">
 								    	<a href="#" class="list-group-item">
 								            <span class="badge">{{value.gender}}</span>
-								            <i class="fa glyphicon-fast-forward fa-circle-o"></i> Género
+								            <i class="pe-7s-male"></i>  Género
 								        </a>
 								        <a href="#" class="list-group-item">
 								            <span class="badge">{{value.document_number}}</span>
-								            <i class="fa fa-id-badge"></i> Número de documento
+								            <i class="pe-7s-id"></i>  Número de documento
 								        </a>
 								        <a href="#" class="list-group-item">
 								            <span class="badge">{{value.phone}}</span>
-								            <i class="fa fa-phone"></i> Teléfono
+								            <i class="pe-7s-phone"></i>  Teléfono
 								        </a>
 								        <a href="#" class="list-group-item">
 								            <span class="badge">{{value.role}}</span>
-								            <i class="fa fa-newspaper-o"></i> Rol
+								            <i class="pe-7s-users"></i>  Rol
 								        </a>
 								        <a href="#" class="list-group-item">
 								            <span class="badge">{{value.email}}</span>
-								            <i class="fa fa-envelope"></i> Correo
+								            <i class="pe-7s-mail"></i>  Correo
 								        </a>
 								    </div>
 								    <div class="text-right">

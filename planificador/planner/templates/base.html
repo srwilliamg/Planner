@@ -33,7 +33,13 @@
 <body>
     
         <div class="wrapper">
-            {% include "snippets/sidebar.html" %}
+            {% if request.user.role == "S" %}
+                {% include "snippets/sidebar.html" %}
+            {% endif %}
+            {% if request.user.role == "A" %}
+                {% include "snippets/sidebar_admin.html" %}
+            {% endif %}
+            
             <div class="main-panel">
                 <nav class="navbar navbar-default navbar-fixed">
                     <div class="container-fluid">
