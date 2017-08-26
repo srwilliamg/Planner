@@ -1039,4 +1039,3 @@ class lote_has_bp(models.Model):
 
     def __str__(self):
         return u"{} -- {}".format(self.lote, self.bp)
-

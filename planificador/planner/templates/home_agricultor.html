@@ -3,10 +3,14 @@
 {% block header %}{{titulo}}{% endblock %}
 
 {% block wrapper %}
+{% load staticfiles %}
 	<div id="campoChart" align="center" style='visibility:hidden; display:none;' >
-		<div class="panel">
+		<div id="panelChart" class="panel">
 			<canvas id="myChart"></canvas>	
 		</div>
+	</div>
+	<div align="center" id="loading" style="display:none;" >
+			<img src="{% static 'images/Cargando.gif' %}" style="height: 10em; width: 10em;margin-bottom: 2em;" alt="">
 	</div>
 
 	<div class="list-inline" id="tableRiesgo" style='visibility:hidden; display:none;'>
@@ -202,9 +206,17 @@
 	    			});
         		});
 
-        		$(document).on("click",'a[id="buttonfinca"]',function() {    
+        		$(document).on("click",'a[id="buttonfinca"]',function() {
+        			$('#myChart').remove(); // this is my <canvas> element
+  					$('#panelChart').append('<canvas id="myChart"><canvas>');   
 	    			var $this = $(this);
         			var finca = $this.data('finca');
+
+        			document.getElementById("loading").style.display ='block';
+
+        			var campo = document.getElementById("campoChart");
+								campo.style.visibility='hidden';
+								campo.style.display ='none';
         			
 				    ajaxfinca = $.ajax({
 				        url: "{% url 'fincaChart' %}",
@@ -259,6 +271,7 @@
 								campo.style.visibility='hidden';
 								campo.style.display ='none';
 							}
+							document.getElementById("loading").style.display ='none';
 				        },
 
 				        error : function() {
@@ -267,9 +280,15 @@
 				    });
 				});
 
-	    		$(document).on("click",'a[id="buttonId"]',function() {    
+	    		$(document).on("click",'a[id="buttonId"]',function() {
+	    			$('#myChart').remove(); // this is my <canvas> element
+  					$('#panelChart').append('<canvas id="myChart"><canvas>'); 
 	    			var $this = $(this);
         			var lote = $this.data('lote');
+        			document.getElementById("loading").style.display ='block';
+        			var campo = document.getElementById("campoChart");
+								campo.style.visibility='hidden';
+								campo.style.display ='none';
 
 				    $.ajax({
 				        url: "{% url 'loteChart' %}",
@@ -335,6 +354,8 @@
 							var tr = document.getElementById("tableRiesgo");
 							tr.style.visibility='visible';
 							tr.style.display ='initial';
+
+							document.getElementById("loading").style.display ='none';
 				        },
 
 				        error : function() {
@@ -354,15 +375,7 @@
 			}
 
 	    	function calcularMargen(){
-	    		var campo = document.getElementById("campoChart");
-				campo.style.visibility='visible';
-				campo.style.display ='initial';
-
-				var canvas = document.getElementById("myChart");
-				var ctx = canvas.getContext("2d");
-				ctx.fillStyle = "green";
-				ctx.textAlign = "center";
-				ctx.fillText("Cargando gráfica",canvas.width/2, canvas.height/2);
+	    		document.getElementById("loading").style.display ='block';
 
 			    $.ajax({
 			        url: "{% url 'home_agricultor' %}",
@@ -395,6 +408,10 @@
 								},
 							}
 						});
+						var campo = document.getElementById("campoChart");
+						campo.style.visibility='visible';
+						campo.style.display ='initial';
+						document.getElementById("loading").style.display ='none';
 			        },
 
 			        error : function() {

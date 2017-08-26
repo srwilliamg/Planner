@@ -324,13 +324,12 @@ def updateLote(request, var):
 
         if loteform.is_valid() and riesgoform.is_valid():
             lote = loteform.save(commit=False)
+            lote_has_bp.objects.filter(lote=lote).delete()
             qbp = Base_presupuestal.objects.filter(tipo=lote.tipo, cultivo=lote.cultivo, variedad=lote.variedad)
             if qbp.__len__() != 0:
                 bp= qbp[0]
                 lhbp = lote_has_bp(lote = lote,bp = bp)
                 lhbp.save()
-            else:
-                lote_has_bp.objects.filter(lote=lote).delete()
             loteform.save()
             riesgoform.save()
 
@@ -770,6 +769,7 @@ def deletebp(request):
         bpform = chooseBD(request.POST)
         if bpform.is_valid():
             keybp = bpform.cleaned_data['bp']
+            lote_has_bp.objects.filter(bp = keybp).delete()
             Base_presupuestal.objects.filter(pk = keybp.id).delete()
             ctx['messages'] = "La base presupuestal ha sido eliminada exitosamente."
             return render(request, template_name, ctx)
