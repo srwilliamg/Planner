@@ -164,7 +164,9 @@
 			    	</div>
 					<div class="content">
 						<div class="list-group">
+							<table class="table table-striped">
 							{{produccionform.as_table}}
+							</table>
 						</div>
 					</div>
 				</div>
@@ -176,7 +178,7 @@
 		<br>
 		<h3><strong>Mano de obra</strong></h3>
 		{% for key, value in manoobra.items %}
-		    <h3> <strong>{{key}}</strong> </h3>
+		    <h3>{{key}}</h3>
 		    <br>
 		    	{% for v in value %}
 			    <div class="list-inline">

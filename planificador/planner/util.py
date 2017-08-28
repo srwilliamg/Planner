@@ -8,7 +8,8 @@ def RedirectToHome(user):
     rol_homes = {
         "R": "/admin",
         "A": "home_admin",
-        "S": "home_agricultor"
+        "S": "home_agricultor",
+        "X": "home_root"
     }
     view = rol_homes.get(user.role, None)
     return redirect(view)

@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^home_agricultor/lotes/(?P<var>\w+)/$', LoteListView.as_view(), name='lotes'),
     url(r'^home_agricultor/lotes/\d+/loteChart/$', views.loteChart, name='loteChart'),
     url(r'^home_admin/$', views.home_admin, name='home_admin'),
+    url(r'^home_admin/createUser/$', views.createUser, name='createUser'),
     url(r'^home_admin/deleteuser/$', views.deleteUser, name='deleteUser'),
     url(r'^home_agricultor/crearf/$', createFinca.as_view(), name = "createFinca"),
     url(r'^home_agricultor/deletef/$', views.deleteFinca, name = "deleteFinca"),
@@ -31,4 +32,7 @@ urlpatterns = [
     url(r'^home_agricultor/crearbp/$', views.createbp, name = "createbp"),
     url(r'^home_agricultor/updatebp/$', views.updatebp, name = "updatebp"),
     url(r'^home_agricultor/deletebp/$', views.deletebp, name = "deletebp"),
+    url(r'^home_root/$', views.home_root, name='home_root'),
+    url(r'^home_root/createAdmin/$', views.createAdmin, name='createAdmin'),
+    url(r'^home_root/deleteAdmin/$', views.deleteAdmin, name='deleteAdmin'),
 ]

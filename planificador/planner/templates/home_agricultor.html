@@ -282,13 +282,20 @@
 
 	    		$(document).on("click",'a[id="buttonId"]',function() {
 	    			$('#myChart').remove(); // this is my <canvas> element
-  					$('#panelChart').append('<canvas id="myChart"><canvas>'); 
+  					$('#panelChart').append('<canvas id="myChart"><canvas>');
+
 	    			var $this = $(this);
         			var lote = $this.data('lote');
+
         			document.getElementById("loading").style.display ='block';
+
+        			var tr = document.getElementById("tableRiesgo");
+					tr.style.visibility='hidden';
+					tr.style.display ='none';
+
         			var campo = document.getElementById("campoChart");
-								campo.style.visibility='hidden';
-								campo.style.display ='none';
+					campo.style.visibility='hidden';
+					campo.style.display ='none';
 
 				    $.ajax({
 				        url: "{% url 'loteChart' %}",
@@ -351,7 +358,7 @@
 								myTable.rows[1].cells[t].innerHTML = data["riesgo"][t];
 
 							}
-							var tr = document.getElementById("tableRiesgo");
+
 							tr.style.visibility='visible';
 							tr.style.display ='initial';
 

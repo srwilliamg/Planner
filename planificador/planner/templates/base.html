@@ -39,6 +39,9 @@
             {% if request.user.role == "A" %}
                 {% include "snippets/sidebar_admin.html" %}
             {% endif %}
+            {% if request.user.role == "X" %}
+                {% include "snippets/sidebar_root.html" %}
+            {% endif %}
             
             <div class="main-panel">
                 <nav class="navbar navbar-default navbar-fixed">

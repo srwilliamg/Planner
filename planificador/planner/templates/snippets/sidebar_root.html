@@ -1,0 +1,34 @@
+{% load staticfiles %}
+<div class="sidebar" data-color="black" data-image="{% static 'images/sidebar-4.jpg' %}">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="{% url 'home_root' %}" class="simple-text">
+                    {% if request.user.role == "S" %}
+                        Agricultor
+                    {% endif %}
+                    {% if request.user.role == "A" %}
+                        Administrador
+                    {% endif %}
+                    {% if request.user.role == "X" %}
+                        Root
+                    {% endif %}
+                </a>
+            </div>
+
+            <ul class="nav">
+                <li>
+                    <a href="{% url 'home_root' %}">
+                        <i class="pe-7s-users"></i>
+                        <p>Listar administradores</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'createAdmin' %}">
+                        <i class="pe-7s-user"></i>
+                        <p>Crear administrador</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+</div>
+

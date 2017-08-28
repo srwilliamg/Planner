@@ -270,7 +270,7 @@ def home_admin(request):
 
     template_name = "home_admin.html"
 
-    ctx = {"users":User.objects.all()}
+    ctx = {"users":User.objects.filter(role="S")}
 
     return render(request, template_name, ctx )
 
@@ -777,3 +777,58 @@ def deletebp(request):
             ctx['messagew'] = "error"
             return render(request, template_name, ctx)
     return render(request, template_name, ctx)
+
+def createUser(request):
+    template_name = 'createUser.html'
+    form = AddUserForm(request.POST or None)
+    errors = None
+    mensaje = None
+    if request.method == "POST":
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.is_active = True
+            obj.role = 'S'
+            obj.save()
+            return redirect('login')
+        else:
+            errors = form.errors
+    context = {"form":form, "errors":errors, "titulo": "Crear usuario"}
+    return render(request, template_name, context)
+
+def createAdmin(request):
+    template_name = 'createAdmin.html'
+    form = AddUserForm(request.POST or None)
+    errors = None
+    mensaje = None
+    if request.method == "POST":
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.is_active = True
+            obj.role = 'A'
+            obj.save()
+            return redirect('login')
+        else:
+            errors = form.errors
+    context = {"form":form, "errors":errors, "titulo": "Crear administrador"}
+    return render(request, template_name, context)
+
+@login_required()
+def deleteAdmin(request):
+    data ={}
+    if request.is_ajax():
+        unum = request.POST["user"]
+        user = User.objects.get(pk=unum)
+        user.delete()
+        data['message'] = "El administrador ha sido eliminado exitosamente"
+        return HttpResponse(json.dumps(data), content_type="application/json")
+
+@login_required()
+def home_root(request):
+    if request.user.role != 'X':
+        return RedirectToHome(request.user)
+
+    template_name = "home_root.html"
+
+    ctx = {"users":User.objects.filter(role='A')}
+
+    return render(request, template_name, ctx )

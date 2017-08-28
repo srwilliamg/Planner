@@ -7,7 +7,7 @@ from .auth import UserManager
 from django.utils.translation import gettext as _
 
 
-ROLE_OPTIONS = (("R", "Root"), ("A", "Administrador"),("S", "Agricultor"))
+ROLE_OPTIONS = (("R", "RealRoot"), ("A", "Administrador"),("S", "Agricultor"), ("X", "Root"))
 DOCUMENT_OPTIONS = (("TI", "Tarjeta de Identidad"), ("CC", "Cedula de Ciudadania"), ("CE", "Cedula de Extranjería"))
 GENDER_OPTIONS = (("M", "Masculino"), ("F", "Femenino"), ("O", "Otro"))
 

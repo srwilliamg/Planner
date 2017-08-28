@@ -9,18 +9,26 @@
                     {% if request.user.role == "A" %}
                         Administrador
                     {% endif %}
+                    {% if request.user.role == "X" %}
+                        Root
+                    {% endif %}
                 </a>
             </div>
 
             <ul class="nav">
-                <li class="active">
+                <li>
                     <a href="{% url 'home_admin' %}">
-                        <i class="pe-7s-photo"></i>
+                        <i class="pe-7s-users"></i>
                         <p>Lista de usuarios</p>
                     </a>
                 </li>
                 <li>
-                    
+                    <a href="{% url 'createUser' %}">
+                        <i class="pe-7s-user"></i>
+                        <p>Crear usuario</p>
+                    </a>
+                </li>
+                <li>
                     <a data-toggle="collapse" href="#bpActions">
                         <i class="pe-7s-note2"></i>
                         <p>Base presupuestal

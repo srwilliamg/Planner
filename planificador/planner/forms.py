@@ -48,7 +48,7 @@ class AddUserForm(forms.ModelForm):
         required=True, label="Fecha de nacimiento",
         input_formats=["%Y-%m-%d",
                        "%d/%m/%Y",
-                       "%d/%m/%y"], widget=forms.TextInput(attrs={"class": "form-control"})
+                       "%d/%m/%y"], widget=forms.TextInput(attrs={"placeholder": "Día/Mes/Año","class": "form-control"})
     )
 
     address = forms.CharField(
@@ -63,7 +63,7 @@ class AddUserForm(forms.ModelForm):
         ))
 
     email = forms.EmailField(
-        required=True, label="Email", widget=forms.TextInput(attrs={"class": "form-control"}))
+        required=True, label="Email", widget=forms.TextInput(attrs={"placeholder": "example@example.co","class": "form-control"}))
     password = forms.CharField(
         required=True, label="Password", widget=forms.PasswordInput(attrs={"class": "form-control"}))
 
@@ -96,7 +96,7 @@ class AddFincaForm(forms.ModelForm):
 
     area = forms.FloatField(
         required=True, label= "Area", min_value=1, 
-        widget=forms.NumberInput(attrs={"title":"Ingrese el área en unidades de hectárea","placeholder":"Hectareas" ,"class": "form-control"}))
+        widget=forms.NumberInput(attrs={"title":"Ingrese el área en unidades de hectárea","placeholder":"Hectáreas" ,"class": "form-control"}))
 
 class AddLoteForm(forms.ModelForm):
     
@@ -139,7 +139,7 @@ class AddLoteForm(forms.ModelForm):
 
     area = forms.FloatField(
         required=False, label= "Área", min_value=1, 
-        widget=forms.NumberInput(attrs={"title":"Ingrese el area en unidades de hectarea","placeholder":"hectareas" ,"class": "form-control"}))
+        widget=forms.NumberInput(attrs={"title":"Ingrese el area en unidades de hectárea","placeholder":"hectáreas" ,"class": "form-control"}))
 
     finca = forms.ModelChoiceField(queryset = Finca.objects.all(),label = "Pertenece a la finca", 
         widget=forms.Select(attrs={"title":"Seleccione la finca en la que estará este lote.", "class": "form-control"}))
@@ -172,11 +172,11 @@ class AddRiesgoForm(forms.ModelForm):
             "title":"Califique del 1 a 10 la probabilidad de que insectos, ácaros, moluscos, roedores, hongos, malas hierbas, bacterias y otras formas de vida animal o vegetal puedan perjudidar la inversión."}))
     fluctuacion_precio = forms.FloatField(
         required=False, label= "Fluctuación", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Fluctuacion de precio[0,10]", "class": "form-control",
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Fluctuación de precio[0,10]", "class": "form-control",
             "title":"Califique del 1 a 10 respecto a la oferta y la demanda, la probabilidad de que los precios del cultivo varien con el tiempo."}))
     administracion = forms.FloatField(
         required=False, label= "Administración", min_value=0, max_value=10, 
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Administracion[0,10]", "class": "form-control",
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Administración[0,10]", "class": "form-control",
             "title":"Califique del 1 a 10 los costos de administración, donde 1 es bajo y 10 es muy alto."}))
     tecnologia = forms.FloatField(
         required=False, label= "Tecnología", min_value=0, max_value=10, 
@@ -196,7 +196,7 @@ class AddRiesgoForm(forms.ModelForm):
             "title":"Califique del 1 a 10 la probabilidad de que el cultivo perezca antes de que de ingresos."}))
     agremiacion = forms.FloatField(
         required=False, label= "Agremiación", min_value=0, max_value=10,
-        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Agremiacion[0,10]", "class": "form-control",
+        widget=forms.NumberInput(attrs={"size":10, "placeholder":"Agremiación[0,10]", "class": "form-control",
             "title":"Califique del 1 a 10 los costos de agremiación que conlleva la inversión a futuro, donde 1 es bajo y 10 es muy alto."}))
     inseguridad = forms.FloatField(
         required=False, label= "Inseguridad", min_value=0, max_value=10, 
@@ -219,7 +219,7 @@ class AddEstablecimientoForm(forms.ModelForm):
         ]
 
     preparacionTerreno = forms.FloatField(
-        required=True, label= "Preparacion de terreno", initial = 6666,
+        required=True, label= "Preparación de terreno", initial = 6666,
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"$", "class": "form-control"}))
     trazo = forms.FloatField(
         required=True, label= "Trazo", initial = 6666,
@@ -231,10 +231,10 @@ class AddEstablecimientoForm(forms.ModelForm):
         required=True, label= "Distribución de colino",initial = 6666, 
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"$", "class": "form-control"}))
     aplicacionCorrectivos = forms.FloatField(
-        required=True, label= "Aplicacion correctivos",initial = 6666, 
+        required=True, label= "Aplicación correctivos",initial = 6666, 
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"$", "class": "form-control"}))
     aplicacionMicorriza = forms.FloatField(
-        required=True, label= "Aplicacion micorriza", initial = 6666,
+        required=True, label= "Aplicación micorriza", initial = 6666,
         widget=forms.NumberInput(attrs={"size":10, "placeholder":"$", "class": "form-control"}))
     aplicacionMateriaOrganica = forms.FloatField(
         required=True, label= "Aplicación de materia organica", initial = 6666,
@@ -348,8 +348,8 @@ class AddCostosForm(forms.ModelForm):
     required=True, label= "Cantidad por sitio", min_value=0,initial = 1, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
     cantidadHectarea = forms.FloatField(
-    required=True, label= "Cantidad por hectarea", min_value=0,initial = 1, 
-    widget=forms.NumberInput(attrs={"placeholder":"Hectareas", "class": "form-control"}))
+    required=True, label= "Cantidad por hectárea", min_value=0,initial = 1, 
+    widget=forms.NumberInput(attrs={"placeholder":"Hectáreas", "class": "form-control"}))
     frecuencia = forms.FloatField(
     required=True, label= "Frecuencia", min_value=0,initial = 1, 
     widget=forms.NumberInput(attrs={"placeholder":"#", "class": "form-control"}))
@@ -407,49 +407,49 @@ class AddProduccionForm(forms.ModelForm):
 
     ano1 = forms.FloatField(
     required=True, label= "Año 1", min_value=0,initial = 9000, 
-    widget=forms.NumberInput(attrs={"placeholder":"produccion 1", "class": "produccionform form-control"}))
+    widget=forms.NumberInput(attrs={"placeholder":"producción 1", "class": "form-control"}))
     ano2 = forms.FloatField(
     required=True, label= "Año 2", min_value=0,initial = 9000, 
-    widget=forms.NumberInput(attrs={"placeholder":"produccion 2", "class": "produccionform form-control"}))
+    widget=forms.NumberInput(attrs={"placeholder":"producción 2", "class": "form-control"}))
     ano3 = forms.FloatField(
     required=True, label= "Año 3", min_value=0,initial = 9000, 
-    widget=forms.NumberInput(attrs={"placeholder":"produccion 3", "class": "produccionform form-control"}))
+    widget=forms.NumberInput(attrs={"placeholder":"producción 3", "class": "form-control"}))
     ano4 = forms.FloatField(
     required=True, label= "Año 4", min_value=0,initial = 9000, 
-    widget=forms.NumberInput(attrs={"placeholder":"produccion 4", "class": "produccionform form-control"}))
+    widget=forms.NumberInput(attrs={"placeholder":"producción 4", "class": "form-control"}))
     ano5 = forms.FloatField(
     required=True, label= "Año 5", min_value=0,initial = 9000, 
-    widget=forms.NumberInput(attrs={"placeholder":"produccion 5", "class": "produccionform form-control"}))
+    widget=forms.NumberInput(attrs={"placeholder":"producción 5", "class": "form-control"}))
     ano6 = forms.FloatField(
     required=True, label= "Año 6", min_value=0,initial = 9000, 
-    widget=forms.NumberInput(attrs={"placeholder":"produccion 6", "class": "produccionform form-control"}))
+    widget=forms.NumberInput(attrs={"placeholder":"producción 6", "class": "form-control"}))
     ano7 = forms.FloatField(
     required=True, label= "Año 7", min_value=0,initial = 9000, 
-    widget=forms.NumberInput(attrs={"placeholder":"produccion 7", "class": "produccionform form-control"}))
+    widget=forms.NumberInput(attrs={"placeholder":"producción 7", "class": "form-control"}))
     ano8 = forms.FloatField(
     required=True, label= "Año 8", min_value=0,initial = 9000, 
-    widget=forms.NumberInput(attrs={"placeholder":"produccion 8", "class": "produccionform form-control"}))
+    widget=forms.NumberInput(attrs={"placeholder":"producción 8", "class": "form-control"}))
     ano9 = forms.FloatField(
     required=True, label= "Año 9", min_value=0,initial = 9000, 
-    widget=forms.NumberInput(attrs={"placeholder":"produccion 9", "class": "produccionform form-control"}))
+    widget=forms.NumberInput(attrs={"placeholder":"producción 9", "class": "form-control"}))
     ano10 = forms.FloatField(
     required=True, label= "Año 10", min_value=0,initial = 9000, 
-    widget=forms.NumberInput(attrs={"placeholder":"produccion 10", "class": "produccionform form-control"}))
+    widget=forms.NumberInput(attrs={"placeholder":"producción 10", "class": "form-control"}))
     ano11 = forms.FloatField(
     required=True, label= "Año 11", min_value=0,initial = 9000, 
-    widget=forms.NumberInput(attrs={"placeholder":"produccion 11", "class": "produccionform form-control"}))
+    widget=forms.NumberInput(attrs={"placeholder":"producción 11", "class": "form-control"}))
     ano12 = forms.FloatField(
     required=True, label= "Año 12", min_value=0,initial = 9000, 
-    widget=forms.NumberInput(attrs={"placeholder":"produccion 12", "class": "produccionform form-control"}))
+    widget=forms.NumberInput(attrs={"placeholder":"producción 12", "class": "form-control"}))
     ano13 = forms.FloatField(
     required=True, label= "Año 13", min_value=0,initial = 9000, 
-    widget=forms.NumberInput(attrs={"placeholder":"produccion 13", "class": "produccionform form-control"}))
+    widget=forms.NumberInput(attrs={"placeholder":"producción 13", "class": "form-control"}))
     ano14 = forms.FloatField(
     required=True, label= "Año 14", min_value=0,initial = 9000, 
-    widget=forms.NumberInput(attrs={"placeholder":"produccion 14", "class": "produccionform form-control"}))
+    widget=forms.NumberInput(attrs={"placeholder":"producción 14", "class": "form-control"}))
     ano15 = forms.FloatField(
     required=True, label= "Año 15", min_value=0,initial = 9000, 
-    widget=forms.NumberInput(attrs={"placeholder":"produccion 15", "class": "produccionform form-control"}))        
+    widget=forms.NumberInput(attrs={"placeholder":"producción 15", "class": "form-control"}))        
 
 class AddPorcentaje_precioForm(forms.ModelForm):
     class Meta:
@@ -652,5 +652,5 @@ class EditBase_presupuestalForm(forms.ModelForm):
         required=True, label="Género", widget=forms.Select(attrs={"class": "form-control"}), queryset = Ano_cipc.objects.all())
 
 class chooseBD(forms.Form):
-    bp = forms.ModelChoiceField(queryset = Base_presupuestal.objects.all(),label = "Elige la base presupuestal", 
+    bp = forms.ModelChoiceField(queryset = Base_presupuestal.objects.all(),label = "Elige la base presupuestal ", 
         widget=forms.Select(attrs={"title":"Seleccione la base presupuestal.", "class": "form-control"}))

@@ -820,25 +820,25 @@ body > .navbar-collapse[data-color="purple"]:after {
 }
 
 .form-control::-moz-placeholder {
-  color: #DDDDDD;
+  color: black;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .form-control:-moz-placeholder {
-  color: #DDDDDD;
+  color: black;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .form-control::-webkit-input-placeholder {
-  color: #DDDDDD;
+  color: black;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .form-control:-ms-input-placeholder {
-  color: #DDDDDD;
+  color: black;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -953,7 +953,7 @@ body > .navbar-collapse[data-color="purple"]:after {
 }
 
 .input-group-btn .btn-default:not(.btn-fill) {
-  border-color: #DDDDDD;
+  border-color: black;
 }
 
 .input-group-btn:last-child > .btn {
@@ -1115,7 +1115,7 @@ body > .navbar-collapse[data-color="purple"]:after {
 
 .checkbox .icons,
 .radio .icons {
-  color: #DDDDDD;
+  color: black;
   display: block;
   height: 20px;
   left: 0;
@@ -1191,12 +1191,12 @@ body > .navbar-collapse[data-color="purple"]:after {
 .checkbox.disabled,
 .radio.disabled {
   cursor: default;
-  color: #DDDDDD !important;
+  color: black !important;
 }
 
 .checkbox.disabled .icons,
 .radio.disabled .icons {
-  color: #DDDDDD !important;
+  color: black !important;
 }
 
 .checkbox.disabled .first-icon,
@@ -1213,7 +1213,7 @@ body > .navbar-collapse[data-color="purple"]:after {
 
 .checkbox.disabled.checked .icons,
 .radio.disabled.checked .icons {
-  color: #DDDDDD;
+  color: black;
 }
 
 .checkbox.disabled.checked .first-icon,
@@ -1332,7 +1332,7 @@ body > .navbar-collapse[data-color="purple"]:after {
 }
 
 .has-switch .switch-off span.switch-left {
-  background-color: #DDDDDD;
+  background-color: black;
 }
 
 .has-switch span.switch-right {
@@ -1343,7 +1343,7 @@ body > .navbar-collapse[data-color="purple"]:after {
 }
 
 .has-switch .switch-off span.switch-right {
-  background-color: #DDDDDD;
+  background-color: black;
 }
 
 .has-switch label {
@@ -1693,7 +1693,7 @@ body > .navbar-collapse[data-color="purple"]:after {
   font-size: 14px;
 }
 .footer hr {
-  border-color: #DDDDDD;
+  border-color: black;
 }
 .footer .title {
   color: #777777;
@@ -1837,6 +1837,14 @@ body > .navbar-collapse[data-color="purple"]:after {
   background-color: #FFFFFF;
   margin-bottom: 30px;
 }
+
+.card-piece {
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(93, 93, 98, 0.4);
+  background-color: #FFFFFF;
+  margin-bottom: 30px;
+}
+
 .card .image {
   width: 100%;
   overflow: hidden;
@@ -1954,7 +1962,7 @@ body > .navbar-collapse[data-color="purple"]:after {
   right: -15px;
   top: 0;
   width: 1px;
-  background-color: #DDDDDD;
+  background-color: black;
   content: "";
   position: absolute;
 }

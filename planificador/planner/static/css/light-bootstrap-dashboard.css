@@ -820,25 +820,25 @@ body > .navbar-collapse[data-color="purple"]:after {
 }
 
 .form-control::-moz-placeholder {
-  color: #DDDDDD;
+  color: #c9c5c5;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .form-control:-moz-placeholder {
-  color: #DDDDDD;
+  color: #c9c5c5;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .form-control::-webkit-input-placeholder {
-  color: #DDDDDD;
+  color: #c9c5c5;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .form-control:-ms-input-placeholder {
-  color: #DDDDDD;
+  color: #c9c5c5;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -1287,7 +1287,7 @@ body > .navbar-collapse[data-color="purple"]:after {
 }
 
 .has-switch > div label {
-  background-color: #FFFFFF;
+  background-color: black;
   background: white;
   background: -moz-linear-gradient(top, white 0%, #f1f1f2 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #f1f1f2));
@@ -1899,7 +1899,7 @@ body > .navbar-collapse[data-color="purple"]:after {
 .card label {
   font-size: 14px;
   font-weight: 400;
-  color: #9A9A9A;
+  color: black;
   margin-bottom: 0px;
 }
 .card .category i,

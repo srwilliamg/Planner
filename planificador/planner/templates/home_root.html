@@ -5,7 +5,7 @@
 	</div><!-- Espacio para insertar mensajes por javascript -->
 		<div id="divUsers">
 		{% for value in users %}
-		{% if value.role != 'R' and value.role != 'A' and value.role != 'X' %}
+		{% if value.role != 'R' and value.role != 'S' and value.role != 'X' %}
 			<div class="">
 		            <div class="col-lg-4">
 		                <div class="card">
@@ -59,7 +59,7 @@
 			console.log(user);
 
 			$.ajax({
-		        url: "{% url 'deleteUser' %}",
+		        url: "{% url 'deleteAdmin' %}",
 		        method: 'POST',
 		        data: {
 		            'user': user,
@@ -70,7 +70,7 @@
 		        	bootstrap_alert.success(data['message']);
 		        },
 		        error : function() {
-		            bootstrap_alert.warning("Ha ocurrido un error al intentar eliminar el usuario");
+		            bootstrap_alert.warning("Ha ocurrido un error al intentar eliminar el administrador");
 		        }
 			});
 		});
