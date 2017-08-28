@@ -37,7 +37,13 @@
 								        </a>
 								    </div>
 								    <div class="text-right">
-								        <a href="javascript:void(0)" id="deleteuser" data-user="{{value.id}}"> 
+								        <a href="javascript:void(0)" id="deleteuser" data-user="{{value.id}}"
+								        data-toggle="confirmation"
+								    	title="¿Estas seguro de eliminar este administrador?" 
+								    	data-btn-ok-label="Si"
+								        data-btn-ok-class="btn-success btn-fill"
+								        data-btn-cancel-label="No"
+								        data-btn-cancel-class="btn-danger btn-fill"> 
 								        	Eliminar <i class="fa fa-trash"></i></a>
 								    </div>
 								</div>
@@ -53,10 +59,13 @@
 	<script type="text/javascript" charset="utf-8">
 
 	$( document ).ready(function() {
-		$('a[id="deleteuser"]').click(function() {
+		$('[data-toggle=confirmation]').confirmation({
+		  rootSelector: '[data-toggle=confirmation]',
+		});
+
+		$(document).on("click",'a[id="deleteuser"]', function() {
 			var $this = $(this);
 			var user = $this.data('user');
-			console.log(user);
 
 			$.ajax({
 		        url: "{% url 'deleteAdmin' %}",
@@ -66,8 +75,9 @@
 		            'csrfmiddlewaretoken': '{{ csrf_token }}'
 		        },
 		        success: function (data){
-		        	$("#divUsers").load(location.href + " #divUsers");
+		        	location.reload();
 		        	bootstrap_alert.success(data['message']);
+		        	//$("#divUsers").load(location.href + ' #divUsers');
 		        },
 		        error : function() {
 		            bootstrap_alert.warning("Ha ocurrido un error al intentar eliminar el administrador");
@@ -78,10 +88,10 @@
 
 	bootstrap_alert = function() {}
 	bootstrap_alert.success = function(message) {
-	    $('#divmessage').html("<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Success!</strong> "+message+"</div>")
+	    $('#divmessage').html("<div class='alert alert-success alert-dismissable fade show'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Success!</strong> "+message+"</div>")
 	}
 	bootstrap_alert.warning = function(message) {
-    $('#divmessage').html("<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Warning!</strong> "+message+"</div>")
+    $('#divmessage').html("<div class='alert alert-warning alert-dismissable fade show'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Warning!</strong> "+message+"</div>")
 	}
 	</script>
 {% endblock %}

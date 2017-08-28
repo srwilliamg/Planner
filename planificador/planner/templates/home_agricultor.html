@@ -85,7 +85,14 @@
 							        &nbsp;
 							        <a href="{% url 'updateFinca' obj.id %}" style="color:rgb(153,153,0);" title="Modificar finca" id="updatefinca" data-finca="{{obj.id}}"><i class="fa fa-pencil"></i></a> 	
 							    	&nbsp;
-							    	<a href="#" style="color:darkred;" id="deletefinca" title="Eliminar finca" data-finca="{{obj.id}}"><i class="fa fa-trash"></i></a> 
+							    	<a href="#" style="color:darkred;" id="deletefinca" 
+							    	data-toggle="confirmation"
+							    	title="¿Estas seguro de eliminar esta finca?" 
+							    	data-btn-ok-label="Si"
+							        data-btn-ok-class="btn-success btn-fill"
+							        data-btn-cancel-label="No"
+							        data-btn-cancel-class="btn-danger btn-fill"
+							    	data-finca="{{obj.id}}"><i class="fa fa-trash"></i></a> 
 							    </div>
 							</div>
 			            </div>
@@ -133,7 +140,14 @@
 								        &nbsp;
 								        <a href="{% url 'updateLote' value.id %}" style="color:rgb(153,153,0);" title="Modificar lote" id="updatelote" data-lote="{{value.id}}"><i class="fa fa-pencil"></i></a> 	
 								    	&nbsp;
-								    	<a href="#" style="color:darkred;" id="deletelote" title="Eliminar lote" data-lote="{{value.id}}"><i class="fa fa-trash"></i></a> 
+								    	<a href="#" style="color:darkred;" id="deletelote"
+								    	data-toggle="confirmation"
+								    	title="¿Estas seguro que quieres eliminar este lote?" 
+								    	data-btn-ok-label="Si"
+								        data-btn-ok-class="btn-success btn-fill"
+								        data-btn-cancel-label="No"
+								        data-btn-cancel-class="btn-danger btn-fill"
+								    	data-lote="{{value.id}}"><i class="fa fa-trash"></i></a> 
 								    </div>
 								</div>
 			                </div>
@@ -160,8 +174,16 @@
 	    		{% endif %}
 
 	    		{% if message %}
-	    			bootstrap_alert.success({{message}})
+	    			bootstrap_alert.success("{{message}}")
 	    		{% endif %}
+
+	    		{% if warning %}
+	    			bootstrap_alert.warning("{{warning}}")
+	    		{% endif %}
+
+	    		$('[data-toggle=confirmation]').confirmation({
+				  rootSelector: '[data-toggle=confirmation]',
+				});
 
 	    		$(document).on("click",'a[id="deletelote"]', function() {
 	    			var $this = $(this);
@@ -375,10 +397,10 @@
 
 			bootstrap_alert = function() {}
 			bootstrap_alert.success = function(message) {
-			    $('#divmessage').html("<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Success!</strong> "+message+"</div>")
+			    $('#divmessage').html("<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Exito!</strong> "+message+"</div>")
 			}
   			bootstrap_alert.warning = function(message) {
-			    $('#divmessage').html("<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Warning!</strong> "+message+"</div>")
+			    $('#divmessage').html("<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Advertencia!</strong> "+message+"</div>")
 			}
 
 	    	function calcularMargen(){

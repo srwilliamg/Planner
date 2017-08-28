@@ -259,6 +259,10 @@ def home_agricultor(request):
         else:
             context = {"margen": [], "years":[]}
         return HttpResponse(json.dumps(context), content_type="application/json")
+
+    if fincas.__len__() == 0:
+        context['warning'] = "No tienes ninguna finca, puedes crear una nueva haciendo click en 'CREAR FINCA'."
+
     context['fincas'] = fincas
     context['titulo'] = "Fincas"
     return render(request, "home_agricultor.html", context)
