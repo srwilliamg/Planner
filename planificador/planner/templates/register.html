@@ -28,13 +28,13 @@
 
 
 {% block form %}
-		<div class="panel panel-green">
-			<div class="panel-body">
+		<div class="card">
+			<div class="content">
 				<form action="" method="POST" accept-charset="utf-8">
 					{% csrf_token %}
-					<table class="table">{{ form.as_table}}</table>
+					<table class="table table-striped">{{ form.as_table}}</table>
 				   	
-				   	<button class="btn btn-fill btn-success btn-block" type="submit">Enviar</button>
+				   	<button class="btn btn-fill btn-success btn-block" type="submit">Registrarse</button>
 				</form>
 	    	</div>
     	</div>
