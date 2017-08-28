@@ -19,38 +19,40 @@
                 <h4 class="title"><i class="fa fa-exclamation-triangle fa-fw"></i> Riesgos</h4>
             </div>
             <div class="content">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-striped" id="riesgos">
-                        <thead>
-                            <tr>
-                                <th>Mercado</th>
-                                <th>Fitosanitario</th>
-                                <th>Fluctuacion de precio</th>
-                                <th>Administracion</th>
-                                <th>Tecnologia</th>
-                                <th>Mano de obra</th>
-                                <th>Clima</th>
-                                <th>Perecedero</th>
-                                <th>Agremiacion</th>
-                                <th>Inseguridad</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>mercado</td>
-                                <td>fitosanitario</td>
-                                <td>fluctuacion_precio</td>
-                                <td>administracion</td>
-                                <td>tecnologia</td>
-                                <td>mano_de_obra</td>
-                                <td>clima</td>
-                                <td>perecedero</td>
-                                <td>agremiacion</td>
-                                <td>inseguridad</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <table class="table table-responsive table-hover table-bordered" id="riesgos">
+                    <thead>
+                        <tr>
+                            <th>Mercado</th>
+                            <th>Fitosanitario</th>
+                            <th>Fluctuacion de precio</th>
+                            <th>Administracion</th>
+                            <th>Tecnologia</th>
+                            <th>Mano de obra</th>
+                            <th>Clima</th>
+                            <th>Perecedero</th>
+                            <th>Agremiacion</th>
+                            <th>Inseguridad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div> 
@@ -376,10 +378,13 @@
 							// print riesgos
 
 							var myTable = document.getElementById('riesgos');
+							var sum = 0;
 						    for (var t = 0; t < 10; t += 1) {
 								myTable.rows[1].cells[t].innerHTML = data["riesgo"][t];
-
+								sum = sum + parseInt(data['riesgo'],10);
 							}
+							myTable.rows[2].cells[0].innerHTML = "Riesgo total";
+							myTable.rows[2].cells[1].innerHTML = sum;
 
 							tr.style.visibility='visible';
 							tr.style.display ='initial';
