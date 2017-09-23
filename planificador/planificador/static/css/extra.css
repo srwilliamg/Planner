@@ -66,3 +66,15 @@
 	visibility: hidden;
 	display: none;
 }
+
+.disable {
+	pointer-events: none;
+   	cursor: default;
+}
+
+.smallfont{
+	font-size: 0.7em !important;
+}
+.noheight{
+	min-height: initial !important;
+}
