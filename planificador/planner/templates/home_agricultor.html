@@ -403,9 +403,11 @@
 			bootstrap_alert = function() {}
 			bootstrap_alert.success = function(message) {
 			    $('#divmessage').html("<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Exito!</strong> "+message+"</div>")
+			    location.href = '#divmessage';
 			}
-  			bootstrap_alert.warning = function(message) {
-			    $('#divmessage').html("<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Advertencia!</strong> "+message+"</div>")
+			bootstrap_alert.warning = function(message) {
+		    $('#divmessage').html("<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Advertencia!</strong> "+message+"</div>")
+		    	location.href = '#divmessage';
 			}
 
 	    	function calcularMargen(){

@@ -1,239 +1,539 @@
 {% extends "base.html" %}
 
-{% block header %}{{titulo}}{{block.super}}{% endblock %}
+{% block cssthings %}
+	{% load staticfiles %}
+	<link href="{% static 'css/gsdk-bootstrap-wizard.css' %}" rel="stylesheet" />
+{% endblock cssthings %}
 
-{% block wrapper %}
-<form method="post" accept-charset="utf-8">
-	{% csrf_token %}
+{% block header %}{% endblock %}
 
-<div style="" class="">
-	        <div class="">
-	            <div class="card">
-	            	<div class = "header">
-				    	<h4 class="title"> <strong>Tipo de base presupuestal </strong> </h4>
-			    	</div>
-					<div class="content">
-						<div class="list-group">
-							<table class="table table-striped">{{base_presupuestal.as_table}}</table>
-						</div>
-					</div>
-				</div>
-			</div>
-	</div>
+{% block bpform %}
+<div id="divmessage">
+</div><!-- Espacio para insertar mensajes por javascript -->
+<div class="card wizard-card" style="box-shadow:none !important;" data-color="blue" id="wizard">
+    <form method="post" accept-charset="utf-8">
+    	{% csrf_token %}
+    	<div class="wizard-header">
+        	<h3>
+        	   <b>{{titulo}}{{block.super}}</b> <br>
+        	   <small>Ingresa los siguientes datos.</small>
+        	</h3>
+    	</div>
+		<div class="wizard-navigation" id="links">
+			<ul>
+				<li><a class="smallfont" style="background-color:blue;" href="#bp" data-toggle="tab">0</a></li>
+                <li><a class="smallfont" href="#Insumos_generales" id="step" data-step="1" data-toggle="tab">1</a></li>
+                <li><a class="smallfont" href="#establecimiento" id="step" data-step="2" data-toggle="tab">2</a></li>
+                <li><a class="smallfont" href="#preparacion" id="step" data-step="3" data-toggle="tab">3</a></li>
+                <li><a class="smallfont" href="#datos_generales" id="step" data-step="4" data-toggle="tab">4</a></li>
+                <li><a class="smallfont" href="#cipc" id="step" data-step="5" data-toggle="tab">5</a></li>
+                <li><a class="smallfont" href="#porcentaje_precio" id="step" data-step="6" data-toggle="tab">6</a></li>
+                <li><a class="smallfont" href="#produccion" id="step" data-step="7" data-toggle="tab">7</a></li>
+                <li><a class="smallfont" href="#Siembra" id="step" data-step="8" data-toggle="tab">8</a></li>
+                <li><a class="smallfont" href="#Resiembra" id="step" data-step="9" data-toggle="tab">9</a></li>
+                <li><a class="smallfont" href="#Limpia-guadaña-calles" id="step" data-step="10" data-toggle="tab">10</a></li>
+                <li><a class="smallfont" href="#Aplicación_de_herbicida" id="step" data-step="11" data-toggle="tab">11</a></li>
+                <li><a class="smallfont" href="#Plateo" id="step" data-step="12" data-toggle="tab">12</a></li>
+                <li><a class="smallfont" href="#Fertilización" id="step" data-step="13" data-toggle="tab">13</a></li>
+                <li><a class="smallfont" href="#Aplicación_de_materia_organica" id="step" data-step="14" data-toggle="tab">14</a></li>
+                <li><a class="smallfont" href="#Fungicidas" id="step" data-step="15" data-toggle="tab">15</a></li>
+                <li><a class="smallfont" href="#Biocontroladores" id="step" data-step="16" data-toggle="tab">16</a></li>
+                <li><a class="smallfont" href="#Aspersiones" id="step" data-step="17" data-toggle="tab">17</a></li>
+                <li><a class="smallfont" href="#Tutorado" id="step" data-step="18" data-toggle="tab">18</a></li>
+                <li><a class="smallfont" href="#Podas" id="step" data-step="19" data-toggle="tab">19</a></li>
+                <li><a class="smallfont" href="#Recolección_contrato" id="step" data-step="20" data-toggle="tab">20</a></li>
+                <li><a class="smallfont" href="#Recolección_por_día" id="step" data-step="21" data-toggle="tab">21</a></li>
+                <li><a class="smallfont" href="#costos" id="step" data-step="22" data-toggle="tab">22</a></li>
+                <li><a class="smallfont" href="#herbicida_calles" id="step" data-step="23" data-toggle="tab">23</a></li>
+                <li><a class="smallfont" href="#herbicida_platos" id="step" data-step="24" data-toggle="tab">24</a></li>
+                <li><a class="smallfont" href="#insecticidas" id="step" data-step="25" data-toggle="tab">25</a></li>
+                <li><a class="smallfont" href="#fungicidas" id="step" data-step="26" data-toggle="tab">26</a></li>
+                <li><a class="smallfont" href="#fertilizante" id="step" data-step="27" data-toggle="tab">27</a></li>
+                <li><a class="smallfont" href="#ridomil" id="step" data-step="28" data-toggle="tab">28</a></li>
+                <li><a class="smallfont" href="#fertilizante_foliar" id="step" data-step="29" data-toggle="tab">29</a></li>
+                <li><a class="smallfont" href="#biocontroladores" id="step" data-step="30" data-toggle="tab">30</a></li>
+                <li><a class="smallfont" href="#guadaña" id="step" data-step="31" data-toggle="tab">31</a></li>
+                <li><a class="smallfont" href="#selectores" id="step" data-step="32" data-toggle="tab">32</a></li>
+                <li><a class="smallfont" href="#bombas_espalda" id="step" data-step="33" data-toggle="tab">33</a></li>
+                <li><a class="smallfont" href="#bombas_estacionarias" id="step" data-step="34" data-toggle="tab">34</a></li>
+                <li><a class="smallfont" href="#canastillas" id="step" data-step="35" data-toggle="tab">35</a></li>
+                <li><a class="smallfont" href="#herramientas" id="step" data-step="36" data-toggle="tab">36</a></li>
+                <li><a class="smallfont" href="#lycra" id="step" data-step="37" data-toggle="tab">37</a></li>
+            </ul>
+		</div>
+        <div class="tab-content">
+        	<div class="tab-pane" id="bp">
+                <div class="row">
+                    <div class="col-sm-12" id="bpt">
+                    	<table class="table table-striped">{{base_presupuestal.as_table}}</table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="Insumos_generales">
+                <div class="row">
+                    <div class="col-sm-12" id="Insumos_generalest">
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="establecimiento">
+                <div class="row">
+                    <div class="col-sm-12" id="establecimientot">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="preparacion">
+                <div class="row">
+                    <div class="col-sm-12" id="preparaciont">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="datos_generales">
+                <div class="row">
+                    <div class="col-sm-12" id="datos_generalest">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="cipc">
+                <div class="row">
+                    <div class="col-sm-12" id="cipct">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="porcentaje_precio">
+                <div class="row">
+                    <div class="col-sm-12" id="porcentaje_preciot">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="produccion">
+                <div class="row">
+                    <div class="col-sm-12" id="producciont">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="Siembra">
+                <div class="row">
+                    <div class="col-sm-12" id="Siembrat">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="Resiembra">
+                <div class="row">
+                    <div class="col-sm-12" id="Resiembrat">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="Limpia-guadaña-calles">
+                <div class="row">
+                    <div class="col-sm-12" id="Limpia-guadaña-callest">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="Aplicación_de_herbicida">
+                <div class="row">
+                    <div class="col-sm-12" id="Aplicación_de_herbicidat">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="Plateo">
+                <div class="row">
+                    <div class="col-sm-12" id="Plateot">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="Fertilización">
+                <div class="row">
+                    <div class="col-sm-12" id="Fertilizaciónt">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="Aplicación_de_materia_organica">
+                <div class="row">
+                    <div class="col-sm-12" id="Aplicación_de_materia_organicat">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="Fungicidas">
+                <div class="row">
+                    <div class="col-sm-12" id="Fungicidast">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="Biocontroladores">
+                <div class="row">
+                    <div class="col-sm-12" id="Biocontroladorest">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="Aspersiones">
+                <div class="row">
+                    <div class="col-sm-12" id="Aspersionest">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="Tutorado">
+                <div class="row">
+                    <div class="col-sm-12" id="Tutoradot">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="Podas">
+                <div class="row">
+                    <div class="col-sm-12" id="Podast">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="Recolección_contrato">
+                <div class="row">
+                    <div class="col-sm-12" id="Recolección_contratot">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="Recolección_por_día">
+                <div class="row">
+                    <div class="col-sm-12" id="Recolección_por_díat">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="costos">
+                <div class="row">
+                    <div class="col-sm-12" id="costost">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="herbicida_calles">
+                <div class="row">
+                    <div class="col-sm-12" id="herbicida_callest">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="herbicida_platos">
+                <div class="row">
+                    <div class="col-sm-12" id="herbicida_platost">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="insecticidas">
+                <div class="row">
+                    <div class="col-sm-12" id="insecticidast">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="fungicidas">
+                <div class="row">
+                    <div class="col-sm-12" id="fungicidast">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="fertilizante">
+                <div class="row">
+                    <div class="col-sm-12" id="fertilizantet">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="ridomil">
+                <div class="row">
+                    <div class="col-sm-12" id="ridomilt">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="fertilizante_foliar">
+                <div class="row">
+                    <div class="col-sm-12" id="fertilizante_foliart">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="biocontroladores">
+                <div class="row">
+                    <div class="col-sm-12" id="biocontroladorest">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="guadaña">
+                <div class="row">
+                    <div class="col-sm-12" id="guadañat">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="selectores">
+                <div class="row">
+                    <div class="col-sm-12" id="selectorest">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="bombas_espalda">
+                <div class="row">
+                    <div class="col-sm-12" id="bombas_espaldat">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="bombas_estacionarias">
+                <div class="row">
+                    <div class="col-sm-12" id="bombas_estacionariast">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="canastillas">
+                <div class="row">
+                    <div class="col-sm-12" id="canastillast">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="herramientas">
+                <div class="row">
+                    <div class="col-sm-12" id="herramientast">
+                    </div>
+                </div>
+            </div><div class="tab-pane" id="lycra">
+                <div class="row">
+                    <div class="col-sm-12" id="lycrat">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wizard-footer">
+            	<div class="pull-right">
+                    <input type='button' class='btn btn-next btn-fill btn-info btn-wd btn-sm' id="step" data-button="N" name='next' value='Siguiente' />
+                    <input type='submit' class='btn btn-finish btn-fill btn-info btn-wd btn-sm' id="finish" name='finish' value='Finish' />
+                </div>
+                <div class="pull-left">
+                    <input type='button' class='btn btn-previous btn-fill btn-default btn-wd btn-sm' id="step" data-button="P" name='previous' value='Anterior' />
+                </div>
+                <div class="clearfix"></div>
+        </div>
+    </form>
+</div>
 
-    <div style="" class="">
-	        <div class="col-lg-4">
-	            <div class="card">
-	            	<div class = "header">
-				    	<h4 class="title"> <strong>Insumos generales </strong> </h4>
-			    	</div>
-					<div class="content">
-						<div class="list-group">
-							<table class="table table-striped">{{Insumos_generalesform.as_table}}</table>
-						</div>
-					</div>
-				</div>
-			</div>
-	</div>
-
-	<div style="" class="">
-	    <div>
-	        <div class="col-lg-4">
-	            <div class="card">
-	            	<div class = "header">
-				    	<h4 class="title"> <strong>Establecimiento </strong></h4>
-			    	</div>
-					<div class="content">
-						<div class="list-group">
-						<table class="table table-striped">{{establecimientoform.as_table}}</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div style="" class="">
-	    <div>
-	        <div class="col-lg-4">
-	            <div class="card">
-	            	<div class = "header">
-				    	<h4 class="title"> <strong>Costes de preparación </strong> </h4>
-			    	</div>
-					<div class="content">
-						<div class="list-group">
-						<table class="table table-striped">{{preparacionform.as_table}}</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div>
-	    <div style="clear:left;">
-	        <div class="">
-	            <div class="card">
-	            	<div class = "header">
-				    	<h4 class="title"> <strong>Datos generales </strong> </h4>
-			    	</div>
-					<div class="content">
-						<div class="list-group">
-							<table class="table table-striped">{{datos_generalesform.as_table}}</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-    
-    <div style="" class="">
-    <h3> <strong>Costos indirectos de producción y comercialización</strong> </h3>
-    <br>
-    	{% for value in cipc %}
-	    <div class="list-inline">
-	        <div class="col-lg-4">
-	            <div class="card">
-				    <div class = "header">
-				    	<h4 class="title"> <strong>Año {{forloop.counter}} </strong> </h4>
-			    	</div>
-					<div class="content">
-						<div class="list-group">
-							<table class="table table-striped">{{value.as_table}}</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		{% endfor %}
-	</div>
-	
-	<div style="clear: left;">
-		<h3> <strong>Distribución de calidad</strong></h3>
-		<br>
-		 <div class="list-inline">
-	        <div class="col-lg-4">
-	            <div class="card">
-				    <div class = "header">
-				    	<h4 class="title"> <strong>Primera </strong> </h4>
-			    	</div>
-					<div class="content">
-						<div class="list-group">
-						<table class="table table-striped">{{porcentaje_precio1form.as_table}}</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="list-inline">
-	        <div class="col-lg-4">
-	            <div class="card">
-					<div class = "header">
-						<h4 class="title"> <strong>Segunda </strong> </h4>
-					</div>
-					<div class="content">
-						<div class="list-group">
-						<table class="table table-striped">{{porcentaje_precio2form.as_table}}</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="list-inline">
-	        <div class="col-lg-4">
-	            <div class="card">
-					<div class = "header">
-						<h4 class="title"> <strong>Tercera </strong> </h4>
-					</div>
-					<div class="content">
-						<div class="list-group">
-						<table class="table table-striped">{{porcentaje_precio3form.as_table}}</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div style="clear: left;">
-		<div class="list-inline">
-	        <div class="">
-	            <div class="card">
-				    <div class = "header">
-				    	<h4 class="title"> <strong>Producción por año </strong> </h4>
-			    	</div>
-					<div class="content">
-						<div class="list-group">
-							<table class="table table-striped">
-							{{produccionform.as_table}}
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div style="" class="">
-		<br>
-		<h3><strong>Mano de obra</strong></h3>
-		{% for key, value in manoobra.items %}
-		    <h3>{{key}}</h3>
-		    <br>
-		    	{% for v in value %}
-			    <div class="list-inline">
-			        <div class="col-lg-4">
-			            <div class="card">
-						    <div class = "header">
-						    	<h4 class="title"> <strong>Año {{forloop.counter}} </strong> </h4>
-					    	</div>
-							<div class="content">
-								<div class="list-group">
-									<table class="table table-striped">{{v.as_table}}</table>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				{% endfor %}
-		{% endfor %}
-	</div>
-
-	<div style="" class="">
-		<h3><strong>Costos de insumos</strong></h3>
-		{% for key, value in data_costos.items %}
-		    <h3>Costos de {{key}}</h3>
-		    <br>
-		    	{% for v in value %}
-			    <div class="list-inline">
-			        <div class="col-lg-4">
-			            <div class="card">
-						    <div class = "header">
-						    	<h4 class="title"> <strong>Año {{forloop.counter}} </strong> </h4>
-					    	</div>
-							<div class="content">
-								<div class="list-group">
-									<table class="table table-striped">{{v.as_table}}</table>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				{% endfor %}
-		{% endfor %}
-	</div>
-	</div>
-<button type="submit" class="btn-success btn-fill btn b-t-1">Guardar</button>
-<br>
-</form>
 {% endblock %}
-
 
 {% block table %}
 
 {% endblock %}
 
 {% block script %}
+
+{% load staticfiles %}
+
+<script src="{% static 'js/jquery.bootstrap.wizard.js' %}" type="text/javascript"></script>
+
+<!--  Plugin for the Wizard -->
+<script src="{% static 'js/gsdk-bootstrap-wizard.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+
+<script type="text/javascript" charset="utf-8">
+	$( document ).ready(function() {
+		var vform = 0;
+		var pass = new Array(37);
+		pass[0] = 1;
+		for (var i = 1; i < pass.length; i++) {
+			pass[i] = 0;
+		}
+		$(document).on("click",'a[id="step"] , input[id="step"]', function() {
+			var $this = $(this);
+			var step = $this.data('step');
+			var vbutton = $this.data('button');
+
+			if (vbutton == 'N') 
+				{
+					vform = vform+1;
+					step = vform;
+					$("a[data-step='"+step+"']").css("background-color", "blue");
+				} 
+			else if(vbutton == 'P')
+				{
+					vform = vform-1;
+					step = vform;
+				}
+			else{
+				this.style.backgroundColor = "blue";
+				vform = step;
+			}
+			if (pass[step] == 1) {
+				return -1;
+			}
+
+			var idiv, name, list;
+			if (step == 1) {
+							idiv = "#Insumos_generalest";
+							name = "Insumos generales";
+							list = 2;}
+			else if (step == 2) {
+							idiv = "#establecimientot";
+							name = "Establecimiento";
+							list = 2;}
+			else if (step == 3) {
+							idiv = "#preparaciont";
+							name = "Preparación";
+							list = 2;}
+			else if (step == 4) {
+							idiv = "#datos_generalest";
+							name = "Datos generales";
+							list = 2;}
+			else if (step == 5) {
+							idiv = "#cipct";
+							name = "Costos indirectos de producción y comercialización";
+							list = 1;}
+			else if (step == 6) {
+							idiv = "#porcentaje_preciot";
+							name = "Distribución de calidad";
+							list = 3;}
+			else if (step == 7) {
+							idiv = "#producciont";
+							name = "Producción";
+							list = 2;}
+			else if (step == 8) {
+							idiv = "#Siembrat";
+							name = "Siembra";
+							list = 1;}
+			else if (step == 9) {
+							idiv = "#Resiembrat";
+							name = "Resiembra";
+							list = 1;}
+			else if (step == 10) {
+							idiv = "#Limpia-guadaña-callest";
+							name = "Limpia-guadaña-calles";
+							list = 1;}
+			else if (step == 11) {
+							idiv = "#Aplicación_de_herbicidat";
+							name = "Aplicación de herbicida";
+							list = 1;}
+			else if (step == 12) {
+							idiv = "#Plateot";
+							name = "Plateo";
+							list = 1;}
+			else if (step == 13) {
+							idiv = "#Fertilizaciónt";
+							name = "Fertilización";
+							list = 1;}
+			else if (step == 14) {
+							idiv = "#Aplicación_de_materia_organicat";
+							name = "Aplicación de materia orgánica";
+							list = 1;}
+			else if (step == 15) {
+							idiv = "#Fungicidast";
+							name = "Fungicidas";
+							list = 1;}
+			else if (step == 16) {
+							idiv = "#Biocontroladorest";
+							name = "Biocontroladores";
+							list = 1;}
+			else if (step == 17) {
+							idiv = "#Aspersionest";
+							name = "Aspersiones";
+							list = 1;}
+			else if (step == 18) {
+							idiv = "#Tutoradot";
+							name = "Tutorado";
+							list = 1;}
+			else if (step == 19) {
+							idiv = "#Podast";
+							name = "Podas";
+							list = 1;}
+			else if (step == 20) {
+							idiv = "#Recolección_contratot";
+							name = "Recolección contrato";
+							list = 1;}
+			else if (step == 21) {
+							idiv = "#Recolección_por_díat";
+							name = "Recolección por día";
+							list = 1;}
+			else if (step == 22) {
+							idiv = "#costost";
+							name = "Materia organica";
+							list = 1;}
+			else if (step == 23) {
+							idiv = "#herbicida_callest";
+							name = "Herbicida calles";
+							list = 1;}
+			else if (step == 24) {
+							idiv = "#herbicida_platost";
+							name = "Herbicida platos";
+							list = 1;}
+			else if (step == 25) {
+							idiv = "#insecticidast";
+							name = "Insecticidas";
+							list = 1;}
+			else if (step == 26) {
+							idiv = "#fungicidast";
+							name = "Fungicidas";
+							list = 1;}
+			else if (step == 27) {
+							idiv = "#fertilizantet";
+							name = "Fertilizante";
+							list = 1;}
+			else if (step == 28) {
+							idiv = "#ridomilt";
+							name = "Ridomil";
+							list = 1;}
+			else if (step == 29) {
+							idiv = "#fertilizante_foliart";
+							name = "Fertilizante foliar";
+							list = 1;}
+			else if (step == 30) {
+							idiv = "#biocontroladorest";
+							name = "Biocontroladores";
+							list = 1;}
+			else if (step == 31) {
+							idiv = "#guadañat";
+							name = "Guadaña";
+							list = 1;}
+			else if (step == 32) {
+							idiv = "#selectorest";
+							name = "Selectores";
+							list = 1;}
+			else if (step == 33) {
+							idiv = "#bombas_espaldat";
+							name = "Bombas espalda";
+							list = 1;}
+			else if (step == 34) {
+							idiv = "#bombas_estacionariast";
+							name = "Bombas estacionarias";
+							list = 1;}
+			else if (step == 35) {
+							idiv = "#canastillast";
+							name = "Canastillas";
+							list = 1;}
+			else if (step == 36) {
+							idiv = "#herramientast";
+							name = "Herramientas";
+							list = 1;}
+			else if (step == 37) {
+							idiv = "#lycrat";
+							name = "Lycra";
+							list = 1;}
+			else if(step == 0){
+				return -1;
+			}
+			else{
+				alert("error 1");
+			}
+
+			pass[step]=1;
+
+			$.ajax({
+		        url: "{% url 'createbp' %}",
+		        method: 'POST',
+		        data: {
+		            'step': step,
+		            'csrfmiddlewaretoken': '{{ csrf_token }}'
+		        },
+		        success: function (data){
+		        	$(idiv).html('<h3> <strong>'+name+'</strong></h3>');
+		        	if (list == 1) 
+	        		{
+	        			for (var i = 0 ; i < 15; i++) {
+		        			$(idiv).append('<div class="list-inline"><div class="col-lg-4"><div class="card wizard-card noheight"><div class = "wizard-header"><h3> <strong>Año '+(i+1)+' </strong> </h3></div><div class="content"><div class="list-group"><table class="table">'+data[name][i]+'</table></div></div></div></div></div>');
+		        		}
+		        	}
+		        	else if(list == 2){
+		        		$(idiv).html('<h3> <strong>'+name+'</strong></h3>');
+		        		$(idiv).append('<table class="table table-striped">'+data[name]+'<table/>');
+		        	}
+		        	else if(list == 3){
+		        		$(idiv).html('<h3> <strong>'+name+'</strong></h3>');
+		        		$(idiv).append('<div class="list-inline"><div class="col-lg-4"><div class="card wizard-card noheight"><div class = "wizard-header"><h3> <strong>Primera </strong> </h3></div><div class="content"><div class="list-group"><table class="table">'+data[name+'1form']+'</table></div></div></div></div></div>');
+		        		$(idiv).append('<div class="list-inline"><div class="col-lg-4"><div class="card wizard-card noheight"><div class = "wizard-header"><h3> <strong>Segunda </strong> </h3></div><div class="content"><div class="list-group"><table class="table">'+data[name+'2form']+'</table></div></div></div></div></div>');
+		        		$(idiv).append('<div class="list-inline"><div class="col-lg-4"><div class="card wizard-card noheight"><div class = "wizard-header"><h3> <strong>Tercera </strong> </h3></div><div class="content"><div class="list-group"><table class="table">'+data[name+'3form']+'</table></div></div></div></div></div>');
+		        	}
+		        	else{
+		        		alert("error");
+		        	}
+		        	
+		        },
+		        error : function() {
+		            alert("it's not working")
+		        }
+			});
+		});
+
+		$(document).on("click",'input[id="finish"]', function(){
+		for (var i = 0; i < pass.length; i++) {
+			if (pass[i] != 1) 
+			{
+				bootstrap_alert.warning("Debes completar todos los pasos para crear la base presupuestal.");
+				return false; 
+			}
+		}
+		});
+
+		bootstrap_alert = function() {}
+		bootstrap_alert.success = function(message) {
+		    $('#divmessage').html("<div class='alert alert-success alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Exito!</strong> "+message+"</div>")
+		    location.href = '#divmessage';
+		}
+		bootstrap_alert.warning = function(message) {
+	    $('#divmessage').html("<div class='alert alert-warning alert-dismissable'><a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Advertencia!</strong> "+message+"</div>")
+	    	location.href = '#divmessage';
+		}
+	});
+</script>
+
 {% endblock %}
 
 {% block footer %}{% endblock %}

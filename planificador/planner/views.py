@@ -410,6 +410,179 @@ def createLote(request):
 def createbp(request):
     template_name = "base_presupuestal.html"
     ctx = {}
+    if request.is_ajax():
+        step =  request.POST["step"]
+        if step == "1":
+            ctx['Insumos generales'] = AddInsumos_generalesForm(prefix="ig").as_table()
+        elif step == "2":
+            ctx['Establecimiento'] = AddEstablecimientoForm(prefix="establecimiento").as_table()
+        elif step == "3":
+            ctx['Preparación'] = AddPreparacion_costosForm(prefix="preparacion").as_table()
+        elif step == "4":
+            ctx['Datos generales'] = AddDatos_generalesForm(prefix="datos_g").as_table()
+        elif step == "5":
+            cipc =[]
+            for x in range(1,16):
+                cipc.append(AddcipcForm(prefix="cipc"+str(x)).as_table())
+            ctx['Costos indirectos de producción y comercialización'] = cipc
+        elif step == "6":
+            ctx['Distribución de calidad1form'] = AddPorcentaje_precioForm(prefix="pp1").as_table()
+            ctx['Distribución de calidad2form'] = AddPorcentaje_precioForm(prefix="pp2").as_table()
+            ctx['Distribución de calidad3form'] = AddPorcentaje_precioForm(prefix="pp3").as_table()
+        elif step == "7":
+            ctx['Producción'] = AddProduccionForm(prefix="produccion").as_table()
+        elif step == "8":
+            data_mo_siembra =[]
+            for x in range(1,16):
+                data_mo_siembra.append(AddData_moForm(prefix="mosimebra"+str(x)).as_table())
+            ctx['Siembra'] = data_mo_siembra
+        elif step == "9":
+            data_mo_resiembra =[]
+            for x in range(1,16):
+                data_mo_resiembra.append(AddData_moForm(prefix="moresiembra"+str(x)).as_table())
+            ctx['Resiembra'] = data_mo_resiembra
+        elif step == "10":
+            data_mo_lgc =[]
+            for x in range(1,16):
+                data_mo_lgc.append(AddData_moForm(prefix="molgc"+str(x)).as_table())
+            ctx['Limpia-guadaña-calles'] = data_mo_lgc
+        elif step == "11":
+            data_mo_ah =[]
+            for x in range(1,16):
+                data_mo_ah.append(AddData_moForm(prefix="moah"+str(x)).as_table())
+            ctx['Aplicación de herbicida'] = data_mo_ah
+        elif step == "12":
+            data_mo_plateo =[]
+            for x in range(1,16):
+                data_mo_plateo.append(AddData_moForm(prefix="moplateo"+str(x)).as_table())
+            ctx['Plateo'] = data_mo_plateo
+        elif step == "13":
+            data_mo_fertilizacion =[]
+            for x in range(1,16):
+                data_mo_fertilizacion.append(AddData_moForm(prefix="mofertilizacion"+str(x)).as_table())
+            ctx['Fertilización'] = data_mo_fertilizacion
+        elif step == "14":
+            data_mo_amo =[]
+            for x in range(1,16):
+                data_mo_amo.append(AddData_moForm(prefix="moamo"+str(x)).as_table())
+            ctx['Aplicación de materia orgánica'] = data_mo_amo
+        elif step == "15":
+            data_mo_fungicidas =[]
+            for x in range(1,16):
+                data_mo_fungicidas.append(AddData_moForm(prefix="mofungicidas"+str(x)).as_table())
+            ctx['Fungicidas'] = data_mo_fungicidas
+        elif step == "16":
+            data_mo_biocontroladores =[]
+            for x in range(1,16):
+                data_mo_biocontroladores.append(AddData_moForm(prefix="mobiocontroladores"+str(x)).as_table())#
+            ctx['Biocontroladores'] = data_mo_biocontroladores
+        elif step == "17":
+            data_mo_aspersiones =[]
+            for x in range(1,16):
+                data_mo_aspersiones.append(AddData_moForm(prefix="moaspersiones"+str(x)).as_table())
+            ctx['Aspersiones'] = data_mo_aspersiones
+        elif step == "18":
+            data_mo_tutorado =[]
+            for x in range(1,16):
+                data_mo_tutorado.append(AddData_moForm(prefix="motutorado"+str(x)).as_table())
+            ctx['Tutorado'] = data_mo_tutorado
+        elif step == "19":
+            data_mo_podas =[]
+            for x in range(1,16):
+                data_mo_podas.append(AddData_moForm(prefix="mopodas"+str(x)).as_table())
+            ctx['Podas'] = data_mo_podas
+        elif step == "20":
+            data_mo_rc =[]
+            for x in range(1,16):
+                data_mo_rc.append(AddData_moForm(prefix="morc"+str(x)).as_table())
+            ctx['Recolección contrato'] = data_mo_rc
+        elif step == "21":
+            data_mo_rd =[]
+            for x in range(1,16):
+                data_mo_rd.append(AddData_moForm(prefix="mord"+str(x)).as_table())
+            ctx['Recolección por día'] = data_mo_rd
+        elif step == "22":
+            materiaOrganica =[]
+            for x in range(1,16):
+                materiaOrganica.append(AddCostosForm(prefix="costosmo"+str(x)).as_table())
+            ctx['Materia organica'] = materiaOrganica
+        elif step == "23":
+            herbicidaCalles =[]
+            for x in range(1,16):
+                herbicidaCalles.append(AddCostosForm(prefix="costoshc"+str(x)).as_table())
+            ctx['Herbicida calles'] = herbicidaCalles
+        elif step == "24":
+            herbicidaPlatos =[]
+            for x in range(1,16):
+                herbicidaPlatos.append(AddCostosForm(prefix="costoshp"+str(x)).as_table())
+            ctx['Herbicida platos'] = herbicidaPlatos
+        elif step == "25":
+            insecticidas =[]
+            for x in range(1,16):
+                insecticidas.append(AddCostosForm(prefix="costosinsecticidas"+str(x)).as_table())
+            ctx['Insecticidas'] = insecticidas
+        elif step == "26":
+            fungicidas =[]
+            for x in range(1,16):
+                fungicidas.append(AddCostosForm(prefix="costosinsecticidas"+str(x)).as_table())
+            ctx['Fungicidas'] = fungicidas
+        elif step == "27":
+            fertilizante =[]
+            for x in range(1,16):
+                fertilizante.append(AddCostosForm(prefix="costosfertilizante"+str(x)).as_table())
+            ctx['Fertilizante'] = fertilizante
+        elif step == "28":
+            ridomil =[]
+            for x in range(1,16):
+                ridomil.append(AddCostosForm(prefix="costosridomil"+str(x)).as_table())
+            ctx['Ridomil'] = ridomil
+        elif step == "29":
+            fertilizanteFoliar =[]
+            for x in range(1,16):
+                fertilizanteFoliar.append(AddCostosForm(prefix="costosff"+str(x)).as_table())
+            ctx['Fertilizante foliar'] = fertilizanteFoliar
+        elif step == "30":
+            biocontroladores =[]
+            for x in range(1,16):
+                biocontroladores.append(AddCostosForm(prefix="costosbiocontroladores"+str(x)).as_table())
+            ctx['Biocontroladores'] = biocontroladores
+        elif step == "31":
+            guadana =[]
+            for x in range(1,16):
+                guadana.append(AddCostosForm(prefix="costosguadana"+str(x)).as_table())
+            ctx['Guadaña'] = guadana
+        elif step == "32":
+            selectores =[]
+            for x in range(1,16):
+                selectores.append(AddCostosForm(prefix="costosselectores"+str(x)).as_table())
+            ctx['Selectores'] = selectores
+        elif step == "33":
+            bombasEspalda =[]
+            for x in range(1,16):
+                bombasEspalda.append(AddCostosForm(prefix="costosbe"+str(x)).as_table())
+            ctx['Bombas espalda'] = bombasEspalda
+        elif step == "34":
+            bombasEstacionarias =[]
+            for x in range(1,16):
+                bombasEstacionarias.append(AddCostosForm(prefix="costosbet"+str(x)).as_table())
+            ctx['Bombas estacionarias'] = bombasEstacionarias
+        elif step == "35":
+            canastillas =[]
+            for x in range(1,16):
+                canastillas.append(AddCostosForm(prefix="costoscanatillas"+str(x)).as_table())
+            ctx['Canastillas'] = canastillas
+        elif step == "36":
+            herramientas =[]
+            for x in range(1,16):
+                herramientas.append(AddCostosForm(prefix="costosh"+str(x)).as_table())
+            ctx['Herramientas'] = herramientas
+        elif step == "37":
+            lycra =[]
+            for x in range(1,16):
+                lycra.append(AddCostosForm(prefix="costoslycra"+str(x)).as_table())
+            ctx['Lycra'] = lycra
+
+        return HttpResponse(json.dumps(ctx), content_type="application/json")
     if request.POST:
         #print(request.POST)
         cipc =[]
@@ -627,120 +800,7 @@ def createbp(request):
 
         return redirect('home_agricultor')
     else:
-        cipc =[]
-        data_mo_siembra =[]
-        data_mo_resiembra =[]
-        data_mo_lgc =[]
-        data_mo_ah =[]
-        data_mo_plateo =[]
-        data_mo_fertilizacion =[]
-        data_mo_amo =[]
-        data_mo_fungicidas =[]
-        data_mo_biocontroladores =[]
-        data_mo_aspersiones =[]
-        data_mo_tutorado =[]
-        data_mo_podas =[]
-        data_mo_rc =[]
-        data_mo_rd =[]
-        materiaOrganica =[]
-        herbicidaCalles =[]
-        herbicidaPlatos =[]
-        insecticidas =[]
-        fungicidas =[]
-        fertilizante =[]
-        ridomil =[]
-        fertilizanteFoliar =[]
-        biocontroladores =[]
-        guadana =[]
-        selectores =[]
-        bombasEspalda =[]
-        bombasEstacionarias =[]
-        canastillas =[]
-        herramientas =[]
-        lycra =[]
-
-        for x in range(1,16):
-            cipc.append(AddcipcForm(prefix="cipc"+str(x)))
-            data_mo_siembra.append(AddData_moForm(prefix="mosimebra"+str(x)))
-            data_mo_resiembra.append(AddData_moForm(prefix="moresiembra"+str(x)))
-            data_mo_lgc.append(AddData_moForm(prefix="molgc"+str(x)))
-            data_mo_ah.append(AddData_moForm(prefix="moah"+str(x)))
-            data_mo_plateo.append(AddData_moForm(prefix="moplateo"+str(x)))
-            data_mo_fertilizacion.append(AddData_moForm(prefix="mofertilizacion"+str(x)))
-            data_mo_amo.append(AddData_moForm(prefix="moamo"+str(x)))
-            data_mo_fungicidas.append(AddData_moForm(prefix="mofungicidas"+str(x)))
-            data_mo_biocontroladores.append(AddData_moForm(prefix="mobiocontroladores"+str(x)))
-            data_mo_aspersiones.append(AddData_moForm(prefix="moaspersiones"+str(x)))
-            data_mo_tutorado.append(AddData_moForm(prefix="motutorado"+str(x)))
-            data_mo_podas.append(AddData_moForm(prefix="mopodas"+str(x)))
-            data_mo_rc.append(AddData_moForm(prefix="morc"+str(x)))
-            data_mo_rd.append(AddData_moForm(prefix="mord"+str(x)))
-            materiaOrganica.append(AddCostosForm(prefix="costosmo"+str(x)))
-            herbicidaCalles.append(AddCostosForm(prefix="costoshc"+str(x)))
-            herbicidaPlatos.append(AddCostosForm(prefix="costoshp"+str(x)))
-            insecticidas.append(AddCostosForm(prefix="costosinsecticidas"+str(x)))
-            fungicidas.append(AddCostosForm(prefix="costosinsecticidas"+str(x)))
-            fertilizante.append(AddCostosForm(prefix="costosfertilizante"+str(x)))
-            ridomil.append(AddCostosForm(prefix="costosridomil"+str(x)))
-            fertilizanteFoliar.append(AddCostosForm(prefix="costosff"+str(x)))
-            biocontroladores.append(AddCostosForm(prefix="costosbiocontroladores"+str(x)))
-            guadana.append(AddCostosForm(prefix="costosguadana"+str(x)))
-            selectores.append(AddCostosForm(prefix="costosselectores"+str(x)))
-            bombasEspalda.append(AddCostosForm(prefix="costosbe"+str(x)))
-            bombasEstacionarias.append(AddCostosForm(prefix="costosbet"+str(x)))
-            canastillas.append(AddCostosForm(prefix="costoscanatillas"+str(x)))
-            herramientas.append(AddCostosForm(prefix="costosh"+str(x)))
-            lycra.append(AddCostosForm(prefix="costoslycra"+str(x)))
-
-
-        data_manoobra = {}
-        
-        data_manoobra['Siembra'] = data_mo_siembra
-        data_manoobra['Resiembra'] = data_mo_resiembra
-        data_manoobra['Limpia-guadaña-calles'] = data_mo_lgc
-        data_manoobra['Aplicación de herbicida'] = data_mo_ah
-        data_manoobra['Plateo'] = data_mo_plateo
-        data_manoobra['Fertilización'] = data_mo_fertilizacion
-        data_manoobra['Aplicación de materia orgánica'] = data_mo_amo
-        data_manoobra['Fungicidas'] = data_mo_fungicidas
-        data_manoobra['Biocontroladores'] = data_mo_biocontroladores
-        data_manoobra['Aspersiones'] = data_mo_aspersiones
-        data_manoobra['Tutorado'] = data_mo_tutorado
-        data_manoobra['Podas'] = data_mo_podas
-        data_manoobra['Recolección contrato'] = data_mo_rc
-        data_manoobra['Recolección por día'] = data_mo_rd
-
-        data_costos = {}
-        
-        data_costos['materia organica'] = materiaOrganica
-        data_costos['herbicida calles'] = herbicidaCalles
-        data_costos['herbicida platos'] = herbicidaPlatos
-        data_costos['insecticidas'] = insecticidas
-        data_costos['fungicidas'] = fungicidas
-        data_costos['fertilizante'] = fertilizante
-        data_costos['ridomil'] = ridomil
-        data_costos['fertilizante foliar'] = fertilizanteFoliar
-        data_costos['biocontroladores'] = biocontroladores
-        data_costos['guadaña'] = guadana
-        data_costos['selectores'] = selectores
-        data_costos['bombas espalda'] = bombasEspalda
-        data_costos['bombas estacionarias'] = bombasEstacionarias
-        data_costos['canastillas'] = canastillas
-        data_costos['herramientas'] = herramientas
-        data_costos['lycra'] = lycra
-
         ctx['titulo'] = "Crear nueva base presupuestal"
-        ctx['establecimientoform'] = AddEstablecimientoForm(prefix="establecimiento")
-        ctx['manoobra'] = data_manoobra
-        ctx['preparacionform'] = AddPreparacion_costosForm(prefix="preparacion")
-        ctx['data_costos'] = data_costos
-        ctx['datos_generalesform'] = AddDatos_generalesForm(prefix="datos_g")
-        ctx['produccionform'] = AddProduccionForm(prefix="produccion")
-        ctx['porcentaje_precio1form'] = AddPorcentaje_precioForm(prefix="pp1")
-        ctx['porcentaje_precio2form'] = AddPorcentaje_precioForm(prefix="pp2")
-        ctx['porcentaje_precio3form'] = AddPorcentaje_precioForm(prefix="pp3")
-        ctx['cipc'] = cipc
-        ctx['Insumos_generalesform'] = AddInsumos_generalesForm(prefix="ig")
         ctx['base_presupuestal'] = AddBase_presupuestalForm(prefix="bp")
 
     return render(request, template_name, ctx)
