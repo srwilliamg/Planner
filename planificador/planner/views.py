@@ -264,7 +264,7 @@ def home_agricultor(request):
         context['warning'] = "No tienes ninguna finca, puedes crear una nueva haciendo click en 'CREAR FINCA'."
 
     context['fincas'] = fincas
-    context['titulo'] = "Fincas"
+    context['titulo'] = "Proyección del margen operacional del grupo de fincas."
     return render(request, "home_agricultor.html", context)
 
 @login_required()

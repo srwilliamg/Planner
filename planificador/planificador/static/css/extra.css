@@ -2,6 +2,15 @@
 	background-repeat: no-repeat !important;
 	background-position: center !important;
 	background-size: cover !important;
+	filter: blur(1px) brightness(50%);
+}
+
+body {
+	background-image: url('/img/landscape.jpg');
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	background-size: cover !important;
+	/*filter: blur(1px) brightness(50%);*/
 }
 
 .container-login{
