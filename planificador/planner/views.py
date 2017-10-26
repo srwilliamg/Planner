@@ -57,7 +57,6 @@ def fincaChart(request):
     if request.is_ajax():
         lnum = request.POST["finca"]
         finca = Finca.objects.filter(pk=lnum)[0]
-        print(finca)
 
         lotes = finca.lote_finca.all()
         for l in lotes:
@@ -105,19 +104,18 @@ def fincaChart(request):
                     egresosTotal[cont] += w
 
             if len(margenTotal) == 0:
-                print("Was false")
                 data = {
                     "ok": False,
                 }
                 return HttpResponse(json.dumps(data), content_type="application/json")
             else:
-                print("was true")
                 data = {
                     "ok": True,
                     "ingresos":ingresosTotal,
                     "egresos":egresosTotal,
                     "margen": margenTotal,
-                    "years":years
+                    "years":years,
+                    "name": finca.name
                 }
 
         return HttpResponse(json.dumps(data), content_type="application/json")
@@ -150,7 +148,8 @@ def loteChart(request):
                 "ingresos":[i * lote.area for i in loteMIE[1]],
                 "egresos":[i * lote.area for i in loteMIE[2]],
                 "margen":[i * lote.area for i in loteMIE[0]],
-                "years":years
+                "years":years,
+                "name":lote.name
             }
             
         return HttpResponse(json.dumps(data), content_type="application/json")

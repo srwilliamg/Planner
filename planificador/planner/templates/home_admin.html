@@ -4,6 +4,7 @@
 	<div id="divmessage">
 	</div><!-- Espacio para insertar mensajes por javascript -->
 		<div id="divUsers">
+		{% load extratags %}
 		{% for value in users %}
 		{% if value.role != 'R' and value.role != 'A' and value.role != 'X' %}
 			<div class="">
@@ -16,7 +17,7 @@
 								<div class="content">
 								    <div class="list-group">
 								    	<a href="#" class="list-group-item">
-								            <span class="badge">{{value.gender}}</span>
+								            <span class="badge">{{value.gender|completeGender}}</span>
 								            <i class="pe-7s-male"></i>  Género
 								        </a>
 								        <a href="#" class="list-group-item">
@@ -28,7 +29,7 @@
 								            <i class="pe-7s-phone"></i>  Teléfono
 								        </a>
 								        <a href="#" class="list-group-item">
-								            <span class="badge">{{value.role}}</span>
+								            <span class="badge">{{value.role|completeRol}}</span>
 								            <i class="pe-7s-users"></i>  Rol
 								        </a>
 								        <a href="#" class="list-group-item">
